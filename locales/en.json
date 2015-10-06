@@ -1,0 +1,38 @@
+{
+  "editor": {
+    "valid_ok": "Content validated",
+    "valid_error": "Could not validate content"
+  },
+  "toolbar": {
+    "save_draft": "Save draft",
+    "validate": "Validate content",
+    "resume": "Resume editing",
+    "content_mode": "Edit content",
+    "content_mode_help": "Switch to content edition mode",
+    "layout_mode": "Edit layout",
+    "layout_mode_help": "Switch to layout edition mode",
+    "cancel": "Cancel",
+    "drafts_list": "My saved drafts"
+  },
+  "layout": {
+    "change_bg": "Change background"
+  },
+  "upload": {
+    "pick_file": "Pick a file",
+    "error": "Error while uploading file"
+  },
+  "drafts": {
+    "default_name": "Draft",
+    "name_prompt": "Draft name",
+    "overwrite_confirm": "A draft with the same name already exists. Do you want to overwrite it?",
+    "save_ok": "Drafts saved",
+    "save_error": "Error while saving draft",
+    "name_empty": "Provided name is empty. Your draft couldn't be saved.",
+    "restore_confirm": "Do you really want to replace the current content with this draft?",
+    "restore_ok": "Draft restored",
+    "restore_error": "Error while restoring draft",
+    "delete_confirm": "Do you really want to delete this draft?",
+    "delete_ok": "Draft deleted",
+    "delete_error": "Error while deleting draft"
+  }
+}

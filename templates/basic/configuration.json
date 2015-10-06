@@ -1,0 +1,41 @@
+{
+	"styles": {
+		"View-online": {
+			"selector": ".dtf-block-view-online",
+			"isUnique": true,
+			"urlckEditor": "/ckeditor-conf/minimal.json"
+		},
+		"Header": {
+			"selector": ".dtf-block-header",
+			"isUnique": true,
+			"urlckEditor": "/ckeditor-conf/minimal.json"
+		},
+		"Intro": {
+			"selector": ".dtf-block-intro",
+			"icon": "title",
+			"caption": "Intro",
+			"listChangeable": "bg-blue, bg-green, bg-red, bg-dark-grey, bg-orange",
+			"urlckEditor": "/ckeditor-conf/minimal.json"
+		},
+		"2cols": {
+			"selector": ".dtf-block-2cols",
+			"icon": "2cols_image_top",
+			"caption": "2 Colonnes"
+		},
+		"Quote": {
+			"selector": ".dtf-block-quote",
+			"icon": "quote",
+			"caption": "Citation"
+		},
+		"textImage": {
+			"selector": ".dtf-block-text-image",
+			"icon": "mixed_image_left",
+			"caption": "Image + Texte"
+		},
+		"Footer": {
+			"selector": ".dtf-block-footer",
+		  "isUnique": true,
+			"urlckEditor": "/ckeditor-conf/minimal.json"
+		}
+	}
+}

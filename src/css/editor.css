@@ -1,0 +1,701 @@
+/*Copyright (c) 2015 Oasiswork.
+All Rights Reserved.
+
+This Source Code Form is subject to the
+terms of the Mozilla Public License, v. 2.0.
+If a copy of the MPL was not distributed with this file,
+You can obtain one at
+http://mozilla.org/MPL/2.0/.*/
+
+/* ==========================================================================
+Sommaire
+
+1 = Basic Style
+2 = Layout
+3 = Change class
+4 = dtf catalog
+5 = Image upload
+6 = Dragabble
+========================================================================== */
+
+/* ==========================================================================
+1 = Basic Style
+========================================================================== */
+
+body {
+  font-family: sans-serif;
+  -webkit-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  transform-origin: 50% 0;
+}
+
+p { margin: 0; }
+
+td { position: relative; }
+
+.dblock { display: block; }
+
+.dtable { display: table; }
+
+.dtable-cell { display: table-cell; }
+
+.first-hidden { display: none }
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+/*========== Buttons ===========*/
+
+button {
+  border: 0;
+  padding: 1em 2em;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: top;
+  line-height: 1.5em;
+  -webkit-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+  transition: all 0.2s ease;
+}
+
+.button-add,
+.button-del {
+  color: white;
+}
+
+.button-add {
+  background: #95a5a6;
+  font-size: 1.4em;
+  color: #333;
+  padding: 0.4em 0.7em 0.3em;
+  border-radius: 90px;
+  margin: 1em auto;
+}
+.button-add:hover,
+.button-add:focus {
+  background: #2ecc71;
+}
+
+.button-del,
+.button-flashing {
+  background: #c0392b;
+}
+
+.button-del  {
+  position: absolute;
+  right: -54px;
+  font-size: 1.4em;
+  padding: 0.6em 0.8em;
+  margin-top: -1px;
+}
+
+.button-del:hover,
+.button-flashing:hover {
+  background: #e74c3c;
+}
+
+.button-cancel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 5px;
+  color: #FFF;
+  z-index: 90;
+}
+
+#dtf-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  overflow: hidden;
+  background: #FFF;
+  box-shadow: 0 0 5px rgba(0,0,0,0.5);
+  height: 3em;
+}
+
+#dtf-toolbar:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-shadow: inset 0 5px 5px rgba(0,0,0,0.2);
+  width: 100%;
+  z-index: 1;
+  height: 0.5em;
+}
+
+#dtf-toolbar button:after {
+  font-family: FontAwesome;
+  font-size: 1.3em;
+  padding-left: 0.6em;
+}
+
+#saveDraft:after { content: '\f0c7'; }
+#validateBtn:after { content: '\f00c'; }
+#resumeBtn:after { content: '\f021'; }
+#dtf-content-mode:after { content: '\f044'; }
+#dtf-layout-mode:after { content: '\f009'; }
+#undoBtn:after { content: '\f112'; }
+
+#saveDraft { margin-right: 0.3em; }
+
+.btn-green {
+  background: #00BC62;
+  float: right;
+}
+
+.btn-green .fa-floppy-o {
+  font-size: 1.5em;
+}
+
+.btn-orange {
+  background: #FF622C;
+  float: right;
+  margin-left: 0.3em;
+}
+
+.btn-green:hover { background: #00ef7d; }
+
+.btn-orange:hover { background: #ff885f; }
+
+.toolbarVisible { padding-top: 3.5em; }
+
+
+/* ==========================================================================
+2 = Layout
+========================================================================== */
+
+.body-scalabled {
+  height: 100%;
+  padding-bottom: 30em;
+}
+
+.body-scalabled .toolbarVisible {
+  padding-top: 10.5em;
+}
+
+.body-scalabled body {
+  transform: scale(0.5);
+}
+
+.body-scalabled .button-del {
+  font-size: 3em;
+  right: -115px;
+}
+
+.body-scalabled #dtf-toolbar {
+  margin-left: -50%;
+  height: 7em;
+  width: 200%;
+}
+
+.body-scalabled #dtf-toolbar button {
+  font-size: 2em;
+}
+
+#dtf-layout-mode {
+  background: #2980b9;
+  padding: 1em;
+}
+
+#dtf-layout-mode:hover { background: #3498db; }
+
+#dtf-toolbar button {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  color: #FFF;
+  -webkit-transition: all 0.5s all;
+  -o-transition: all 0.5s all;
+  transition: all 0.5s all;
+  height: 100%;
+  font-size: 0.8em;
+}
+
+#dtf-content-mode { background: #f39c12; }
+
+#dtf-content-mode .fa {
+  font-size: 1.5em;
+  margin-left: 0.3em;
+}
+
+#dtf-content-mode:hover { background: #f1c40f; }
+
+#undoBtn {
+  padding: 1em 1.5em;
+  background: #c0392b;
+}
+
+#undoBtn .fa { font-size: 1.2em; }
+
+#undoBtn:hover { background: #e74c3c; }
+
+.dtf-deletion-border { border: 1px solid #bdc3c7; }
+
+/* ==========================================================================
+3 = Change class
+========================================================================== */
+
+.dtf-change button {
+  color: #FFF;
+  padding: 0.4em;
+}
+
+.dtf-change-element {
+  padding: 1.5em 0;
+  overflow: hidden;
+}
+
+.dtf-background {
+  margin:0 0 1em 3%;
+  width: 45.5%;
+  float: left;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 1.5em;
+  height: 4em;
+  background-position: right bottom;
+  background-repeat: no-repeat;
+  background-size: contain!important;
+  box-shadow: 0 0 2px rgba(0,0,0,0.5);
+  border: 1px solid #FFF;
+  cursor: pointer;
+}
+
+.dtf-background.active,
+.dtf-background:hover {
+  border-color: #999;
+}
+
+.dtf-changeable { border-bottom: 0; }
+
+.dtf-change {
+  border: 1px solid #bdc3c7;
+  border-top: 0;
+  margin-bottom: 2em;
+  background: #FFF;
+}
+
+.dtf-change h2 {
+  padding-top: 1.5em;
+  font-size: 1em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+
+/* ==========================================================================
+4 = dtf catalog
+========================================================================== */
+
+.dtf-catalog {
+  overflow: hidden;
+  padding: 1.5em;
+  background: #FFF;
+}
+
+.dtf-block-choice {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  text-align: center;
+  margin-bottom: 1em;
+  padding: 0;
+  float: left;
+  width: 31.333%;
+  margin: 1%;
+  font-size: 1em;
+  color: #333;
+  height: 8em;
+  text-decoration: none;
+  -webkit-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  box-shadow: 0 0 2px rgba(0,0,0,0.5);
+  position: relative;
+}
+
+.dtf-block-choice .icon {
+  width: 100%;
+  height: 6.1em;
+}
+
+.dtf-block-choice .dtable-cell { vertical-align: middle; }
+
+.dtf-block-choice i { font-style: normal; }
+
+.icon-text {
+  font-family: Georgia, serif;
+  font-size: 2em;
+}
+
+.icon-text.icon-quote {
+  font-size: 7em;
+  display: block;
+  height: 0.7em;
+}
+
+.dtf-add-bar .dtf-block-choice:hover { box-shadow: 0 0 10px rgba(0,0,0,0.7); }
+
+.dtf-add-bar p,
+.dtf-change p {
+  text-align: center;
+}
+
+.dtf-add-bar button { color: white; }
+
+.dtf-add-bar .dtf-catalog { text-align: center; }
+
+.dtf-block-choice i { padding: 1px; }
+
+/* ==========================================================================
+5 = Image upload
+========================================================================== */
+
+.dtf-image-wrap { position: relative; }
+
+.dtf-image-wrap:hover .dtf-upload {
+  opacity: 1;
+  z-index: 100;
+}
+
+.dtf-image-wrap .dtf-upload {
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: #2c3e50;
+  color: #FFF;
+}
+
+button.dtf-upload {
+  opacity: 0.6;
+  padding: 1em 1.2em;
+}
+
+form.dtf-upload {
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  background: rgba(255,255,255,0.8);
+  text-align: center;
+}
+
+form.dtf-upload button {
+  width: 100%;
+  height: 100%;
+  display: table;
+  background: #2c3e50;
+  color: #FFF;
+  line-height: 2em;
+}
+
+form.dtf-upload button:before {
+  font-family: FontAwesome;
+  content: '\f093';
+  color: #FFF;
+  font-size: 1.2em;
+  padding-right: 0.6em;
+}
+
+.dtf-upload input {
+  position: absolute;
+  top: 45%;
+  left: 0;
+  font-size: 30px;
+  max-width: 100%;
+  top: 0;
+  height: 100%;
+  cursor: pointer;
+  opacity: 0;
+  filter: alpha(opacity=0);
+  z-index: 80;
+}
+
+/* ==========================================================================
+6 = Dragabble
+========================================================================== */
+
+.ui-sortable .dtf-draggable { cursor: move; }
+.ui-wrapper {
+  left: 0!important;
+}
+.ui-resizable {
+  position: relative;
+}
+.ui-resizable-handle {
+  display: block;
+  font-size: 0.1px;
+  position: absolute;
+}
+.ui-resizable-disabled .ui-resizable-handle, .ui-resizable-autohide .ui-resizable-handle {
+  display: none;
+}
+.ui-resizable-n {
+  cursor: n-resize;
+  height: 7px;
+  left: 0;
+  top: -5px;
+  width: 100%;
+}
+.ui-resizable-s {
+  bottom: -5px;
+  cursor: s-resize;
+  height: 7px;
+  left: 0;
+  width: 100%;
+}
+.ui-resizable-e {
+  cursor: e-resize;
+  height: 100%;
+  right: -5px;
+  top: 0;
+  width: 7px;
+}
+.ui-resizable-w {
+  cursor: w-resize;
+  height: 100%;
+  left: -5px;
+  top: 0;
+  width: 7px;
+}
+.ui-resizable-se {
+  bottom: 1px;
+  cursor: se-resize;
+  height: 17px;
+  right: 1px;
+  width: 17px;
+  background-image: url('data:image/gif;base64,R0lGODlhEAAQAPcAAISEhNbWzv///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////yH5BAEAAAEALAAAAAAQABAAAAg7AAMIHEiwoMGDCBMqXMgwgICGDgE0FABA4kKKFhVidKixYsSEGzceDOlxpMeQBklKpFhQZcSML2NuDAgAOw==');
+  background-repeat: no-repeat;
+}
+.ui-resizable-sw {
+  bottom: 1px;
+  cursor: sw-resize;
+  height: 17px;
+  left: 1px;
+  width: 17px;
+  background-image: url('data:image/gif;base64,R0lGODlhEAAQAKECAISEhNbWzv///////yH+EUNyZWF0ZWQgd2l0aCBHSU1QACH5BAEKAAMALAAAAAAQABAAAAIinI+py+0tHgJRDkDtzS/i2mSfM46hyCkeCk7rq5RsPJtGAQA7');
+  background-repeat: no-repeat;
+}
+.ui-resizable-nw {
+  cursor: nw-resize;
+  height: 9px;
+  left: -5px;
+  top: -5px;
+  width: 9px;
+}
+.ui-resizable-ne {
+  cursor: ne-resize;
+  height: 9px;
+  right: -5px;
+  top: -5px;
+  width: 9px;
+}
+
+.returnInitialPos {
+  left: 0!important;
+  top: 0!important;
+}
+
+.droppable.active .dtf-add-bar { outline-color: #999; }
+
+.droppable .dtf-add-bar {
+  outline: 4px dashed #CCC;
+  outline-offset: -4px;
+}
+
+.droppable button { opacity: 0; }
+
+.ui-state-highlight {
+  height: 1.5em;
+  background: #CCC;
+}
+
+.sortable-element.margeBlock { margin-bottom: 95px; }
+
+.ui-sortable-helper {
+  display: table;
+  background: #FFF;
+}
+
+.ui-sortable-helper > * { width: 600px!important; }
+
+#containerListDraft {
+  position: fixed;
+  left: -20em;
+  width: 20em;
+  background: #FFF;
+  height: 100%;
+  top: 0;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  z-index: 11;
+  -webkit-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+#listDraft {
+  padding: 0;
+  margin: 0;
+}
+
+#listDraft li {
+  padding: 1em 2em 1em 1em;
+  border-bottom: 1px solid #CCC;
+  list-style: none;
+  cursor: pointer;
+  position: relative;
+}
+
+#listDraft li:hover {
+  background: #EEE;
+}
+
+#containerListDraft.isActive {
+  left: 0;
+}
+
+.titleContainerListDraft {
+  font-size: 1.5em;
+  color: #666;
+  padding: 2em 0.7em 0.5em;
+  text-align: left;
+}
+
+#closeListDraft {
+  position: absolute;
+  top: 0;
+  right: 0.5em;
+  font-size: 2em;
+  font-weight: bold;
+  cursor: pointer;
+  color: #666;
+}
+
+#closeListDraft:hover {
+  color: #999;
+}
+
+#getList {
+  background: #666;
+}
+
+#getList span {
+  top: -1px;
+  left: -2px;
+}
+
+.draftDate {
+  display: block;
+  font-size: 0.8em;
+  font-style: italic;
+}
+
+.spanDelete {
+  position: absolute;
+  right: 0.5em;
+  top: 50%;
+  background-color: #e74c3c;
+  padding: 0.4em 0.45em;
+  color: #FFF;
+  border-radius: 120px;
+  font-size: 1em;
+  transform: translate(0,-50%);
+}
+
+.spanDelete:hover {
+  background: #e74c3c;
+}
+
+/* ==========================================================================
+6 = Overlay, messages and spinner
+========================================================================== */
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 9;
+  background-color: rgba(0,0,0,0.7);
+}
+
+#messages{
+  z-index: 10;
+  position: fixed;
+  padding: 1.5em;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  box-shadow: 10px 10px 20px rgba(0,0,0,0.3);
+  border-radius: 2px;
+  color: #FFF;
+  display: none;
+}
+
+#messages.valid {
+  background: #16a085;
+}
+
+#messages.error {
+  background: #e74c3c;
+}
+
+.spinner {
+  z-index: 10;
+  height: 60px;
+  width: 60px;
+  margin: 50% auto;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  -webkit-animation: rotation .6s infinite linear;
+  -moz-animation: rotation .6s infinite linear;
+  -o-animation: rotation .6s infinite linear;
+  animation: rotation .6s infinite linear;
+  border-left: 6px solid rgba(255, 255, 255, 0.15);
+  border-right: 6px solid rgba(255, 255, 255, 0.15);
+  border-bottom: 6px solid rgba(255, 255, 255, 0.15);
+  border-top: 6px solid rgba(255, 255, 255, 0.8);
+  border-radius: 100%;
+}
+
+@-webkit-keyframes rotation {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(359deg);
+  }
+}
+@-moz-keyframes rotation {
+  from {
+    -moz-transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(359deg);
+  }
+}
+@-o-keyframes rotation {
+  from {
+    -o-transform: rotate(0deg);
+  }
+  to {
+    -o-transform: rotate(359deg);
+  }
+}
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}

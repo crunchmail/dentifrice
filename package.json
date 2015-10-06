@@ -1,0 +1,47 @@
+{
+  "name": "dentifrice",
+  "version": "0.9.23",
+  "license": "MPL-2.0",
+  "repository": "https://github.com/crunchmail/dentifrice.git",
+  "bugs": "https://github.com/crunchmail/dentifrice/issues",
+  "author": "Oasiswork <dev@oasiswork.fr>",
+  "contributors": [
+    {
+      "name": "Jean-Michel François",
+      "email": "jmfrancois@atreal.fr"
+    },
+    {
+      "name": "Jocelyn Delalande",
+      "email": "jdelalande@oasiswork.fr"
+    },
+    {
+      "name": "Thomas Lebeau",
+      "email": "tlebeau@oasiswork.fr"
+    },
+    {
+      "name": "Nicolas Brisac",
+      "email": "nbrisac@oasiswork.fr"
+    }
+  ],
+  "devDependencies": {
+    "bower": "*",
+    "del": "^2.0.2",
+    "gulp": "*",
+    "gulp-bower": "0.0.10",
+    "gulp-concat": "*",
+    "gulp-csslint": "*",
+    "gulp-debug": "^2.0.1",
+    "gulp-html-js-template": "^0.1.4",
+    "gulp-jshint": "*",
+    "gulp-license": "~1.0.0",
+    "gulp-load-plugins": "*",
+    "gulp-rename": "^1.2.0",
+    "gulp-sourcemaps": "*",
+    "gulp-uglify": "*",
+    "i18next-client": "^1.10.2",
+    "local-web-server": "*"
+  },
+  "scripts": {
+    "start": "ws -d ./dist"
+  }
+}

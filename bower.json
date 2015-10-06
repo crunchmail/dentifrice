@@ -1,0 +1,27 @@
+{
+  "name": "dentifrice",
+  "version": "0.0.0",
+  "authors": [
+    "Jean-Michel François <jmfrancois@atreal.fr>",
+    "Jocelyn Delalande <jdelalande@oasiswork.fr>",
+    "Thomas Lebeau <tlebeau@oasiswork.fr>",
+    "Nicolas Brisac <nbrisac@oasiswork.fr>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~1.11.2",
+    "ckeditor": "~4.4.6",
+    "lodash": "~2.4.1",
+    "pure": "~0.5.0",
+    "font-awesome": "~4.3.0",
+    "jquery-color": "~2.1.2",
+    "jquery-ui": "~1.11.4"
+  }
+}

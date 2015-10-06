@@ -10,18 +10,6 @@
 var dtfLayoutMode = (function( $ ) {
   'use strict';
 
-  /*var that = this;
-  this._mode = true;*/
-
-  /*var _toggle = function() {
-    if (that._mode) {
-      $.proxy(enter,this)();
-    } else {
-      $.proxy(leave,this)();
-    }
-    that._mode = ! that._mode;
-  };*/
-
   var _draggable = function(block) {
     var parent_tr = block.closest('tr'),
       c = {};
@@ -53,9 +41,9 @@ var dtfLayoutMode = (function( $ ) {
         $('.button-del').remove();
         $('.dtf-block').each(function() {
           if($(this).hasClass('dtf-changeable')) {
-            that.changeClass($(this));
+            changeClass($(this));
           }else {
-            that.equipBlock($(this));
+            equipBlock($(this));
           }
         });
         $('#templateContainer > tbody > tr:not(.sortable-element)').css('opacity', 1);

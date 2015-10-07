@@ -1,6 +1,6 @@
 {
   "name": "dentifrice",
-  "version": "0.9.23",
+  "version": "0.9.25",
   "license": "MPL-2.0",
   "repository": "https://github.com/crunchmail/dentifrice.git",
   "bugs": "https://github.com/crunchmail/dentifrice/issues",
@@ -38,7 +38,6 @@
     "gulp-rename": "^1.2.0",
     "gulp-sourcemaps": "*",
     "gulp-uglify": "*",
-    "i18next-client": "^1.10.2",
     "local-web-server": "*"
   },
   "scripts": {

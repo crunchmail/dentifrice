@@ -22,7 +22,7 @@ module.exports = function (gulp, plugins) {
     gulp.src(['bower_components/jquery/dist/jquery.min.js'])
     .pipe(gulp.dest('dist/js'));
 
-    gulp.src(['node_modules/i18next-client/i18next.min.js'])
+    gulp.src(['bower_components/i18next/i18next.min.js'])
     .pipe(gulp.dest('dist/js'));
 
     gulp.src(['bower_components/font-awesome/css/font-awesome.css'])

@@ -217,7 +217,7 @@ var dtfInit = (function ( $ ) {
 
   // Get our own url base dynamically
   // This is to allow deployments into a subdirectory
-  var pageUrl = location.href
+  var pageUrl = location.href;
   var appRootUrl = pageUrl.substring(0, pageUrl.lastIndexOf('/')+1);
   var settingsUrl = appRootUrl + '_local_settings.js';
 

@@ -185,7 +185,20 @@ var dentifrice = (function () {
         configUrlEncoded = encodeURIComponent(settings.configUrl);
     }
 
-    var editorUrl = 'editor.html?template=' + templateUrlEncoded + '&styles=' + stylesUrlEncoded + '&config=' + configUrlEncoded + '&lang=' + lang + '&title=' + settings.title;
+    // Get our own URL to use as base for the iFrame src
+    var bootstrapRoot = '';
+    var allScripts = document.getElementsByTagName('script');
+    var re = /^(.*)dentifrice\.(min\.)*js$/;
+    [].forEach.call(allScripts, function (tag) {
+      var src = tag.getAttribute('src');
+      var match = re.exec(src);
+      if (match) {
+        // Found a base url to use
+        bootstrapRoot = match[1];
+      }
+    });
+
+    var editorUrl = bootstrapRoot + 'editor.html?template=' + templateUrlEncoded + '&styles=' + stylesUrlEncoded + '&config=' + configUrlEncoded + '&lang=' + lang + '&title=' + settings.title;
 
     var iframe = document.createElement('iframe');
 

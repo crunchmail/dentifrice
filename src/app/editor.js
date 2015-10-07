@@ -170,28 +170,30 @@ var dtfEditor = (function ( $ ) {
   /* Remove data attributes
    */
   var _removeDataAttributes = function ($target) {
-    var i,
-        attrName,
-        dataAttrsToDelete = [],
-        dataAttrs = $target.get(0).attributes,
-        dataAttrsLen = dataAttrs.length;
+    if ( 0 !== $target.length ) {
+      var i,
+          attrName,
+          dataAttrsToDelete = [],
+          dataAttrs = $target.get(0).attributes,
+          dataAttrsLen = dataAttrs.length;
 
-    // Loop through attributes and make a list of those
-    // that begin with 'data-'
-    for (i=0; i<dataAttrsLen; i++) {
-        if ( 'data-' === dataAttrs[i].name.substring(0,5) ) {
-            // Why don't we just delete the attributes here?
-            // Deleting an attribute changes the indices of the
-            // others wreaking havoc on the loop we are inside
-            // b/c dataAttrs is a NamedNodeMap (not an array or obj)
-            dataAttrsToDelete.push(dataAttrs[i].name);
-        }
+      // Loop through attributes and make a list of those
+      // that begin with 'data-'
+      for (i=0; i<dataAttrsLen; i++) {
+          if ( 'data-' === dataAttrs[i].name.substring(0,5) ) {
+              // Why don't we just delete the attributes here?
+              // Deleting an attribute changes the indices of the
+              // others wreaking havoc on the loop we are inside
+              // b/c dataAttrs is a NamedNodeMap (not an array or obj)
+              dataAttrsToDelete.push(dataAttrs[i].name);
+          }
+      }
+      // Delete each of the attributes we found above
+      // i.e. those that start with "data-"
+      $.each( dataAttrsToDelete, function( index, attrName ) {
+          $target.removeAttr( attrName );
+      });
     }
-    // Delete each of the attributes we found above
-    // i.e. those that start with "data-"
-    $.each( dataAttrsToDelete, function( index, attrName ) {
-        $target.removeAttr( attrName );
-    });
   };
 
   var _generateFinal = function ( html ) {

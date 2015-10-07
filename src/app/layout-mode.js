@@ -142,7 +142,7 @@ var dtfLayoutMode = (function( $ ) {
 
   };
 
-  //Change Class to element with listChangeable in configuration.json
+  //Change Class of element with listChangeable in configuration.json
   var changeClass = function(block, blockClass) {
     var parent_tr = block.closest('tr');
 
@@ -181,7 +181,6 @@ var dtfLayoutMode = (function( $ ) {
         draft_row.prev().find('.dtf-block').removeClass(removeOldClasse);
         var nameClass = $(this).data('background');
         draft_row.prev().find('.dtf-block').addClass(nameClass);
-        draft_row.prev().find('.dtf-block').parent().addClass(nameClass);
 
       });
     }

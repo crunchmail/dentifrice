@@ -138,10 +138,7 @@ var dtfEditor = (function ( $ ) {
 
       if ( config.urlckEditor !== undefined ) {
         // Get CKEditor config URL from config
-        var ckEditorUrl = config.urlckEditor;
-        if (config.urlckEditor.charAt(0) == '/') {
-          ckEditorUrl = settings.appRootUrl + config.urlckEditor;
-        }
+        var ckEditorUrl = getAbsoluteUrl(config.urlckEditor);
 
         // Fetch CKEditor config
         $.getJSON(ckEditorUrl, function(data) {

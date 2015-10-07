@@ -80,6 +80,20 @@ function loadSettings (local_settings) {
   CKEDITOR_BASEPATH = settings.appRootUrl + '/ckeditor/';
 }
 
+/* Helper function to get a file's absolute URL
+ * using discovered appRootUrl
+ */
+var getAbsoluteUrl = function (url) {
+  var r = new RegExp('^(?:[a-z]+:)?//', 'i');
+  if ( r.test(url) ) {
+   // URL is absolute, return unchanged
+   return url;
+  } else {
+   // URL is relative, concatenate with appRootUrl and return
+   return settings.appRootUrl + url.replace(/^\//, '');
+  }
+};
+
 /* Spinner overlay
  */
 var spinner = function (action) {
@@ -116,8 +130,6 @@ var blocks_config = { styles: {} };
 var dtfInit = (function ( $ ) {
   'use strict';
 
-  //var _spinner = $('<div class="spinner-overlay"><div class="spinner"></div></div>');
-
   var loadScripts = function (scripts, index, callback, failCallback) {
     if (typeof scripts === 'string') scripts = [scripts];
     debug('Loading script: ' + scripts[index]);
@@ -139,17 +151,19 @@ var dtfInit = (function ( $ ) {
     spinner('show');
     // Build list of scripts to load
     var scriptsList = [
-      settings.appRootUrl + '/js/plugins/' + settings.plugins.draftStore,
-      settings.appRootUrl + '/js/plugins/' + settings.plugins.uploadStore
+      settings.appRootUrl + 'js/plugins/' + settings.plugins.draftStore,
+      settings.appRootUrl + 'js/plugins/' + settings.plugins.uploadStore
     ];
     // Add before-editor custom scripts
     if (typeof settings.plugins.beforeEditor === 'string') settings.plugins.beforeEditor = [settings.plugins.beforeEditor];
-    scriptsList = scriptsList.concat(settings.plugins.beforeEditor);
+    var beforeEditor = settings.plugins.beforeEditor.map( function(item) { return getAbsoluteUrl(item); });
+    scriptsList = scriptsList.concat(beforeEditor);
     // Add the editor itself
-    scriptsList.push(settings.appRootUrl + '/js/editor.js');
+    scriptsList.push(settings.appRootUrl + 'js/editor.js');
     // Add after-editor custom scripts
     if (typeof settings.plugins.afterEditor === 'string') settings.plugins.afterEditor = [settings.plugins.afterEditor];
-    scriptsList = scriptsList.concat(settings.plugins.afterEditor);
+    var afterEditor = settings.plugins.afterEditor.map( function(item) { return getAbsoluteUrl(item); });
+    scriptsList = scriptsList.concat(afterEditor);
 
     // Dynamically load scripts
     loadScripts(scriptsList, 0, function () {
@@ -159,9 +173,9 @@ var dtfInit = (function ( $ ) {
         lng             : settings.lang,
         fallbackLng     : 'en',
         lowerCaseLng    : true,
-        resGetPath      : '../locales/__lng__.json',
+        resGetPath      : settings.appRootUrl + 'locales/__lng__.json',
         useLocalStorage : false,
-        debug           : true //settings.debug
+        debug           : settings.debug
       }, function () {
         // Load editor
         info('Initializing editor');
@@ -203,20 +217,9 @@ var dtfInit = (function ( $ ) {
 
   // Get our own url base dynamically
   // This is to allow deployments into a subdirectory
-  var appRootUrl = '';
-  var settingsUrl = '/_local_settings.js';
-  var allTags = document.getElementsByTagName('script');
-  var re = /^(.*)\/js\/init\.(min\.)*js$/;
-
-  [].forEach.call(allTags, function (tag) {
-    src = tag.getAttribute('src');
-    match = re.exec(src);
-    if (match) {
-      // Found a base url to use
-      settingsUrl = match[1] + settingsUrl;
-      appRootUrl = match[1];
-    }
-  });
+  var pageUrl = location.href
+  var appRootUrl = pageUrl.substring(0, pageUrl.lastIndexOf('/')+1);
+  var settingsUrl = appRootUrl + '_local_settings.js';
 
   // Get the URLs of the template, css and configuration to load
   var templateUrl = _getQueryParameterByName('template');

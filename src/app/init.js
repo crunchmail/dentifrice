@@ -63,11 +63,12 @@ var settings = {},
     CKEDITOR_BASEPATH;
 function loadSettings (local_settings) {
   var default_settings = {
-    log         : true,
-    debug       : false,
-    showSpinner : true,
-    uploadURL   : 'http://localhost:8080/files',
-    plugins     : {
+    log          : true,
+    debug        : false,
+    showSpinner  : true,
+    noinlineAttr : 'inline="false"',
+    uploadURL    : 'http://localhost:8080/files',
+    plugins      : {
       'draftStore'   : 'drafts-localstore.js',
       'uploadStore'  : 'upload-simplestore.js',
       'beforeEditor' : [],

@@ -207,12 +207,13 @@ var dtfEditor = (function ( $ ) {
       var styles = getUserStyles();
 
       // Load the boilerplate from the server
-      var boilerplateURL = settings.appRootUrl + '/final-boilerplate.html';
+      var boilerplateURL = settings.appRootUrl + 'final-boilerplate.html';
       $.get(boilerplateURL, function (boilerplate) {
         // Insert user bits
         boilerplate = boilerplate.replace('[[USER_TITLE]]', settings.title);
         boilerplate = boilerplate.replace('[[USER_STYLES]]', styles);
         boilerplate = boilerplate.replace('[[USER_CONTENT]]', html);
+        boilerplate = boilerplate.replace('[[USER_NOINLINE_ATTR]]', settings.noinlineAttr);
 
         // Remove CSS comments
         boilerplate = boilerplate.replace(/\/\*(.|[\r\n])*?\*\//g, "");

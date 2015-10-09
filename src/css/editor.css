@@ -104,7 +104,7 @@ button {
   right: 0;
   margin: 5px;
   color: #FFF;
-  z-index: 90;
+  z-index: 9;
 }
 
 #dtf-toolbar {
@@ -433,6 +433,7 @@ form.dtf-upload button:before {
   display: block;
   font-size: 0.1px;
   position: absolute;
+  z-index: 9 !important;
 }
 .ui-resizable-disabled .ui-resizable-handle, .ui-resizable-autohide .ui-resizable-handle {
   display: none;

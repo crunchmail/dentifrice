@@ -13,6 +13,9 @@
     "node_modules",
     "bower_components"
   ],
+  "main": [
+    "src/bootstrap.js"
+  ],
   "dependencies": {
     "ckeditor": "~4.4.6",
     "font-awesome": "~4.3.0",

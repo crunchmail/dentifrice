@@ -28,7 +28,7 @@ Then clone the repo and install the dependencies
     npm install
 
 The project ships with a development backend. It is a very lightweight python application build with Bottle that exposes two POST endpoints for Dentifrice (image upload and final HTML submission, for checking).  
-To run this backend you'll need Python (2 or 3) and virtualenv. Go to the [Python website](http://python.org) to get it if necessary and then :
+To run this backend you'll need Python3 and virtualenv. Go to the [Python website](http://python.org) to get it if necessary and then :
 
     (sudo) pip install virtualenv
     # The start.sh script will setup the virtualenv

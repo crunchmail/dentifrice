@@ -1,5 +1,5 @@
 var gulp = require('gulp');
-var bower = require('gulp-bower')
+var bower = require('gulp-bower');
 var del = require('del');
 var plugins = require('gulp-load-plugins')();
 
@@ -8,7 +8,7 @@ function getTask(task) {
 }
 
 gulp.task('bower', function() {
-  return bower()
+  return bower();
 });
 
 gulp.task('lint-js', getTask('lint-js'));

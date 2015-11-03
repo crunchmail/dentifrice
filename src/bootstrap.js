@@ -7,14 +7,23 @@
 // You can obtain one at
 // http://mozilla.org/MPL/2.0/.
 
+/*
+* Globals variables
+*/
+var iframeID     = 'dentifriceIframe',
+    msgPrefix    = '[Dentifrice]',
+    msgPrefixLen = msgPrefix.length,
+    lang         = 'en',
+    target;
+
+/*
+* Dentifrice Module
+*/
 var dentifrice = (function () {
   'use strict';
 
   // Define some global variables and defaults
   var
-    iframeID     = 'dentifriceIframe',
-    msgPrefix    = '[Dentifrice]',
-    msgPrefixLen = msgPrefix.length,
     settings     = {},
 
     defaults     = {
@@ -33,7 +42,6 @@ var dentifrice = (function () {
       height         : parseInt(window.outerHeight*0.8)
     },
 
-    lang         = 'en',
     locales      = {
       'en' : {
         'Please validate' : 'Please validate your edition first !'
@@ -41,42 +49,7 @@ var dentifrice = (function () {
       'fr' : {
         'Please validate' : "Veuillez valider l'éditeur !"
       }
-    },
-
-    target;
-
-  /**
-   * Log warning messages to console.
-   * Always logged regardless of the 'log' setting.
-   */
-  var _warn = function (msg) {
-    _output('warn', msg, true);
-  };
-
-  /**
-   * Log information messages to console.
-   * Only displayed if 'log' setting is true.
-   */
-  var _info = function (msg) {
-      _output('info', msg, settings.log);
-  };
-
-  /**
-   * Log debug messages to console.
-   * Only displayed if 'debug' setting is true.
-   */
-  var _debug = function (msg) {
-      _output('log', msg, settings.debug);
-  };
-
-  /**
-   * Print messages to the console using provided level.
-   */
-  var _output = function (type, msg, enabled) {
-    if (true === enabled && 'object' === typeof window.console) {
-      console[type]('Dentifrice: ' + msg);
-    }
-  };
+    };
 
   /**
    * Initialize language to, in order of preference :
@@ -91,7 +64,7 @@ var dentifrice = (function () {
     } else if ( userLang in locales) {
       lang = userLang;
     }
-    _debug('Setting locale to: ' + lang);
+    logger._debug('Setting locale to: ' + lang);
   };
 
   /**
@@ -119,10 +92,10 @@ var dentifrice = (function () {
   var _findTarget = function () {
     var element = document.getElementById(settings.targetId);
     if ( !element || 0 === element.length) {
-      _warn('Could not find element with ID: ' + settings.targetId);
+      logger._warn('Could not find element with ID: ' + settings.targetId);
       return false;
     } else {
-      _debug('Found element matching selector: ' + settings.targetId);
+      logger._debug('Found element matching selector: ' + settings.targetId);
       return element;
     }
   };
@@ -138,10 +111,10 @@ var dentifrice = (function () {
 
     var msg = event.data;
     if(msg.length > 0 && typeof msg === 'string' && isMessageForUs()) {
-      _debug('Received postmessage :' + msg);
+      logger._debug('Received postmessage :' + msg);
       target.value = msg.substr(msgPrefixLen);
     }else {
-      _debug('Received postmessage, but not for us :' + msg);
+      logger._debug('Received postmessage, but not for us :' + msg);
     }
 
   };
@@ -156,77 +129,7 @@ var dentifrice = (function () {
     eventer(messageEvent, _messageListener, false);
   };
 
-  /**
-   * Initialize the editor
-   */
-  var _initEditor = function () {
-    // Hide the target and prepare iframe
-    if (settings.hideTarget) {
-      target.style.display = 'none';
-    }
-
-    var assetsUrlBase = settings.templateUrl.replace(/\/[^\/]*$/, '/');
-    var absTest = /^https?:\/\/|^\/\//i;
-
-    // Prepare template URL
-    var templateUrlEncoded = encodeURIComponent(settings.templateUrl);
-
-    // Prepare CSS URL
-    var stylesUrlEncoded = encodeURIComponent(assetsUrlBase + settings.stylesUrl);
-    // If an absolute stylesUrl was provided, use it instead
-    if ( absTest.test(settings.stylesUrl) ) {
-        stylesUrlEncoded = encodeURIComponent(settings.stylesUrl);
-    }
-
-    // Prepare config URL
-    var configUrlEncoded = encodeURIComponent(assetsUrlBase + settings.configUrl);
-    // f an absolute configUrl was provided, use it instead
-    if ( absTest.test(settings.configUrl) ) {
-        configUrlEncoded = encodeURIComponent(settings.configUrl);
-    }
-
-    // Get our own URL to use as base for the iFrame src
-    var bootstrapRoot = '';
-    var allScripts = document.getElementsByTagName('script');
-    var re = /^(.*)dentifrice\.(min\.)*js$/;
-    [].forEach.call(allScripts, function (tag) {
-      var src = tag.getAttribute('src');
-      var match = re.exec(src);
-      if (match) {
-        // Found a base url to use
-        bootstrapRoot = match[1];
-      }
-    });
-
-    var editorUrl = bootstrapRoot + 'editor.html?template=' + templateUrlEncoded + '&styles=' + stylesUrlEncoded + '&config=' + configUrlEncoded + '&lang=' + lang + '&title=' + settings.title;
-
-    var iframe = document.createElement('iframe');
-
-    iframe.id = iframeID;
-    iframe.setAttribute('src', editorUrl);
-    iframe.style.border = '0';
-    iframe.style.width = settings.width + 'px';
-    iframe.style.height = settings.height + 'px';
-
-    if (settings.anchorId) {
-      var anchor = document.getElementById(settings.anchorId);
-      if (0 === anchor.length) {
-        _warn('Could not find anchor element with ID: ' + settings.anchorId);
-      } else {
-        _debug('Found anchor element with ID: ' + settings.anchorId);
-        if (settings.replaceAnchor) {
-          _debug('Replacing anchor element with editor');
-          anchor.parentNode.replaceChild(iframe, anchor);
-        } else {
-          _debug('Inserting editor inside anchor element');
-          anchor.appendChild(iframe);
-        }
-      }
-    } else {
-      target.parentNode.insertBefore(iframe, target.nextSibling);
-    }
-  };
-
+  //Global
   var _showValidationAlert = function () {
     if(document.getElementById('dentifriceValidationAlert') === null) {
 
@@ -266,42 +169,43 @@ var dentifrice = (function () {
         return true;
       }
     },
+    settings: settings,
 
     bootstrap : function(options) {
       // initialize settings
-      _info('Initializing settings');
+      logger._info('Initializing settings');
       _initSettings(options);
 
       // First check if template url was provided
       // else, give up straight away
       if ( !settings.templateUrl ) {
-        _warn('No template URL provided');
+        logger._warn('No template URL provided');
         // Return false so we can test on the calling page
         return false;
       }
 
       // Initialize language
-      _info('Initializing locale');
+      logger._info('Initializing locale');
       _initLang();
 
       // Get the target element
-      _info('Getting target element');
+      logger._info('Getting target element');
       target = _findTarget();
 
       if (target) {
 
         // Load the editor
-        _info('Initializing editor');
-        _initEditor();
+        logger._info('Initializing editor');
+        _initEditor.init();
         // Listen to messages from the iframe
-        _info('Setting up postMessages listener');
+        logger._info('Setting up postMessages listener');
         _setupMessageListener();
 
         return true;
 
       } else {
 
-        _warn('Target element not found, aborting');
+        logger._warn('Target element not found, aborting');
         // Return false so we can test on the calling page
         return false;
 
@@ -310,3 +214,124 @@ var dentifrice = (function () {
   };
 
 })();
+
+/*
+* Logger Module
+*/
+
+var logger = (function (dentifrice) {
+  /**
+   * Print messages to the console using provided level.
+   */
+  var _output = function (type, msg, enabled) {
+    if (true === enabled && 'object' === typeof window.console) {
+      console[type]('Dentifrice: ' + msg);
+    }
+  };
+  return {
+    /**
+     * Log warning messages to console.
+     * Always logged regardless of the 'log' setting.
+     */
+    _warn : function (msg) {
+      _output('warn', msg, true);
+    },
+
+    /**
+     * Log information messages to console.
+     * Only displayed if 'log' setting is true.
+     */
+    _info : function (msg) {
+        _output('info', msg, dentifrice.settings.log);
+    },
+
+    /**
+     * Log debug messages to console.
+     * Only displayed if 'debug' setting is true.
+     */
+    _debug : function (msg) {
+        _output('log', msg, dentifrice.settings.debug);
+    }
+  }
+  
+})(dentifrice || {});
+
+/**
+ * Initialize the editor
+ */
+var _initEditor = (function (dentifrice) {
+  var init = function() {
+    // Hide the target and prepare iframe
+    if (dentifrice.settings.hideTarget) {
+      target.style.display = 'none';
+    }
+
+    var assetsUrlBase = dentifrice.settings.templateUrl.replace(/\/[^\/]*$/, '/');
+    var absTest = /^https?:\/\/|^\/\//i;
+
+    // Prepare template URL
+    var templateUrlEncoded = encodeURIComponent(dentifrice.settings.templateUrl);
+
+    // Prepare CSS URL
+    var stylesUrlEncoded = encodeURIComponent(assetsUrlBase + dentifrice.settings.stylesUrl);
+    // If an absolute stylesUrl was provided, use it instead
+    if ( absTest.test(dentifrice.settings.stylesUrl) ) {
+        stylesUrlEncoded = encodeURIComponent(dentifrice.settings.stylesUrl);
+    }
+
+    // Prepare config URL
+    var configUrlEncoded = encodeURIComponent(assetsUrlBase + dentifrice.settings.configUrl);
+    // f an absolute configUrl was provided, use it instead
+    if ( absTest.test(dentifrice.settings.configUrl) ) {
+        configUrlEncoded = encodeURIComponent(dentifrice.settings.configUrl);
+    }
+
+    // Get our own URL to use as base for the iFrame src
+    var bootstrapRoot = '';
+    var allScripts = document.getElementsByTagName('script');
+    var re = /^(.*)dentifrice\.(min\.)*js$/;
+    [].forEach.call(allScripts, function (tag) {
+      var src = tag.getAttribute('src');
+      var match = re.exec(src);
+      if (match) {
+        // Found a base url to use
+        bootstrapRoot = match[1];
+      }
+    });
+
+    var editorUrl = bootstrapRoot + 'editor.html?template=' + templateUrlEncoded + '&styles=' + stylesUrlEncoded + '&config=' + configUrlEncoded + '&lang=' + lang + '&title=' + dentifrice.settings.title;
+
+    var iframe = document.createElement('iframe');
+
+    iframe.id = dentifrice.iframeID;
+    iframe.setAttribute('src', editorUrl);
+    iframe.style.border = '0';
+    iframe.style.width = dentifrice.settings.width + 'px';
+    iframe.style.height = dentifrice.settings.height + 'px';
+
+    if (dentifrice.settings.anchorId) {
+      var anchor = document.getElementById(dentifrice.settings.anchorId);
+      if (0 === anchor.length) {
+        logger._warn('Could not find anchor element with ID: ' + dentifrice.settings.anchorId);
+      } else {
+        logger._debug('Found anchor element with ID: ' + dentifrice.settings.anchorId);
+        if (dentifrice.settings.replaceAnchor) {
+          logger._debug('Replacing anchor element with editor');
+          anchor.parentNode.replaceChild(iframe, anchor);
+        } else {
+          logger._debug('Inserting editor inside anchor element');
+          anchor.appendChild(iframe);
+        }
+      }
+    } else {
+      target.parentNode.insertBefore(iframe, target.nextSibling);
+    }
+  }
+
+  /*
+  * Return init function
+  */
+  return {
+    init: init
+  }
+})(dentifrice || {});

@@ -3,7 +3,7 @@ module.exports = function (gulp, plugins) {
     gulp.src(['src/css/editor.css'])
     .pipe(gulp.dest('dist/css'));
 
-    gulp.src(['src/css/init.css'])
+    gulp.src(['src/css/toothpick.css'])
     .pipe(gulp.dest('dist/css'));
 
     gulp.src(['src/css/bootstrap.css'])

@@ -359,7 +359,11 @@ button {
 5 = Image upload
 ========================================================================== */
 
-.dtf-image-wrap { position: relative; }
+.dtf-image-wrap {
+  position: relative;
+  padding: 0!important;
+  width: auto!important;
+}
 
 .dtf-image-wrap:hover .dtf-upload {
   opacity: 1;

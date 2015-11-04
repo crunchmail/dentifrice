@@ -236,7 +236,7 @@ button {
 
 #undoBtn:hover { background: #e74c3c; }
 
-.dtf-deletion-border { border: 1px solid #bdc3c7; }
+.dtf-deletion-border { box-shadow: 0 0 0 1px #bdc3c7; }
 
 /* ==========================================================================
 3 = Change class
@@ -288,6 +288,7 @@ button {
   font-size: 1em;
   text-transform: uppercase;
   text-align: center;
+  margin: 0;
 }
 
 
@@ -529,7 +530,7 @@ form.dtf-upload button:before {
   background: #FFF;
 }
 
-.ui-sortable-helper > * { width: 600px!important; }
+.ui-sortable-helper > *:not(button) { width: 600px!important; }
 
 #containerListDraft {
   position: fixed;

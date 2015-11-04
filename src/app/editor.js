@@ -40,7 +40,11 @@ var dtfEditor = (function ( $ ) {
     },
 
     get_dom: function ( name ) {
-      return this.doms[name].clone(true, true);
+      return this.doms[name].html.clone(true, true);
+    },
+
+    get_divClass: function ( name ) {
+      return this.doms[name].divClass;
     },
 
     add: function ( name, block_config, dom ) {
@@ -84,7 +88,6 @@ var dtfEditor = (function ( $ ) {
 
         //Duplicate exist DOM element and add to layout
         link.on('click', function() {
-
           var dom_block = that.get_dom($(this).attr('data-block-name'));
           dom_block.addClass('dtf-draggable dtf-block');
 
@@ -92,7 +95,11 @@ var dtfEditor = (function ( $ ) {
           new_row.find('.dtf-block')
             .replaceWith(dom_block);
 
-          var draft_row = $(this).closest('tr');
+          var divClass = that.get_divClass($(this).attr('data-block-name'));
+
+          new_row.addClass(divClass);
+
+          var draft_row = $(this).closest('div.dtf-tr-element');
           draft_row.after(new_row.css('display', 'none'));
 
           if ( dom_block.hasClass('dtf-changeable') ) {
@@ -121,7 +128,6 @@ var dtfEditor = (function ( $ ) {
         $(block_config.selector).addClass('isUnique');
 
       }
-
       this.doms[name] = dom;
       this.configs[name] = block_config;
     }
@@ -133,8 +139,11 @@ var dtfEditor = (function ( $ ) {
   var _fetchBlocksConfig = function () {
 
     _.forOwn(blocks_config.styles, function (config, name) {
-      blocksCatalog.add(name, config,
-                        $(config.selector).first().clone(true, true));
+      var existBlockDom = {
+        "html": $(config.selector).first().clone(true, true),
+        "divClass": $(config.selector).closest("div").attr("class")
+      };
+      blocksCatalog.add(name, config, existBlockDom);
 
       if ( config.urlckEditor !== undefined ) {
         // Get CKEditor config URL from config
@@ -437,7 +446,7 @@ var dtfEditor = (function ( $ ) {
 
       toolbar.i18n();
 
-      document.body.classList.add('toolbarVisible');
+      $('body').addClass('toolbarVisible');
     }
   };
 

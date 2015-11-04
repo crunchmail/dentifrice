@@ -54,7 +54,7 @@ var _initEditor = (function (dentifrice) {
 
     var iframe = document.createElement('iframe');
 
-    iframe.id = dentifrice.iframeID;
+    iframe.id = iframeID;
     iframe.setAttribute('src', editorUrl);
     iframe.style.border = '0';
     iframe.style.width = dentifrice.settings.width + 'px';

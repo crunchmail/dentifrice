@@ -11,10 +11,10 @@ var dtfLayoutMode = (function( $ ) {
   'use strict';
 
   var _draggable = function(block) {
-    var parent_tr = block.closest('tr'),
+    var parent_div = block.closest('div'),
       c = {};
 
-    parent_tr.addClass('sortable-element');
+    parent_div.addClass('sortable-element');
 
     $('#templateContainer').sortable({
       items: '.sortable-element',
@@ -86,7 +86,7 @@ var dtfLayoutMode = (function( $ ) {
     $(this).hide(100);
 
     // show my catalog
-    $(this).closest('tr').find('.dtf-catalog')
+    $(this).closest('div').find('.dtf-catalog')
       .html(dtfEditor.blocksCatalog.get_gallery())
       .show(100);
   };
@@ -114,7 +114,7 @@ var dtfLayoutMode = (function( $ ) {
   var leave = function() {
     info('Leaving LayoutMode');
 
-    $('.dtf-draft-block').closest('tr').remove();
+    $('.dtf-draft-block').closest('div').remove();
     $('.button-del').remove();
     $('.first-hidden').hide(100);
     $('#dtf-layout-mode').show(100);
@@ -126,15 +126,15 @@ var dtfLayoutMode = (function( $ ) {
    * Equips a block with a border and block inserting tool under it.
    */
   var equipBlock = function(block) {
-    var parent_tr = block.closest('tr');
+    var parent_div = block.closest('div');
 
     block.addClass('dtf-deletion-border');
-    if (parent_tr.next('tr').find('.dtf-draft-block').length <= 0) {
+    if (parent_div.next('div').find('.dtf-draft-block').length <= 0) {
       var draft_row = $(window.templates.blockAddBar);
       draft_row.find('button').on('click', _show_catalog);
       _hide_catalog();
 
-      parent_tr.after(draft_row.fadeIn());
+      parent_div.after(draft_row.fadeIn());
     }
 
     //Add button delete block if not Unique
@@ -144,10 +144,10 @@ var dtfLayoutMode = (function( $ ) {
 
   //Change Class of element with listChangeable in configuration.json
   var changeClass = function(block, blockClass) {
-    var parent_tr = block.closest('tr');
+    var parent_div = block.closest('div');
 
     block.addClass('dtf-deletion-border');
-    if (parent_tr.next('tr').find('.dtf-draft-block').length <= 0) {
+    if (parent_div.next('div').find('.dtf-draft-block').length <= 0) {
 
       if(!block.hasClass('lastChild')) {
         var draft_rowAdd = $(window.templates.blockAddBar);
@@ -155,18 +155,18 @@ var dtfLayoutMode = (function( $ ) {
         draft_rowAdd.find('button').on('click', _show_catalog);
         _hide_catalog();
 
-        parent_tr.after(draft_rowAdd.fadeIn());
+        parent_div.after(draft_rowAdd.fadeIn());
       }
 
       var draft_row = $(window.templates.blockChange);
-      var classesElement = parent_tr.find('.dtf-block').data('change-class');
+      var classesElement = parent_div.find('.dtf-block').data('change-class');
       var removeOldClasse = classesElement.split(',').join(' ');
       var arrClass = classesElement.split(',');
 
-      parent_tr.after(draft_row);
+      parent_div.after(draft_row);
 
       $.each(arrClass, function() {
-        if(block.closest('tr').find('.dtf-block').hasClass(this)) {
+        if(block.closest('div').find('.dtf-block').hasClass(this)) {
           draft_row.find('.dtf-change-element').append('<div data-background="'+this+'" class="active dtf-background '+this+'"></div>');
 
         }else {
@@ -175,7 +175,7 @@ var dtfLayoutMode = (function( $ ) {
 
       });
 
-      block.closest('tr').next().on('click', '.dtf-background', function() {
+      block.closest('div').next().on('click', '.dtf-background', function() {
         $('.dtf-background').removeClass('active');
         $(this).addClass('active');
         draft_row.prev().find('.dtf-block').removeClass(removeOldClasse);
@@ -193,8 +193,8 @@ var dtfLayoutMode = (function( $ ) {
     /* the setattr is a woraround to avoid getting a hidden forever
      * cloned element
      */
-    var parent_tr = block.closest('tr');
-    var deleted = $().add(parent_tr).add(parent_tr.next('tr'));
+    var parent_div = block.closest('div');
+    var deleted = $().add(parent_div).add(parent_div.next('div'));
     var clone = deleted.clone(true, true);
     deleted.hide(200, function() {
       $(this).remove();

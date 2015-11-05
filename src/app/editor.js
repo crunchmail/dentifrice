@@ -80,7 +80,11 @@ var dtfEditor = (function ( $ ) {
         } else {
 
           $(block_config.selector).attr('data-change-class', block_config.listChangeable);
-          dom = $(block_config.selector).clone(true, true);
+          var existBlockDom = {
+            "html": $(block_config.selector).first().clone(true, true),
+            "divClass": $(block_config.selector).closest("div").attr("class")
+          };
+          dom = existBlockDom;
           $(block_config.selector).addClass('dtf-draggable');
           this.blocks.first().append(link);
 
@@ -137,7 +141,6 @@ var dtfEditor = (function ( $ ) {
    * Gets all the block config and initialize them
    */
   var _fetchBlocksConfig = function () {
-
     _.forOwn(blocks_config.styles, function (config, name) {
       var existBlockDom = {
         "html": $(config.selector).first().clone(true, true),
@@ -274,6 +277,7 @@ var dtfEditor = (function ( $ ) {
       dtfContentMode.leave();
       // Clone the content div
       var $content = $('#dtf-content').clone();
+
       // Re-enable the editor
       dtfContentMode.enter();
 
@@ -295,12 +299,21 @@ var dtfEditor = (function ( $ ) {
           $(this).removeAttr('class style');
         });
 
+
         $content.find('.dtf-upload').remove();
         _removeDataAttributes($content.find('.dtf-changeable'));
         $content.find('.dtf-contentEditable').removeAttr('contenteditable style');
+        //Remove dentifrice Classes
         $content.find('*[class*="dtf"]').removeClass (function (index, css) {
           return (css.match (/(^|\s)dtf-\S+/g) || []).join(' ');
         });
+        $content.find('.isUnique').removeClass("isUnique");
+
+        //Add table conditional IE
+        $content.find('#templateContainer td:first > div').each(function() {
+          $(this).before('<!--[if (gte mso 9)|(IE)]><table cellpadding="0" cellspacing="0" width="600" align="center"><tr><td><![endif]-->');
+          $(this).after('<!--[if (gte mso 9)|(IE)]></td></tr></table><![endif]-->');
+        })
       }
 
       // Dump the raw html

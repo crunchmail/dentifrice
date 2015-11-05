@@ -298,6 +298,7 @@ button {
   overflow: hidden;
   padding: 1.5em;
   background: #FFF;
+  margin: 0;
 }
 
 .dtf-block-choice {

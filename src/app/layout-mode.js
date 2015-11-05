@@ -145,10 +145,10 @@ var dtfLayoutMode = (function( $ ) {
   //Change Class of element with listChangeable in configuration.json
   var changeClass = function(block, blockClass) {
     var parent_div = block.closest('div');
+    //console.log(parent_div.find('.dtf-block'));
 
     block.addClass('dtf-deletion-border');
     if (parent_div.next('div').find('.dtf-draft-block').length <= 0) {
-
       if(!block.hasClass('lastChild')) {
         var draft_rowAdd = $(window.templates.blockAddBar);
 
@@ -194,7 +194,14 @@ var dtfLayoutMode = (function( $ ) {
      * cloned element
      */
     var parent_div = block.closest('div');
-    var deleted = $().add(parent_div).add(parent_div.next('div'));
+    var deleted;
+    //console.log(parent_div.next('div'));
+    if(block.hasClass("dtf-changeable")) {
+      deleted = $().add(parent_div).add(parent_div.next('div')).add(parent_div.next('div').next('div'));
+    }else {
+      deleted = $().add(parent_div).add(parent_div.next('div'));
+    }
+
     var clone = deleted.clone(true, true);
     deleted.hide(200, function() {
       $(this).remove();

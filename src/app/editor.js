@@ -251,7 +251,9 @@ var dtfEditor = (function ( $ ) {
     var $head = $('head').clone();
     $head.find('title,meta,link, script, style:not([data-userstyle])').remove();
     _removeDataAttributes($head.find('style'));
+
     return unescape($head.html());
+
   };
 
   String.prototype.htmlEncode = function() {
@@ -296,18 +298,25 @@ var dtfEditor = (function ( $ ) {
         $content.find('.dtf-upload').remove();
         _removeDataAttributes($content.find('.dtf-changeable'));
         $content.find('.dtf-contentEditable').removeAttr('contenteditable style');
+        $content.find('*[class*="dtf"]').removeClass (function (index, css) {
+          return (css.match (/(^|\s)dtf-\S+/g) || []).join(' ');
+        });
       }
 
       // Dump the raw html
       var html = $content.html();
+
 
       // HTML-encode some characters in the tags that might contain text,
       // in order to avoid mangling further down the chain
       // especially with UTF-8 encoding on POST (smart quotes for example)
       html = html.htmlEncode();
 
-      // Remove comments
-      html = html.replace(/<!--(.*?)-->/g, "");
+      //Remove dtf Classes
+      html = html.replace(/dtf.* /g, "");
+
+      // Remove no IE comments
+      html = html.replace(/<!--(?!\[if).*?-->/g, "");
 
       return html;
 

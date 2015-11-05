@@ -1,15 +1,48 @@
 /* ==========================================================================
-  General Style
+  Sommaire
+
+  1 = General Style
+  2 = Message header/footer
+  3 = Layout
+  4 = Style Elements
+  5 = Special Blocks
 ========================================================================== */
 
-#outlook a{ padding:0; } /* Force Outlook to provide a "view in browser" button. */
-.ReadMsgBody{ width:100%; } .ExternalClass{ width:100%; } /* Force Hotmail to display emails at full width */
+/* ==========================================================================
+  1 = General Style
+========================================================================== */
+
+/* Force Outlook to provide a "view in browser" button. */
+#outlook a {
+  padding: 0;
+}
+
+/* Force Hotmail / Outlook.com to display emails at full width */
+.ReadMsgBody,
+.ExternalClass {
+  width: 100%;
+}
+
+/* Force Hotmail / Outlook.com to display normal line spacing, */
+.ExternalClass,
+.ExternalClass p,
+.ExternalClass span,
+.ExternalClass font,
+.ExternalClass td,
+.ExternalClass div {
+  line-height: 100%;
+}
+
 body{
   width:100% !important;
   -webkit-text-size-adjust:none;/* Prevent Webkit platforms from changing default text sizes. */
+  -ms-text-size-adjust: none;
   margin: 0;
   padding: 0;
+  /*Font-family Backup*/
+  font-family: sans-serif;
 }
+
 img {
   border: 0;
   height: auto;
@@ -18,31 +51,33 @@ img {
   text-decoration: none;
   display: block;
   width: 100%;
+  -ms-interpolation-mode: bicubic;
 }
+
 table {
   border-collapse: collapse;
   margin: 0 auto; /*Fix for yahoo align center bug*/
 }
+
 table td { border-collapse: collapse; }
 
 /* ==========================================================================
-  Message header/footer
+  2 = Message header/footer
 ========================================================================== */
 
-.message_users {
-  color: #999;
+.crunchMessageUsers {
   padding:15px;
   font-size: 14px;
   text-align: center;
   font-family:Arial, sans-serif;
 }
-.message_users a {
-  color: #666;
+
+.crunchMessageUsers a {
   text-decoration: none;
 }
 
 /* ==========================================================================
-  Layout
+  3 = Layout
 ========================================================================== */
 
 .crunchGlobalWrapper { min-width: 600px; /*to Fix layout Gmail*/ }
@@ -106,7 +141,7 @@ table td { border-collapse: collapse; }
 }
 
 /* ==========================================================================
-  Style Elements
+  4 = Style Elements
 ========================================================================== */
 
 .crunchWrapper .crunchTitle,
@@ -153,6 +188,8 @@ table td { border-collapse: collapse; }
   display: block; /*use for tag a*/
 }
 
+.crunchWrapper .crunchElement:first-child { margin-top: 0; }
+
 .crunchElement.crunchButton { display: table; }
 
 .crunchLink {
@@ -162,6 +199,8 @@ table td { border-collapse: collapse; }
 
 .crunchButton { text-align: center; }
 
+.crunchButton p { margin: 0; }
+
 .crunchButton a { text-decoration: none; }
 
 .crunchButton td {
@@ -169,8 +208,10 @@ table td { border-collapse: collapse; }
   background: inherit;
 }
 
+
+
 /* ==========================================================================
-  Special Blocks
+  5 = Special Blocks
 ========================================================================== */
 
 .crunchBgFB { background: #004f7c; }

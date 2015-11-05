@@ -30,8 +30,6 @@ body {
   transform-origin: 50% 0;
 }
 
-p { margin: 0; }
-
 td { position: relative; }
 
 .dblock { display: block; }
@@ -164,7 +162,7 @@ button {
 
 .btn-orange:hover { background: #ff885f; }
 
-.toolbarVisible { padding-top: 3.5em; }
+.toolbarVisible { padding-top: 3em; }
 
 
 /* ==========================================================================

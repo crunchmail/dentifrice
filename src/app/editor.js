@@ -26,6 +26,7 @@ var dtfEditor = (function ( $ ) {
       'title'              : '<i class="icon-text">T</i>',
       'paragraph'          : '<i class="fa fa-2x fa-align-justify"></i>',
       'image'              : '<i class="fa fa-2x fa-picture-o"></i>',
+      '1col_image_top'    : '<i class="fa fa-2x fa-picture-o"></i><br /><i class="fa fa-2x fa fa-align-justify"></i>',
       '2cols_image_top'    : '<i class="fa fa-2x fa-picture-o"></i><i class="fa fa-2x fa-picture-o"></i><br /><i class="fa fa-2x fa fa-align-justify"></i><i class="fa fa-2x fa fa-align-justify"></i>',
       '2cols_image_bottom' : '<i class="fa fa-2x fa fa-align-justify"></i><i class="fa fa-2x fa fa-align-justify"></i><br /><i class="fa fa-2x fa-picture-o"></i><i class="fa fa-2x fa-picture-o"></i>',
       'quote'              : '<i class="icon-text icon-quote">&rdquo;</i>',
@@ -278,6 +279,9 @@ var dtfEditor = (function ( $ ) {
       // Clone the content div
       var $content = $('#dtf-content').clone();
 
+      // Dump the raw html
+      var html = $content.html();
+
       // Re-enable the editor
       dtfContentMode.enter();
 
@@ -314,19 +318,14 @@ var dtfEditor = (function ( $ ) {
           $(this).before('<!--[if (gte mso 9)|(IE)]><table cellpadding="0" cellspacing="0" width="600" align="center"><tr><td><![endif]-->');
           $(this).after('<!--[if (gte mso 9)|(IE)]></td></tr></table><![endif]-->');
         })
+        //Remove dtf Classes
+        html = html.replace(/dtf.* /g, "");
       }
-
-      // Dump the raw html
-      var html = $content.html();
-
 
       // HTML-encode some characters in the tags that might contain text,
       // in order to avoid mangling further down the chain
       // especially with UTF-8 encoding on POST (smart quotes for example)
       html = html.htmlEncode();
-
-      //Remove dtf Classes
-      html = html.replace(/dtf.* /g, "");
 
       // Remove no IE comments
       html = html.replace(/<!--(?!\[if).*?-->/g, "");

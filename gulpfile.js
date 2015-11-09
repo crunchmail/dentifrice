@@ -21,6 +21,10 @@ gulp.task('locales', getTask('locales'));
 gulp.task('templates', getTask('templates'));
 gulp.task('html', getTask('html'));
 
+
+//Init editor task
+gulp.task('init', getTask('init'));
+
 gulp.task('lint', ['lint-js', 'lint-css'], function () {
   gulp.watch([
     'src/*.js',

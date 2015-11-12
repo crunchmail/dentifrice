@@ -44,7 +44,8 @@ gulp.task('default', [
   'styles',
   'locales',
   'templates',
-  'html'
+  'html',
+  'init'
 ]);
 
 gulp.task('watch', function () {

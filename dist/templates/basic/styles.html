@@ -1,0 +1,132 @@
+<style type="text/css">
+
+  .crunchGlobalWrapper { background: #444; }
+
+  .crunchBlock,
+  .crunchButton {
+    background: #FFF;
+  }
+
+  .crunchButton {
+    border-radius: 2px;
+  }
+
+  .crunchButton a {
+    color: #444;
+  }
+  .crunchMessageUsers,
+  .crunchMessageUsers a {
+    color: #FFF;
+  }
+
+  .crunchCitation .crunchTitle {
+    font-size: 40px;
+  }
+
+  .crunchCitation { color: #FFF; }
+
+  .crunchMessageUsers { margin: 0; }
+
+  .dtf-block-intro .crunchTitle {
+    color: #FFF;
+    font-size: 40px;
+  }
+
+  /*========== dtf-block-header background ===========*/
+  .bg-blue { background: #2980b9; }
+  .bg-green { background: #27ae60; }
+  .bg-red { background: #c0392b; }
+  .bg-orange { background: #f39c12; }
+  .bg-dark-grey { background: #333; }
+
+  .bg-dark-grey .crunchElement { color: #FFF; }
+
+</style>
+
+<style type="text/css" inline="false">
+  /*
+    Use @media queries with care.  You should not bring these styles inline
+    Note: test carefully with Yahoo.
+
+    To properly use @media queries and play nice with yahoo mail, use attribute selectors in place of class, id declarations.
+    table[class=classname]
+    Read more: http://www.campaignmonitor.com/blog/post/3457/media-query-issues-in-yahoo-mail-mobile-email/
+  */
+
+  @media only screen and (max-device-width: 480px) {
+
+    /* A nice and clean way to target phone numbers you want clickable and avoid a mobile phone from linking other numbers that look like, but are not phone numbers.
+    Use these two blocks of code to "unstyle" any numbers that may be linked.
+    The second block gives you a class to apply with a span tag to the numbers you would like linked and styled.
+
+    Inspired by Campaign Monitor's article on using phone numbers in email: http://www.campaignmonitor.com/blog/post/3571/using-phone-numbers-in-html-email/.
+
+    Step 1 (Step 2: line 224)
+    */
+    a[href^="tel"], a[href^="sms"] {
+      text-decoration: none;
+      color: black; /* or whatever your want */
+      pointer-events: none;
+      cursor: default;
+    }
+
+    .mobile_link a[href^="tel"], .mobile_link a[href^="sms"] {
+      text-decoration: default;
+      color: orange !important; /* or whatever your want */
+      pointer-events: auto;
+      cursor: default;
+    }
+  }
+
+  /* More Specific Targeting */
+
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    /* You guessed it, ipad (tablets, smaller screens, etc) */
+
+    /* Step 1a: Repeating for the iPad */
+    a[href^="tel"], a[href^="sms"] {
+      text-decoration: none;
+      color: blue; /* or whatever your want */
+      pointer-events: none;
+      cursor: default;
+    }
+
+    .mobile_link a[href^="tel"], .mobile_link a[href^="sms"] {
+      text-decoration: default;
+      color: orange !important; /* or whatever your want */
+      pointer-events: auto;
+      cursor: default;
+    }
+  }
+
+  @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+    /* Put your iPhone 4g styles in here */
+  }
+
+  /* Following Android targeting from:
+    http://developer.android.com/guide/webapps/targeting.html
+    http://pugetworks.com/2011/04/css-media-queries-for-targeting-different-mobile-devices/
+  */
+  @media only screen and (-webkit-device-pixel-ratio:.75){
+    /* Put CSS for low density (ldpi) Android layouts in here */
+  }
+  @media only screen and (-webkit-device-pixel-ratio:1){
+    /* Put CSS for medium density (mdpi) Android layouts in here */
+  }
+  @media only screen and (-webkit-device-pixel-ratio:1.5){
+    /* Put CSS for high density (hdpi) Android layouts in here */
+  }
+  /* end Android targeting */
+</style>
+
+<!--[if IEMobile 7]>
+<style type="text/css" inline="false">
+  /* Target Windows Mobile */
+</style>
+<![endif]-->
+
+<!--[if gte mso 9]>
+<style inline="false">
+  /* Target Outlook 2007 and 2010 */
+</style>
+<![endif]-->

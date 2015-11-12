@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>Dentifrice Test</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/png" href="images/favicon.png">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+	<style>
+		h1 {
+			border-bottom: 1px solid #CCC;
+			padding-bottom: 0.3em;
+		}
+		h1,
+		label {
+			color: #666;
+		}
+		label {
+			margin: 1.5em 0;
+			display: block;
+		}
+		.container {
+			width: 850px;
+			margin: auto;
+		}
+		input[type="submit"] {
+			background: #2e8dcd;
+			color: #FFF;
+			border: 0;
+			padding: 0.8em 2em;
+			float: right;
+			margin-top: 1em;
+		}
+		input[type="submit"]:hover,
+		input[type="submit"]:focus {
+			background: #3498db;
+		}
+		.form-group { margin-bottom: 1.5em; }
+		#dentifrice-textarea {
+			width: 100%;
+			min-height: 200px;
+		}
+	</style>
+	<link rel="stylesheet" href="css/dentifrice.css">
+	<script src="dentifrice.js"></script>
+	<script>
+	//Form fields validation
+	function checkFormElements() {
+		return dentifrice.checkIfValidated();
+	}
+	</script>
+</head>
+<body>
+	<div class="container">
+		<h1>Dentifrice Test</h1>
+		<form name="form" method="POST" action="http://localhost:8080" onsubmit="return checkFormElements();">
+			<div id="editor-anchor"></div>
+			<div class="form-group">
+				<label for="dentifrice-textarea">Target text area</label>
+				<textarea class="form-control" id="dentifrice-textarea" name="newsletter"></textarea>
+			</div>
+			<div>
+				<input id="test" type="submit" class="form-control"/>
+			</div>
+		</form>
+	</div>
+	<script type="text/javascript">
+		var dentifrice_settings = {
+			templateUrl    : 'templates/basic/basic.html',
+			anchorId       : 'editor-anchor',
+			debug          : true,
+			hideTarget     : false
+		};
+		if ( !dentifrice.bootstrap( dentifrice_settings ) ) {
+			alert('Could not load Dentifrice editor ! See console for errors.');
+		}
+	</script>
+</body>
+</html>

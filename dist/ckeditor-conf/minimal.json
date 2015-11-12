@@ -1,0 +1,5 @@
+{
+	"ckEditor": {
+		"removeButtons": "Underline,Strike,Italic,Bold,BulletedList,NumberedList,Styles,PasteFromWord,FontSize,Anchor"
+	}
+}

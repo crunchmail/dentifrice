@@ -1,0 +1,242 @@
+/* ==========================================================================
+  Sommaire
+
+  1 = General Style
+  2 = Message header/footer
+  3 = Layout
+  4 = Style Elements
+  5 = Special Blocks
+========================================================================== */
+
+/* ==========================================================================
+  1 = General Style
+========================================================================== */
+
+/* Force Outlook to provide a "view in browser" button. */
+#outlook a {
+  padding: 0;
+}
+
+/* Force Hotmail / Outlook.com to display emails at full width */
+.ReadMsgBody,
+.ExternalClass {
+  width: 100%;
+}
+
+/* Force Hotmail / Outlook.com to display normal line spacing, */
+.ExternalClass,
+.ExternalClass p,
+.ExternalClass span,
+.ExternalClass font,
+.ExternalClass td,
+.ExternalClass div {
+  line-height: 100%;
+}
+
+body{
+  width:100% !important;
+  -webkit-text-size-adjust:none;/* Prevent Webkit platforms from changing default text sizes. */
+  -ms-text-size-adjust: none;
+  margin: 0;
+  padding: 0;
+  /*Font-family Backup*/
+  font-family: sans-serif;
+}
+
+img {
+  border: 0;
+  height: auto;
+  line-height: 100%;
+  outline: 0;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  -ms-interpolation-mode: bicubic;
+}
+
+table {
+  border-collapse: collapse;
+  margin: 0 auto; /*Fix for yahoo align center bug*/
+}
+
+table td { border-collapse: collapse; }
+
+/* ==========================================================================
+  2 = Message header/footer
+========================================================================== */
+
+.crunchMessageUsers {
+  padding:15px;
+  font-size: 14px;
+  text-align: center;
+  font-family:Arial, sans-serif;
+}
+
+.crunchMessageUsers a {
+  text-decoration: none;
+}
+
+/* ==========================================================================
+  3 = Layout
+========================================================================== */
+
+.crunchGlobalWrapper { min-width: 600px; /*to Fix layout Gmail*/ }
+
+.crunchWFull { width: 600px; }
+
+.crunchW3-4 { width: 450px; }
+.crunchW2-3 { width: 400px; }
+.crunchW1-2 { width: 300px; }
+.crunchW1-3 { width: 200px; }
+.crunchW1-4 { width: 150px; }
+.crunchW1-5 { width: 120px; }
+.crunchW1-6 { width: 100px; }
+.crunchW1-7 { width: 85px; }
+.crunchW1-8 { width: 69px; }
+.crunchW1-8 { width: 66px; }
+.crunchW1-10 { width: 60px; }
+
+.crunchBlock td { padding: 20px 30px; }
+
+.crunchBlockNoBg div { padding: 10px; }
+
+.crunchBlock div { padding: 10px; }
+
+.crunchCol div {
+  display: inline-block;
+  vertical-align: top;
+  letter-spacing: normal;
+}
+
+.crunchCol td {
+  letter-spacing: -5px;/*better than font-size:0, Bug on Safari*/
+  vertical-align: top;
+}
+
+.crunchCol .crunchButton td { letter-spacing: normal; }
+.crunchBlockNoBg.crunch2Col div { width: 280px; }
+.crunchBlock.crunch2Col div { width: 250px; }
+.crunchBlockNoBg.crunch3Col div { width: 180px; }
+.crunchBlock.crunch3Col div { width: 160px; }
+
+
+.crunchBlock.crunch1-3ColLeft div:first-child { width: 160px; }
+.crunchBlockNoBg.crunch1-3ColLeft div:first-child { width: 180px; }
+.crunchBlock.crunch1-3ColLeft div:nth-child(2) { width: 340px; }
+.crunchBlockNoBg.crunch1-3ColLeft div:nth-child(2) { width: 360px; }
+
+.crunchBlock.crunch1-3ColRight div:first-child { width: 340px; }
+.crunchBlockNoBg.crunch1-3ColRight div:first-child { width: 360px; }
+.crunchBlock.crunch1-3ColRight div:nth-child(2) { width: 160px; }
+.crunchBlockNoBg.crunch1-3ColRight div:nth-child(2) { width: 180px; }
+
+.crunchInlineImg img {
+  display: inline;
+  width: auto;
+}
+
+.crunchValignCenter div,
+.crunchValignCenter.crunchInlineImg img {
+  vertical-align: middle;
+}
+
+/* ==========================================================================
+  4 = Style Elements
+========================================================================== */
+
+.crunchWrapper .crunchTitle,
+.crunchWrapper .crunchText,
+.crunchWrapper .crunchList,
+.crunchWrapper .crunchLink {
+  font-family: Arial, sans-serif;
+}
+
+.crunchWrapper .crunchTitle {
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+.crunchTitle .crunchSubtitle {
+  font-size: 60%;
+  font-weight: normal;
+}
+
+.crunchTtu { text-transform: uppercase; }
+.crunchTar { text-align: right; }
+.crunchTac { text-align: center; }
+.crunchTac div { text-align: center; }
+.crunchTal { text-align: left; }
+
+.crunchWrapper .crunchText,
+.crunchWrapper .crunchList,
+.crunchWrapper .crunchLink {
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+.crunchWrapper h1 { font-size: 30px; }
+.crunchWrapper h2 { font-size: 25px; }
+.crunchWrapper h3 { font-size: 18px; }
+.crunchWrapper h4,
+.crunchWrapper h5,
+.crunchWrapper h6 {
+  font-size: 14px;
+}
+
+.crunchWrapper .crunchElement {
+  margin: 10px 0;
+  display: block; /*use for tag a*/
+}
+
+.crunchWrapper .crunchElement:first-child { margin-top: 0; }
+
+.crunchElement.crunchButton { display: table; }
+
+.crunchLink {
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.crunchButton { text-align: center; }
+
+.crunchButton p { margin: 0; }
+
+.crunchButton a { text-decoration: none; }
+
+.crunchButton td {
+  padding: 15px;
+  background: inherit;
+}
+
+
+
+/* ==========================================================================
+  5 = Special Blocks
+========================================================================== */
+
+.crunchBgFB { background: #004f7c; }
+.crunchBgFB a { color: #FFF; }
+
+.crunchButton.crunchSmallButton {
+  padding: 5px 10px;
+}
+
+.crunchCitation,
+.crunchCitation div {
+  text-align: center;
+}
+.crunchCitation .crunchText { font-size: 25px; }
+.crunchCitation img { margin: auto; }
+.crunchCitation .crunchButton { margin: auto; }
+
+.crunchSocial img, .crunchInlineImg img {
+  display: inline;
+}
+.crunchSocial img { margin: 0 10px; padding-top: 10px; }
+
+.crunchList {
+  padding-left: 16px;
+}
+.crunchList li {
+  list-style: disc;
+}

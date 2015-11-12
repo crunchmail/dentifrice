@@ -1,0 +1,38 @@
+{
+  "editor": {
+    "valid_ok": "Edition validée",
+    "valid_error": "Erreur lors de la validation de l'édition"
+  },
+  "toolbar": {
+    "save_draft": "Enregistrer un brouillon",
+    "validate": "Terminer l'édition",
+    "resume": "Reprendre l'édition",
+    "content_mode": "Editer le contenu",
+    "content_mode_help": "Passer en mode édition de contenu",
+    "layout_mode": "Mise en page",
+    "layout_mode_help": "Passer en mode ajout/suppression de blocs",
+    "cancel": "Annuler",
+    "drafts_list": "Mes brouillons"
+  },
+  "layout": {
+    "change_bg": "Changer le fond"
+  },
+  "upload": {
+    "pick_file": "Choisir un fichier",
+    "error": "Erreur lors de l'upload du fichier"
+  },
+  "drafts": {
+    "default_name": "Brouillon",
+    "name_prompt": "Nom du brouillon",
+    "overwrite_confirm": "Un brouillon avec ce nom existe déjà. Voulez-vous l'écraser ?",
+    "save_ok": "Brouillon enregistré",
+    "save_error": "Erreur lors de l'enregistrement du brouillon",
+    "name_empty": "Votre brouillon n'a pas été sauvegardé car le nom était vide",
+    "restore_confirm": "Etes-vous sûr de vouloir remplacer le contenu actuel par une ce brouillon ?",
+    "restore_ok": "Brouillon restauré",
+    "restore_error": "Erreur lors de la restauration du brouillon",
+    "delete_confirm": "Êtes-vous sûr de vouloir supprimer ce brouillon ?",
+    "delete_ok": "Brouillon supprimé",
+    "delete_error": "Erreur lors de la suppression du brouillon"
+  }
+}

@@ -131,6 +131,24 @@ var spinner = function (action) {
   }
 };
 
+function _init (local_settings) {
+  // Add a few values to local settings before loading
+  local_settings.appRootUrl = appRootUrl;
+  local_settings.lang = lang;
+  local_settings.title = title;
+  // Get the settings
+  loadSettings(local_settings);
+  // And start initialising
+  dtfInit.loadEditor();
+}
+
+function _getQueryParameterByName (name) {
+  name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+  var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+      results = regex.exec(location.search);
+  return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
 /* Some global variables that we will need
  * throughout the application
  */

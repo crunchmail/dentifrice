@@ -21,7 +21,8 @@
  */
 var
   msgPrefix    = "[Dentifrice]",
-  msgPrefixLen = msgPrefix.length;
+  msgPrefixLen = msgPrefix.length,
+  appRootUrl;
 
 /**
  * Log error messages to console.

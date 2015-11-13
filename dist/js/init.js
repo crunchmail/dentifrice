@@ -22,6 +22,8 @@
 var
   msgPrefix    = "[Dentifrice]",
   msgPrefixLen = msgPrefix.length,
+  title,
+  lang,
   appRootUrl;
 
 /**
@@ -246,15 +248,17 @@ var dtfInit = (function ( $ ) {
   // Get our own url base dynamically
   // This is to allow deployments into a subdirectory
   var pageUrl = location.href;
-  var appRootUrl = pageUrl.substring(0, pageUrl.lastIndexOf('/')+1);
+  appRootUrl = pageUrl.substring(0, pageUrl.lastIndexOf('/')+1);
   var settingsUrl = appRootUrl + '_local_settings.js';
+
+  console.log(appRootUrl);
 
   // Get the URLs of the template, css and configuration to load
   var templateUrl = _getQueryParameterByName('template');
   var stylesUrl = _getQueryParameterByName('styles');
   var configUrl = _getQueryParameterByName('config');
-  var lang = _getQueryParameterByName('lang');
-  var title = _getQueryParameterByName('title');
+  lang = _getQueryParameterByName('lang');
+  title = _getQueryParameterByName('title');
 
   // Start by loading the template content
   $('#dtf-content').load(templateUrl, function ( response, status, xhr ) {

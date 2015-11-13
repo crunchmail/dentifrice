@@ -22,6 +22,8 @@
 var
   msgPrefix    = "[Dentifrice]",
   msgPrefixLen = msgPrefix.length,
+  title,
+  lang,
   appRootUrl;
 
 /**

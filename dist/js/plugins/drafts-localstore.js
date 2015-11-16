@@ -115,8 +115,30 @@ var draftStore = (function () {
     }
   };
 
+  var loadDraft = function ( id ) {
+    console.log("load")
+    var draft = JSON.parse(localStorage.getItem('dtfDraft' + id));
+
+    blocks_config = draft.config;
+    // Empty content div
+    $('#dtf-content').empty();
+    // Replace current userStyles
+    $('head').find('style[data-userstyle]').remove();
+    var $tmp = $('<tmp/>').html(draft.styles);
+    $tmp.find('style').attr('data-userstyle', true);
+    $tmp.contents().appendTo('head');
+    // Insert HTML content from the draft
+    $('#dtf-content').html(draft.html);
+    // Re-load the editor
+    dtfEditor.load();
+    dtfEditor.setMessage($.t('drafts.restore_ok'), 'valid');
+    // Hide the drafts list
+    dtfDraftsManager.hideMenu();
+  };
+
   return {
     saveDraft   : saveDraft,
+    loadDraft   : loadDraft,
     listDrafts  : listDrafts,
     draftExists : draftExists,
     deleteDraft : deleteDraft

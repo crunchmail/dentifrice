@@ -364,71 +364,58 @@ var dtfDraftsManager = (function( $ ) {
     spinner('hide');
   };
 
+  var hideMenu = function() {
+    console.log("hideMenu")
+    $('#containerListDraft').removeClass('isActive');
+  };
+
   var listDrafts = function() {
-    var draftsListUl = document.getElementById('listDraft');
-    draftsListUl.innerHTML = '';
+    var draftsListUl = $('#listDraft');
+    draftsListUl.empty();
 
     var list = draftStore.listDrafts();
 
     list.forEach( function(draft) {
 
-      var draftLi = document.createElement('li');
-      draftLi.setAttribute('data-objId', draft.id);
+      var draftLi = $("<li/>");
+      draftLi.attr('data-objId', draft.id);
 
-      var spanDate = document.createElement('span');
-      spanDate.textContent = draft.date;
-      spanDate.className = 'draftDate';
+      var spanDate = $('<span class="draftDate">'+draft.date+'</span>');
 
-      var spanName = document.createElement('span');
-      spanName.textContent = draft.name;
-      spanName.className = 'draftName';
+      var spanName = $('<span class="draftName">'+draft.name+'</span>');
 
-      var spanDelete = document.createElement('span');
-      spanDelete.className = 'spanDelete fa fa-minus-circle';
+      var spanDelete = $('<span class="spanDelete fa fa-minus-circle"/>');
 
-      draftLi.appendChild(spanDate);
-      draftLi.appendChild(spanName);
-      draftLi.appendChild(spanDelete);
 
-      draftLi.addEventListener('click', function(e) {
+      draftLi.append(spanDate);
+      draftLi.append(spanName);
+      draftLi.append(spanDelete);
+
+      draftLi.on('click', function(e) {
         if ( confirm($.t('drafts.restore_confirm')) ) {
           try {
             // Replace blocks configuration
-            blocks_config = draft.config;
-            // Empty content div
-            $('#dtf-content').empty();
-            // Replace current userStyles
-            $('head').find('style[data-userstyle]').remove();
-            var $tmp = $('<tmp/>').html(draft.styles);
-            $tmp.find('style').attr('data-userstyle', true);
-            $tmp.contents().appendTo('head');
-            // Insert HTML content from the draft
-            $('#dtf-content').html(draft.html);
-            // Re-load the editor
-            dtfEditor.load();
-            dtfEditor.setMessage($.t('drafts.restore_ok'), 'valid');
-            // Hide the drafts list
-            $('#dtf-modes-toolbar').find('#containerListDraft').removeClass('isActive');
+            draftStore.loadDraft(draft.id);
           } catch(err) {
             dtfEditor.setMessage($.t('drafts.restore_error'), 'error');
           }
         }
-      }, false);
+      });
 
-      spanDelete.addEventListener('click', function(e) {
+      spanDelete.on('click', function(e) {
         if(confirm($.t('drafts.delete_confirm'))) {
           //var id = this.parentNode.getAttribute('data-objId');
           if ( draftStore.deleteDraft(draft.id) ) {
-            draftsListUl.removeChild(draftLi);
+            draftLi.remove();
             dtfEditor.setMessage($.t('drafts.delete_ok'), 'valid');
           } else {
             dtfEditor.setMessage($.t('drafts.delete_error'), 'error');
           }
         }
         e.stopPropagation();
-      }, false);
+      });
 
-      draftsListUl.appendChild(draftLi);
+      draftsListUl.append(draftLi);
     });
   };
 
@@ -447,6 +434,7 @@ var dtfDraftsManager = (function( $ ) {
   return {
     saveDraft       : saveDraft,
     listDrafts      : listDrafts,
+    hideMenu        : hideMenu,
     deleteAllDrafts : deleteAllDrafts
   };
 

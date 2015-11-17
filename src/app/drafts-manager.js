@@ -46,7 +46,6 @@ var dtfDraftsManager = (function( $ ) {
   };
 
   var hideMenu = function() {
-    console.log("hideMenu")
     $('#containerListDraft').removeClass('isActive');
   };
 

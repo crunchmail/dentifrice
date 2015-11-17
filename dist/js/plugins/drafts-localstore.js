@@ -116,7 +116,6 @@ var draftStore = (function () {
   };
 
   var loadDraft = function ( id ) {
-    console.log("load")
     var draft = JSON.parse(localStorage.getItem('dtfDraft' + id));
 
     blocks_config = draft.config;

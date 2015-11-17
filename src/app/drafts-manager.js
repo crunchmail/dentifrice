@@ -74,7 +74,6 @@ var dtfDraftsManager = (function( $ ) {
       draftLi.on('click', function(e) {
         if ( confirm($.t('drafts.restore_confirm')) ) {
           try {
-            // Replace blocks configuration
             draftStore.loadDraft(draft.id);
           } catch(err) {
             dtfEditor.setMessage($.t('drafts.restore_error'), 'error');

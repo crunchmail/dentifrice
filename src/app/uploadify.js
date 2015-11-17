@@ -38,6 +38,7 @@
 			var img = $(el);
 			var showFormButton = $(window.templates.imageUploadButton);
 			var attrHref;
+      var imgWidth = img.width();
 
 			uploadForm.i18n();
 
@@ -81,7 +82,7 @@
 
 			fileInput.change(function() {
 				var data = new FormData(uploadForm[0]);
-				var url = uploadStore.doUpload(data);
+				var url = uploadStore.doUpload(data, imgWidth);
 
 				if ( null !== url ) {
 					var dataResizable = (img.data('resizable') === undefined ? 'right' : img.data('resizable'));

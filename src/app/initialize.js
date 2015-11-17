@@ -25,8 +25,6 @@
   appRootUrl = pageUrl.substring(0, pageUrl.lastIndexOf('/')+1);
   var settingsUrl = appRootUrl + '_local_settings.js';
 
-  console.log(appRootUrl);
-
   // Get the URLs of the template, css and configuration to load
   var templateUrl = _getQueryParameterByName('template');
   var stylesUrl = _getQueryParameterByName('styles');

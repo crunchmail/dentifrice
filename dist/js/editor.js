@@ -365,7 +365,6 @@ var dtfDraftsManager = (function( $ ) {
   };
 
   var hideMenu = function() {
-    console.log("hideMenu")
     $('#containerListDraft').removeClass('isActive');
   };
 
@@ -394,7 +393,6 @@ var dtfDraftsManager = (function( $ ) {
       draftLi.on('click', function(e) {
         if ( confirm($.t('drafts.restore_confirm')) ) {
           try {
-            // Replace blocks configuration
             draftStore.loadDraft(draft.id);
           } catch(err) {
             dtfEditor.setMessage($.t('drafts.restore_error'), 'error');
@@ -480,6 +478,7 @@ var dtfDraftsManager = (function( $ ) {
 			var img = $(el);
 			var showFormButton = $(window.templates.imageUploadButton);
 			var attrHref;
+      var imgWidth = img.width();
 
 			uploadForm.i18n();
 
@@ -523,7 +522,7 @@ var dtfDraftsManager = (function( $ ) {
 
 			fileInput.change(function() {
 				var data = new FormData(uploadForm[0]);
-				var url = uploadStore.doUpload(data);
+				var url = uploadStore.doUpload(data, imgWidth);
 
 				if ( null !== url ) {
 					var dataResizable = (img.data('resizable') === undefined ? 'right' : img.data('resizable'));

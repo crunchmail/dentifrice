@@ -448,107 +448,111 @@ var dtfDraftsManager = (function( $ ) {
 // http://mozilla.org/MPL/2.0/.
 
 (function ( $ ) {
-	'use strict';
+  'use strict';
 
-	var instances;
+  var instances;
 
-	$.fn.makeResizable = function () {
-		$.each(this, function(idx, el) {
-			var img = $(el);
+  $.fn.makeResizable = function () {
+    $.each(this, function(idx, el) {
+      var img = $(el);
 
-			var ratioResizable = Math.round(img[0].naturalHeight / img[0].naturalWidth);
-			var maxWidthResizable = img.closest('td').width();
-			var configResizable = {
-				maxWidth: maxWidthResizable,
-				minWidth: 50,
-				aspectRatio: true,
-				handles:"e, s, se"
-			};
-			if(img.data('resizable') === 'left') {
-				configResizable.handles = "sw, w, s";
-			}
-			img.resizable(configResizable);
-		});
-		return this;
-	};
+      var ratioResizable = Math.round(img[0].naturalHeight / img[0].naturalWidth);
+      var maxWidthResizable = img.closest('td').width();
+      var configResizable = {
+        maxWidth: maxWidthResizable,
+        minWidth: 50,
+        aspectRatio: true,
+        handles:"e, s, se"
+      };
+      if(img.data('resizable') === 'left') {
+        configResizable.handles = "sw, w, s";
+      }
+      img.resizable(configResizable);
+    });
+    return this;
+  };
 
-	$.fn.uploadify = function () {
-		$.each(this, function(idx, el) {
-			var uploadForm = $(window.templates.imageUploadForm);
-			var img = $(el);
-			var showFormButton = $(window.templates.imageUploadButton);
-			var attrHref;
+  $.fn.uploadify = function () {
+    $.each(this, function(idx, el) {
+      var uploadForm = $(window.templates.imageUploadForm);
+      var img = $(el);
+      var showFormButton = $(window.templates.imageUploadButton);
+      var attrHref;
       var imgWidth = img.width();
 
-			uploadForm.i18n();
+      uploadForm.i18n();
 
-			if(img.closest('a').length > 0) {
-				attrHref = img.parent('a').attr('href');
-				img.parent('a')
-					.removeAttr('href')
-					.attr('data-href', attrHref);
-			}
+      if(img.closest('a').length > 0) {
+        attrHref = img.parent('a').attr('href');
+        img.parent('a')
+        .removeAttr('href')
+        .attr('data-href', attrHref);
+      }
 
-			img.wrap('<div class="dtf-image-wrap">');
-			img.parent().append(showFormButton);
-			img.parent().append(uploadForm.hide());
-			var waiter = uploadForm.find('.dtf-waiter');
-			var fileInput = uploadForm.find('input');
-			var browseBtn = uploadForm.find('.upload-button');
-			var closeLink = uploadForm.find('.button-cancel');
+      img.wrap('<div class="dtf-image-wrap">');
+      img.parent().append(showFormButton);
+      img.parent().append(uploadForm.hide());
+      var waiter = uploadForm.find('.dtf-waiter');
+      var fileInput = uploadForm.find('input');
+      var browseBtn = uploadForm.find('.upload-button');
+      var closeLink = uploadForm.find('.button-cancel');
 
-			function showUploadForm() {
-				showFormButton.hide();
-				fileInput.show();
-				browseBtn.show();
-				waiter.hide();
-				uploadForm.show();
-			}
+      function showUploadForm() {
+        showFormButton.hide();
+        fileInput.show();
+        browseBtn.show();
+        waiter.hide();
+        uploadForm.show();
+      }
 
-			function hideUploadForm() {
-				uploadForm.hide();
-				showFormButton.show();
-				return false;
-			}
+      function hideUploadForm() {
+        uploadForm.hide();
+        showFormButton.show();
+        return false;
+      }
 
-			function startWaiting() {
-				fileInput.hide();
-				browseBtn.hide();
-				waiter.show();
-			}
+      function startWaiting() {
+        fileInput.hide();
+        browseBtn.hide();
+        waiter.show();
+      }
 
-			showFormButton.click(showUploadForm);
-			closeLink.click(hideUploadForm);
+      showFormButton.click(showUploadForm);
+      closeLink.click(hideUploadForm);
 
-			fileInput.change(function() {
-				var data = new FormData(uploadForm[0]);
-				var url = uploadStore.doUpload(data, imgWidth);
+      fileInput.change(function() {
+        var fd = new FormData();
+        var file = uploadForm.find("#file")[0].files[0];
+        fd.append("file", file);
+        fd.append("width", imgWidth);
 
-				if ( null !== url ) {
-					var dataResizable = (img.data('resizable') === undefined ? 'right' : img.data('resizable'));
+        var url = uploadStore.doUpload(fd);
 
-					if ( img.hasClass('dtf-resizable') ) {
-							img.resizable("destroy");
-					}
+        if ( null !== url ) {
+          var dataResizable = (img.data('resizable') === undefined ? 'right' : img.data('resizable'));
 
-					var parent = img.parent();
-					var newImg = $('<img data-resizable="' + dataResizable + '" class="dtf-resizable dtf-imageUploadable" src="' + url + '" width="' + img.width() + 'px" />');
-					parent.replaceWith(newImg);
+          if ( img.hasClass('dtf-resizable') ) {
+            img.resizable("destroy");
+          }
 
-					setTimeout(function(){
-						newImg.uploadify();
-						newImg.makeResizable();
-					}, 1000);
-				} else {
-					dtfEditor.setMessage($.t('upload.error'), 'error');
-				}
+          var parent = img.parent();
+          var newImg = $('<img data-resizable="' + dataResizable + '" class="dtf-resizable dtf-imageUploadable" src="' + url + '" width="' + img.width() + 'px" />');
+          parent.replaceWith(newImg);
 
-				hideUploadForm();
-				startWaiting();
-				return false;
-			});
-		});
-	  return this;
+          setTimeout(function(){
+            newImg.uploadify();
+            newImg.makeResizable();
+          }, 1000);
+        } else {
+          dtfEditor.setMessage($.t('upload.error'), 'error');
+        }
+
+        hideUploadForm();
+        startWaiting();
+        return false;
+      });
+    });
+    return this;
   };
 
 }( jQuery ));

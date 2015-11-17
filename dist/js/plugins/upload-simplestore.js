@@ -10,7 +10,7 @@
 var uploadStore = (function ( $ ) {
   'use strict';
 
-  var doUpload = function (data) {
+  var doUpload = function (data, width) {
     var ret = null;
 
     $.ajax({

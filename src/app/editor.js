@@ -453,11 +453,13 @@ var dtfEditor = (function ( $ ) {
     	draftsListBtn.on('click', function() {
     		dtfDraftsManager.listDrafts();
         containerListDraft.addClass('isActive');
+        $('body').addClass('sidebarMenuOpen');
     	});
 
       var closeDraftsListBtn = toolbar.find('#closeListDraft');
     	closeDraftsListBtn.on('click', function() {
     		containerListDraft.removeClass('isActive');
+        $('body').removeClass('sidebarMenuOpen');
     	});
 
       $('body').append(toolbar);

@@ -50,7 +50,7 @@ input::-moz-focus-inner {
 
 button {
   border: 0;
-  padding: 1em 2em;
+  padding: 1em;
   cursor: pointer;
   display: inline-block;
   vertical-align: top;

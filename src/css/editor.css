@@ -579,6 +579,10 @@ form.dtf-upload button:before {
   background: #EEE;
 }
 
+.sidebarMenuOpen .titleContainerListDraft {
+  position: fixed;
+}
+
 .titleContainerListDraft {
   font-size: 1.5em;
   color: #666;
@@ -586,7 +590,6 @@ form.dtf-upload button:before {
   text-align: left;
   width: 11.4em;
   background: #FFF;
-  position: fixed;
   z-index: 10;
   margin: 0;
 }

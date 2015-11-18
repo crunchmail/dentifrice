@@ -22,7 +22,7 @@ var draftStore = (function () {
     localStorage.setItem('draftLastId', id);
   };
 
-  var saveDraft = function ( name, html, styles, config, date ) {
+  var saveDraft = function ( name, html, styles, config, date, successHandler ) {
     try {
       // Create draft object
       var draftObj = {
@@ -47,12 +47,15 @@ var draftStore = (function () {
       localStorage.setItem('dtfDraft' + id, draftObj);
       _setLastId(id);
 
-      return true;
+      // return value, normally use for ajax call
+      successHandler(true);
 
     } catch(err) {
 
       error('Failed saving draft: ' + err.message);
-      return false;
+      
+      // return value, normally use for ajax call
+      successHandler(false);
 
     }
   };

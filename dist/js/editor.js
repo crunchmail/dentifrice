@@ -352,10 +352,15 @@ var dtfDraftsManager = (function( $ ) {
         var html = dtfEditor.getContent();
         var styles = dtfEditor.getUserStyles();
 
-        if ( draftStore.saveDraft( resultPrompt, html, styles, blocks_config, date ) ) {
-          dtfEditor.setMessage($.t('drafts.save_ok'), 'valid');
-        } else {
-          dtfEditor.setMessage($.t('drafts.save_error'), 'error');
+        draftStore.saveDraft( resultPrompt, html, styles, blocks_config, date, checkingFunction);
+
+        function checkingFunction(val) {
+          if(val === true) {
+            dtfEditor.setMessage($.t('drafts.save_ok'), 'valid');
+          }
+          else {
+            dtfEditor.setMessage($.t('drafts.save_error'), 'error');
+          }
         }
       }
     } else if ( resultPrompt === "" ) {

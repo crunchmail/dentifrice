@@ -53,7 +53,7 @@ var draftStore = (function () {
     } catch(err) {
 
       error('Failed saving draft: ' + err.message);
-      
+
       // return value, normally use for ajax call
       successHandler(false);
 
@@ -104,16 +104,16 @@ var draftStore = (function () {
     return exists;
   };
 
-  var deleteDraft = function ( id ) {
+  var deleteDraft = function ( id, successHandler ) {
     try {
 
       localStorage.removeItem('dtfDraft' + id);
-      return true;
+      successHandler(true);
 
     } catch(err) {
 
       error('Failed deleting draft version' + version + ': ' + err.message);
-      return false;
+      successHandler(false);
 
     }
   };

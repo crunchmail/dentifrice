@@ -408,11 +408,16 @@ var dtfDraftsManager = (function( $ ) {
       spanDelete.on('click', function(e) {
         if(confirm($.t('drafts.delete_confirm'))) {
           //var id = this.parentNode.getAttribute('data-objId');
-          if ( draftStore.deleteDraft(draft.id) ) {
-            draftLi.remove();
-            dtfEditor.setMessage($.t('drafts.delete_ok'), 'valid');
-          } else {
-            dtfEditor.setMessage($.t('drafts.delete_error'), 'error');
+
+          draftStore.deleteDraft(draft.id, checkingFunction)
+
+          function checkingFunction(val) {
+            if(val === true) {
+              dtfEditor.setMessage($.t('drafts.delete_ok'), 'valid');
+            }
+            else {
+              dtfEditor.setMessage($.t('drafts.delete_error'), 'error');
+            }
           }
         }
         e.stopPropagation();
@@ -428,8 +433,12 @@ var dtfDraftsManager = (function( $ ) {
 
     for ( var v in list ) {
       var id = this.parentNode.getAttribute('data-objId');
-      if ( draftStore.deleteDraft(id) ) {
-        draftsListUl.removeChild(draftLi);
+      draftStore.deleteDraft(draft.id, checkingFunction)
+
+      function checkingFunction(val) {
+        if(val === true) {
+          draftsListUl.removeChild(draftLi);
+        }
       }
     }
   };

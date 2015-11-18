@@ -559,7 +559,7 @@ form.dtf-upload button:before {
 }
 
 .listing-elements {
-  padding: 0;
+  padding: 8em 0 0 0;
   margin: 0;
 }
 
@@ -584,6 +584,11 @@ form.dtf-upload button:before {
   color: #666;
   padding: 2em 0.7em 0.5em;
   text-align: left;
+  width: 11.4em;
+  background: #FFF;
+  position: fixed;
+  z-index: 10;
+  margin: 0;
 }
 
 #closeListDraft {
@@ -593,6 +598,7 @@ form.dtf-upload button:before {
   font-weight: bold;
   cursor: pointer;
   color: #666;
+  z-index: 11;
 }
 
 #closeListDraft:hover {

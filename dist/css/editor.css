@@ -22,6 +22,8 @@ Sommaire
 1 = Basic Style
 ========================================================================== */
 
+.sidebarMenuOpen { overflow: hidden; }
+
 body {
   font-family: sans-serif;
   -webkit-transition: all 0.5s ease;
@@ -552,12 +554,16 @@ form.dtf-upload button:before {
   transition: all 0.5s ease;
 }
 
-#listDraft {
+#containerListDraft.isActive {
+  left: 0;
+}
+
+.listing-elements {
   padding: 0;
   margin: 0;
 }
 
-#listDraft li {
+.listing-elements li {
   padding: 1em 2em 1em 1em;
   border-bottom: 1px solid #CCC;
   list-style: none;
@@ -565,12 +571,12 @@ form.dtf-upload button:before {
   position: relative;
 }
 
-#listDraft li:hover {
-  background: #EEE;
+#containerListDraft:hover {
+  overflow-y: scroll;
 }
 
-#containerListDraft.isActive {
-  left: 0;
+.listing-elements li:hover {
+  background: #EEE;
 }
 
 .titleContainerListDraft {
@@ -581,9 +587,8 @@ form.dtf-upload button:before {
 }
 
 #closeListDraft {
-  position: absolute;
-  top: 0;
-  right: 0.5em;
+  position: fixed;
+  margin-left: 8.8em;
   font-size: 2em;
   font-weight: bold;
   cursor: pointer;

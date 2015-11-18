@@ -330,7 +330,7 @@ var dtfDraftsManager = (function( $ ) {
   'use strict';
 
   var versionTpl = 1;
-  var containerListDraft = document.getElementById('containerListDraft');
+  var containerListDraft = $('containerListDraft');
 
   var saveDraft = function() {
     spinner('show');

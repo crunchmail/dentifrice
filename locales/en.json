@@ -31,13 +31,18 @@
     "restore_confirm": "Do you really want to replace the current content with this draft?",
     "restore_ok": "Draft restored",
     "restore_error": "Error while restoring draft",
-    "delete_confirm": "Do you really want to delete this draft?",
+    "delete_confirm": "Do you really want to delete this draft ?",
     "delete_ok": "Draft deleted",
     "delete_error": "Error while deleting draft"
   },
   "tpl": {
     "save_tpl": "Save new template",
     "name_tpl": "new template name",
-    "default_name_tpl": "My Template"
+    "default_name_tpl": "My Template",
+    "save_ok": "Template saved",
+    "save_error": "Error while saving template",
+    "delete_confirm": "Do you really want to delete this template ?",
+    "delete_ok": "Template deleted",
+    "delete_error": "Error while deleting template"
   }
 }

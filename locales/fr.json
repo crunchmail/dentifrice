@@ -38,6 +38,11 @@
   "tpl": {
     "save_tpl": "Enregistrer comme nouveau template",
     "name_tpl": "Nom du nouveau template",
-    "default_name_tpl": "Mon Template"
+    "default_name_tpl": "Mon Template",
+    "save_ok": "Template enregistré",
+    "save_error": "Erreur lors de l'enregistrement du template",
+    "delete_confirm": "Êtes-vous sûr de vouloir supprimer ce template ?",
+    "delete_ok": "Template supprimé",
+    "delete_error": "Erreur lors de la suppression du template"
   }
 }

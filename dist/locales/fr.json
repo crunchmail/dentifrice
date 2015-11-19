@@ -38,6 +38,8 @@
   "tpl": {
     "save_tpl": "Enregistrer comme nouveau template",
     "name_tpl": "Nom du nouveau template",
+    "overwrite_error": "Le template existe déjà mais il est protéger, merci de changer de nom",
+    "overwrite_confirm": "Un template avec ce nom existe déjà. Voulez-vous l'écraser ?",
     "default_name_tpl": "Mon Template",
     "save_ok": "Template enregistré",
     "save_error": "Erreur lors de l'enregistrement du template",

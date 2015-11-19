@@ -34,5 +34,9 @@
     "delete_confirm": "Êtes-vous sûr de vouloir supprimer ce brouillon ?",
     "delete_ok": "Brouillon supprimé",
     "delete_error": "Erreur lors de la suppression du brouillon"
+  },
+  "tpl": {
+    "save_tpl": "Enregistrer comme nouveau template",
+    "name_tpl": "Nom du nouveau template"
   }
 }

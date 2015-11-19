@@ -37,6 +37,7 @@
   },
   "tpl": {
     "save_tpl": "Save new template",
-    "name_tpl": "new template name"
+    "name_tpl": "new template name",
+    "default_name_tpl": "My Template"
   }
 }

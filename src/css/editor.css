@@ -179,6 +179,7 @@ button {
   padding: 1.3em 3em 1.3em 2em;
   font-size: 0.8em;
   position: relative;
+  cursor: default;
 }
 
 .dtf-drop-down-btn:hover .dtf-drop-down {

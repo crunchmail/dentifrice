@@ -162,6 +162,7 @@ button {
   float: right;
   background: #FF622C;
   position: relative;
+  margin-right: 0.3em;
 }
 
 .dtf-drop-down-btn span:after {

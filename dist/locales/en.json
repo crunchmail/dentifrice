@@ -37,7 +37,7 @@
     "delete_error": "Error while deleting draft"
   },
   "tpl": {
-    "save_tpl": "Save new template",
+    "save_tpl": "a new template",
     "name_tpl": "new template name",
     "overwrite_error": "This template already exist, but it is protect, thanks to change name",
     "overwrite_confirm": "A template with the same name already exists. Do you want to overwrite it?",

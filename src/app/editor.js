@@ -400,6 +400,15 @@ var dtfEditor = (function ( $ ) {
       $('.overlay').fadeOut(100);
     }
   };
+  /*
+  * add a item to dropdown
+  */
+  var addItemDropDown = function(btn, event) {
+    var li = $("<li/>");
+    li.append(btn);
+    btn.on("click", event);
+    $('#dtf-drop-down').append(li);
+  };
 
   var _loadToolbar = function () {
     if ( !$('#dtf-toolbar').length ) {
@@ -517,13 +526,14 @@ var dtfEditor = (function ( $ ) {
 
   // Return public methods
   return {
-    blocksCatalog : blocksCatalog,
-    setMessage    : setMessage,
-    flashUndo     : flashUndo,
-    pushToStack   : pushToStack,
-    getContent   : getContent,
-    getUserStyles : getUserStyles,
-    load          : load
+    blocksCatalog   : blocksCatalog,
+    setMessage      : setMessage,
+    flashUndo       : flashUndo,
+    addItemDropDown : addItemDropDown,
+    pushToStack     : pushToStack,
+    getContent      : getContent,
+    getUserStyles   : getUserStyles,
+    load            : load
   };
 
 }( jQuery ));

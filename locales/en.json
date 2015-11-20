@@ -4,7 +4,8 @@
     "valid_error": "Could not validate content"
   },
   "toolbar": {
-    "save_draft": "Save draft",
+    "save_draft": "A draft",
+    "dropdown": "Save",
     "validate": "Validate content",
     "resume": "Resume editing",
     "content_mode": "Edit content",

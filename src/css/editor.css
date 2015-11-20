@@ -113,7 +113,6 @@ button {
   left: 0;
   z-index: 10;
   width: 100%;
-  overflow: hidden;
   background: #FFF;
   box-shadow: 0 0 5px rgba(0,0,0,0.5);
   height: 3em;
@@ -136,14 +135,11 @@ button {
   padding-left: 0.6em;
 }
 
-#saveDraft:after { content: '\f0c7'; }
 #validateBtn:after { content: '\f00c'; }
 #resumeBtn:after { content: '\f021'; }
 #dtf-content-mode:after { content: '\f044'; }
 #dtf-layout-mode:after { content: '\f009'; }
 #undoBtn:after { content: '\f112'; }
-
-#saveDraft { margin-right: 0.3em; }
 
 .btn-green {
   background: #00BC62;
@@ -154,11 +150,7 @@ button {
   font-size: 1.5em;
 }
 
-.btn-orange {
-  background: #FF622C;
-  float: right;
-  margin-left: 0.3em;
-}
+.btn-orange { background: #FF622C; }
 
 .btn-green:hover { background: #00ef7d; }
 
@@ -166,6 +158,54 @@ button {
 
 .toolbarVisible { padding-top: 3em; }
 
+.dtf-drop-down-btn {
+  float: right;
+  background: #FF622C;
+  position: relative;
+}
+
+.dtf-drop-down-btn span:after {
+  content: "▾";
+  position: absolute;
+  top: 1.3em;
+  right: 1.3em;
+  color: #FFF;
+}
+
+.dtf-drop-down-btn span {
+  color: #FFF;
+  display: block;
+  padding: 1.3em 3em 1.3em 2em;
+  font-size: 0.8em;
+  position: relative;
+}
+
+.dtf-drop-down-btn:hover .dtf-drop-down {
+  top: 100%;
+}
+
+.dtf-drop-down {
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  background: #c53200;
+  top: -9999px;
+  width: 100%;
+}
+
+.dtf-drop-down li {
+  list-style: none;
+}
+
+.dtf-drop-down button {
+  display: block;
+  width: 100%;
+  background: none;
+}
+
+.dtf-drop-down button:hover {
+  background: #f83f00;
+}
 
 /* ==========================================================================
 2 = Layout

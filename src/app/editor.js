@@ -117,8 +117,6 @@ var dtfEditor = (function ( $ ) {
           }
           new_row.show(100);
 
-          undoBtn.flash();
-
           actionStack.push(function(){
             dtfLayoutMode.deleteBlock(dom_block);
           });

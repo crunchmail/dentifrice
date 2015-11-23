@@ -960,14 +960,14 @@ var dtfEditor = (function ( $ ) {
       $('.overlay').show();
       $('#getList').hide();
       $('#dtf-layout-mode').hide();
-      $('#saveDraft').hide();
+      $('#dtf-drop-down-btn').hide();
       $('#validateBtn').hide();
       $('#resumeBtn').show();
     } else {
       $('#resumeBtn').hide();
       $('#getList').show();
       $('#dtf-layout-mode').show();
-      $('#saveDraft').show();
+      $('#dtf-drop-down-btn').show();
       $('#validateBtn').show();
       $('#messages').fadeOut(100);
       $('.overlay').fadeOut(100);
@@ -990,7 +990,7 @@ var dtfEditor = (function ( $ ) {
 
       var layoutModeBtn = toolbar.find('#dtf-layout-mode');
     	layoutModeBtn.on('click', function() {
-    		$('#saveDraft').hide();
+    		$('#dtf-drop-down-btn').hide();
         $('#validateBtn').hide();
     		$.proxy(dtfContentMode.leave,this)();
     		$.proxy(dtfLayoutMode.enter,this)();
@@ -998,7 +998,7 @@ var dtfEditor = (function ( $ ) {
 
       var contentModeBtn  = toolbar.find('#dtf-content-mode');
     	contentModeBtn.on('click', function() {
-    		$('#saveDraft').show();
+    		$('#dtf-drop-down-btn').show();
         $('#validateBtn').show();
     		$.proxy(dtfLayoutMode.leave,this)();
     		// use setTimeout to let animation finish before we do heavy work

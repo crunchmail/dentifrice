@@ -179,6 +179,7 @@ button {
   padding: 1.3em 3em 1.3em 2em;
   font-size: 0.8em;
   position: relative;
+  cursor: default;
 }
 
 .dtf-drop-down-btn:hover .dtf-drop-down {
@@ -690,7 +691,7 @@ form.dtf-upload button:before {
   left: 0;
   height: 100%;
   width: 100%;
-  z-index: 9;
+  z-index: 25;
   background-color: rgba(0,0,0,0.7);
 }
 
@@ -716,7 +717,7 @@ form.dtf-upload button:before {
 }
 
 .spinner {
-  z-index: 10;
+  z-index: 26;
   height: 60px;
   width: 60px;
   margin: 50% auto;

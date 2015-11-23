@@ -71,7 +71,6 @@ var dtfLayoutMode = (function( $ ) {
             }
             removed.show(200);
           });
-          dtfEditor.flashUndo();
         });
     }
   };

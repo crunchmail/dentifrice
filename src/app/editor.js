@@ -10,6 +10,9 @@
 var dtfEditor = (function ( $ ) {
   'use strict';
 
+  // Some scoped global variables
+  var undoBtn;
+
   /**
    * Blocks Catalog
    */
@@ -113,6 +116,8 @@ var dtfEditor = (function ( $ ) {
             dtfLayoutMode.equipBlock(dom_block);
           }
           new_row.show(100);
+
+          undoBtn.flash();
 
           actionStack.push(function(){
             dtfLayoutMode.deleteBlock(dom_block);
@@ -502,10 +507,6 @@ var dtfEditor = (function ( $ ) {
     }
   };
 
-  var flashUndo = function () {
-    undoBtn.flash();
-  };
-
   var pushToStack = function ( fn ) {
     actionStack.push(fn);
   };
@@ -519,14 +520,12 @@ var dtfEditor = (function ( $ ) {
     _loadToolbar();
   };
 
-  // Some scoped global variables
-  var undoBtn;
+
 
   // Return public methods
   return {
     blocksCatalog   : blocksCatalog,
     setMessage      : setMessage,
-    flashUndo       : flashUndo,
     addItemDropDown : addItemDropDown,
     pushToStack     : pushToStack,
     getContent      : getContent,

@@ -337,11 +337,15 @@ var dtfDraftsManager = (function( $ ) {
 
     if ( resultPrompt !== "" && resultPrompt !== null ) {
       var save = true;
+      var exist;
 
       if ( draftStore.draftExists(resultPrompt) ) {
         info('Draft name already exist: ' + resultPrompt);
         save = confirm($.t('drafts.overwrite_confirm'));
-        if (save === true) info('Overwriting draft named ' + resultPrompt);
+        if (save === true) {
+          info('Overwriting draft named ' + resultPrompt);
+          exist = true;
+        }
       }
 
       if ( save === true ) {
@@ -351,7 +355,7 @@ var dtfDraftsManager = (function( $ ) {
         var html = dtfEditor.getContent();
         var styles = dtfEditor.getUserStyles();
 
-        draftStore.saveDraft( resultPrompt, html, styles, blocks_config, date, checkingFunction);
+        draftStore.saveDraft( resultPrompt, html, styles, blocks_config, date, checkingFunction, exist);
 
         function checkingFunction(val) {
           if(val === true) {

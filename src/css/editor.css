@@ -674,8 +674,9 @@ form.dtf-upload button:before {
   color: #FFF;
   border-radius: 120px;
   font-size: 1em;
-  transform: translate(0,-50%);
 }
+
+li .spanDelete { transform: translate(0, -50%); }
 
 .spanDelete:hover {
   background: #e74c3c;

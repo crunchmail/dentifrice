@@ -160,6 +160,24 @@ var dentifrice = (function () {
     }
   };
 
+  var init_dentifrice = function(options) {
+    // initialize settings
+    logger._info('Initializing settings');
+    _initSettings(options);
+
+    // Initialize language
+    logger._info('Initializing locale');
+    _initLang();
+
+    // Get the target element
+    logger._info('Getting target element');
+    target = _findTarget();
+
+    // Listen to messages from the iframe
+    logger._info('Setting up postMessages listener');
+    _setupMessageListener();
+  };
+
   return {
     checkIfValidated : function() {
       if(target.value === "") {
@@ -170,11 +188,10 @@ var dentifrice = (function () {
       }
     },
     settings: settings,
-
+    init_dentifrice : init_dentifrice,
     bootstrap : function(options) {
-      // initialize settings
-      logger._info('Initializing settings');
-      _initSettings(options);
+      // initialize
+      init_dentifrice(options);
 
       // First check if template url was provided
       // else, give up straight away
@@ -184,22 +201,11 @@ var dentifrice = (function () {
         return false;
       }
 
-      // Initialize language
-      logger._info('Initializing locale');
-      _initLang();
-
-      // Get the target element
-      logger._info('Getting target element');
-      target = _findTarget();
-
       if (target) {
 
         // Load the editor
         logger._info('Initializing editor');
         _initEditor.init();
-        // Listen to messages from the iframe
-        logger._info('Setting up postMessages listener');
-        _setupMessageListener();
 
         return true;
 
@@ -253,9 +259,8 @@ var logger = (function (dentifrice) {
         _output('log', msg, dentifrice.settings.debug);
     }
   }
-  
-})(dentifrice || {});
 
+})(dentifrice || {});
 
 // Copyright (c) 2015 Oasiswork.
 // All Rights Reserved.

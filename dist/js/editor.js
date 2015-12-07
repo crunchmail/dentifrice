@@ -810,7 +810,7 @@ var dtfEditor = (function ( $ ) {
         // Remove blank lines for good measure
         boilerplate = boilerplate.replace(/^\s*[\r\n]/gm, "");
 
-        postMessage_module.post("final_html", boilerplate);
+        postMessage_module.createMessageToSend("final_html", boilerplate);
 
         spinner('hide');
         setMessage($.t('editor.valid_ok'), 'valid', false);

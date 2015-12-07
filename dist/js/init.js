@@ -75,6 +75,7 @@ var postMessage_module = (function() {
     /*
     * Model message to send
     */
+
     var messageObj = {
         "type": "",
         "content": ""
@@ -82,11 +83,17 @@ var postMessage_module = (function() {
     var get = function(event) {
         var message = event.data;
     };
-    var post = function(type, content) {
+    var createMessageToSend = function(type, content) {
+        var messageToSend;
         messageObj.type = type;
         messageObj.content = content;
 
-        parent.postMessage(msgPrefix + JSON.stringify(messageObj), "*");
+        messageToSend = JSON.stringify(messageObj);
+        post(messageToSend)
+    };
+
+    var post = function(messageToSend) {
+        parent.postMessage(msgPrefix + messageToSend, "*");
     };
 
     /*
@@ -97,12 +104,11 @@ var postMessage_module = (function() {
     var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
     eventer(messageEvent, get, false);
 
-
-
     return {
-        messageObj : messageObj,
-        get        : get,
-        post       : post
+        createMessageToSend : createMessageToSend,
+        messageObj          : messageObj,
+        get                 : get,
+        post                : post
     }
 })();
 

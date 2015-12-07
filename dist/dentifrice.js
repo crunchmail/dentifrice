@@ -57,7 +57,7 @@ var dentifrice_postMessage_method = (function() {
       }
 
       var msg = event.data;
-      if(msg.length > 0 && typeof msg === 'string' && isMessageForUs()) {
+      if(msg.length > msgPrefixLen && typeof msg === 'string' && isMessageForUs()) {
         logger._debug('Received postmessage :' + msg);
         /*
         * Message Json

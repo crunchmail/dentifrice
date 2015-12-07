@@ -39,9 +39,17 @@ var dentifrice_postMessage = (function() {
 })();
 
 var dentifrice_postMessage_method = (function() {
-    /**
-     * Callback listener for postMessages
-     */
+    /*
+    * Type post Message response, extend it if you want
+    */
+    var type = {
+        "final_html": function(data) {
+            return data;
+        }
+    };
+    /*
+    * Callback listener for postMessages
+    */
     var messageListener = function (event) {
 
       function isMessageForUs () {
@@ -51,7 +59,21 @@ var dentifrice_postMessage_method = (function() {
       var msg = event.data;
       if(msg.length > 0 && typeof msg === 'string' && isMessageForUs()) {
         logger._debug('Received postmessage :' + msg);
-        target.value = msg.substr(msgPrefixLen);
+        /*
+        * Message Json
+        */
+        var messageJson = JSON.parse(msg.substr(msgPrefixLen));
+        /*
+        * Check if type is defined
+        */
+        if(type.hasOwnProperty(messageJson.type)) {
+            target.value = type[messageJson.type](messageJson.content)
+        }else {
+            logger._warn('Type undefined');
+        }
+
+
+
       }else {
         logger._debug('Received postmessage, but not for us :' + msg);
       }

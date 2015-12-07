@@ -67,6 +67,44 @@ function output (type, msg, enabled) {
   }
 }
 
+/*
+* PostMessage Module
+*/
+
+var postMessage_module = (function() {
+    /*
+    * Model message to send
+    */
+    var messageObj = {
+        "type": "",
+        "content": ""
+    }
+    var get = function(event) {
+        var message = event.data;
+    };
+    var post = function(type, content) {
+        messageObj.type = type;
+        messageObj.content = content;
+
+        parent.postMessage(msgPrefix + JSON.stringify(messageObj), "*");
+    };
+
+    /*
+    * Listener postMessage
+    */
+    var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+    var eventer = window[eventMethod];
+    var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+    eventer(messageEvent, get, false);
+
+
+
+    return {
+        get : get,
+        post: post
+    }
+})();
+
 /**
  * Load settings
  * See _local_settings.js and README.md for how to override

@@ -21,10 +21,28 @@ var iframeID     = 'dentifriceIframe',
 */
 
 var dentifrice_postMessage = (function() {
+
+    /**
+     * Attach postMessage listener
+     */
+    var setupMessageListener = function () {
+      var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+      var eventer = window[eventMethod];
+      var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+      eventer(messageEvent, dentifrice_postMessage_method.messageListener, false);
+    };
+
+    return {
+        setupMessageListener: setupMessageListener
+    }
+
+})();
+
+var dentifrice_postMessage_method = (function() {
     /**
      * Callback listener for postMessages
      */
-    var _messageListener = function (event) {
+    var messageListener = function (event) {
 
       function isMessageForUs () {
         return msgPrefix === (('' + msg).substr(0,msgPrefixLen));
@@ -40,18 +58,8 @@ var dentifrice_postMessage = (function() {
 
     };
 
-    /**
-     * Attach postMessage listener
-     */
-    var setupMessageListener = function () {
-      var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
-      var eventer = window[eventMethod];
-      var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
-      eventer(messageEvent, _messageListener, false);
-    };
-
     return {
-        setupMessageListener: setupMessageListener
+        messageListener: messageListener
     }
 
 })();

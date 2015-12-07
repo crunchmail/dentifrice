@@ -44,7 +44,7 @@ var dentifrice_postMessage_method = (function() {
     */
     var type = {
         "final_html": function(data) {
-            return data;
+            return data.content;
         }
     };
     /*
@@ -67,7 +67,7 @@ var dentifrice_postMessage_method = (function() {
         * Check if type is defined
         */
         if(type.hasOwnProperty(messageJson.type)) {
-            target.value = type[messageJson.type](messageJson.content)
+            target.value = type[messageJson.type](messageJson)
         }else {
             logger._warn('Type undefined');
         }

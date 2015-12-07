@@ -100,8 +100,9 @@ var postMessage_module = (function() {
 
 
     return {
-        get : get,
-        post: post
+        messageObj : messageObj,
+        get        : get,
+        post       : post
     }
 })();
 

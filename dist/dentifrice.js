@@ -81,7 +81,8 @@ var dentifrice_postMessage_method = (function() {
     };
 
     return {
-        messageListener: messageListener
+        type            : type,
+        messageListener : messageListener
     }
 
 })();

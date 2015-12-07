@@ -17,6 +17,46 @@ var iframeID     = 'dentifriceIframe',
     target;
 
 /*
+* Listener Post Message Module
+*/
+
+var dentifrice_postMessage = (function() {
+    /**
+     * Callback listener for postMessages
+     */
+    var _messageListener = function (event) {
+
+      function isMessageForUs () {
+        return msgPrefix === (('' + msg).substr(0,msgPrefixLen));
+      }
+
+      var msg = event.data;
+      if(msg.length > 0 && typeof msg === 'string' && isMessageForUs()) {
+        logger._debug('Received postmessage :' + msg);
+        target.value = msg.substr(msgPrefixLen);
+      }else {
+        logger._debug('Received postmessage, but not for us :' + msg);
+      }
+
+    };
+
+    /**
+     * Attach postMessage listener
+     */
+    var setupMessageListener = function () {
+      var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
+      var eventer = window[eventMethod];
+      var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
+      eventer(messageEvent, _messageListener, false);
+    };
+
+    return {
+        setupMessageListener: setupMessageListener
+    }
+
+})();
+
+/*
 * Dentifrice Module
 */
 var dentifrice = (function () {
@@ -100,35 +140,6 @@ var dentifrice = (function () {
     }
   };
 
-  /**
-   * Callback listener for postMessages
-   */
-  var _messageListener = function (event) {
-
-    function isMessageForUs () {
-      return msgPrefix === (('' + msg).substr(0,msgPrefixLen));
-    }
-
-    var msg = event.data;
-    if(msg.length > 0 && typeof msg === 'string' && isMessageForUs()) {
-      logger._debug('Received postmessage :' + msg);
-      target.value = msg.substr(msgPrefixLen);
-    }else {
-      logger._debug('Received postmessage, but not for us :' + msg);
-    }
-
-  };
-
-  /**
-   * Attach postMessage listener
-   */
-  var _setupMessageListener = function () {
-    var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
-    var eventer = window[eventMethod];
-    var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
-    eventer(messageEvent, _messageListener, false);
-  };
-
   //Global
   var _showValidationAlert = function () {
     if(document.getElementById('dentifriceValidationAlert') === null) {
@@ -175,7 +186,7 @@ var dentifrice = (function () {
 
     // Listen to messages from the iframe
     logger._info('Setting up postMessages listener');
-    _setupMessageListener();
+    dentifrice_postMessage.setupMessageListener();
   };
 
   return {

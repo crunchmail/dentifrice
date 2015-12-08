@@ -1,3 +1,5 @@
+This is a beta, don't use in production
+
 Dentifrice is a modern and simple editor for HTML emails.
 
 It's primary purpose is to allow non-technical users to create great looking and well crafted HTML emails from pre-defined templates.

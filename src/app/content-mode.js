@@ -17,6 +17,9 @@ var dtfContentMode = (function( $ ) {
 
     $.each(dtfEditor.blocksCatalog.configs, function(name, config) {
       // Add CKEditor instances
+      if(!$(config.selector).data("default")) {
+          $(config.selector).remove();
+      }
       $(config.selector).addClass('dtf-block');
       if(config.urlckEditor !== undefined) {
         //get localStorage json file

@@ -27,6 +27,11 @@
 			"icon": "quote",
 			"caption": "Citation"
 		},
+        "text": {
+            "selector": ".dtf-basic-text",
+            "icon": "paragraph",
+            "caption": "Paragraph"
+        },
 		"textImage": {
 			"selector": ".dtf-block-text-image",
 			"icon": "mixed_image_left",

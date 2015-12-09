@@ -112,6 +112,24 @@ var postMessage_module = (function() {
     }
 })();
 
+/*
+* icons, see editor.js dtfEditor
+*/
+
+var blocksIcons = {
+    'title'              : '<i class="icon-text">T</i>',
+    'paragraph'          : '<i class="fa fa-2x fa-align-justify"></i>',
+    'image'              : '<i class="fa fa-2x fa-picture-o"></i>',
+    '1col_image_top'    : '<i class="fa fa-2x fa-picture-o"></i><br /><i class="fa fa-2x fa fa-align-justify"></i>',
+    '2cols_image_top'    : '<i class="fa fa-2x fa-picture-o"></i><i class="fa fa-2x fa-picture-o"></i><br /><i class="fa fa-2x fa fa-align-justify"></i><i class="fa fa-2x fa fa-align-justify"></i>',
+    '2cols_image_bottom' : '<i class="fa fa-2x fa fa-align-justify"></i><i class="fa fa-2x fa fa-align-justify"></i><br /><i class="fa fa-2x fa-picture-o"></i><i class="fa fa-2x fa-picture-o"></i>',
+    'quote'              : '<i class="icon-text icon-quote">&rdquo;</i>',
+    'mixed_image_left'   : '<i class="fa fa-2x fa-picture-o"></i><i class="fa fa-2x fa-align-justify"></i>',
+    'mixed_image_right'  : '<i class="fa fa-2x fa-align-justify"></i><i class="fa fa-2x fa-picture-o"></i>',
+    'mixed_image_top'    : '<i class="fa fa-2x fa-picture-o"></i><br /><i class="fa fa-2x fa-align-justify"></i>',
+    'mixed_image_bottom' : '<i class="fa fa-2x fa-align-justify"></i><br /><i class="fa fa-2x fa-picture-o"></i>'
+};
+
 /**
  * Load settings
  * See _local_settings.js and README.md for how to override

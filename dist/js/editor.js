@@ -603,21 +603,6 @@ var dtfEditor = (function ( $ ) {
         // blocks configs dictionnary
         configs : {},
 
-        // Block icons library
-        icons   : {
-            'title'              : '<i class="icon-text">T</i>',
-            'paragraph'          : '<i class="fa fa-2x fa-align-justify"></i>',
-            'image'              : '<i class="fa fa-2x fa-picture-o"></i>',
-            '1col_image_top'    : '<i class="fa fa-2x fa-picture-o"></i><br /><i class="fa fa-2x fa fa-align-justify"></i>',
-            '2cols_image_top'    : '<i class="fa fa-2x fa-picture-o"></i><i class="fa fa-2x fa-picture-o"></i><br /><i class="fa fa-2x fa fa-align-justify"></i><i class="fa fa-2x fa fa-align-justify"></i>',
-            '2cols_image_bottom' : '<i class="fa fa-2x fa fa-align-justify"></i><i class="fa fa-2x fa fa-align-justify"></i><br /><i class="fa fa-2x fa-picture-o"></i><i class="fa fa-2x fa-picture-o"></i>',
-            'quote'              : '<i class="icon-text icon-quote">&rdquo;</i>',
-            'mixed_image_left'   : '<i class="fa fa-2x fa-picture-o"></i><i class="fa fa-2x fa-align-justify"></i>',
-            'mixed_image_right'  : '<i class="fa fa-2x fa-align-justify"></i><i class="fa fa-2x fa-picture-o"></i>',
-            'mixed_image_top'    : '<i class="fa fa-2x fa-picture-o"></i><br /><i class="fa fa-2x fa-align-justify"></i>',
-            'mixed_image_bottom' : '<i class="fa fa-2x fa-align-justify"></i><br /><i class="fa fa-2x fa-picture-o"></i>'
-        },
-
         get_gallery: function () {
             return this.blocks.children().clone(true, true);
         },
@@ -639,8 +624,8 @@ var dtfEditor = (function ( $ ) {
                 var blockIcon = $('<span class="dtable icon"><span class="dtable-cell"></span></span>');
                 var blockCaption = $();
 
-                if (block_config.icon in this.icons) {
-                    blockIcon.find('.dtable-cell').html(this.icons[block_config.icon]);
+                if (block_config.icon in blocksIcons) {
+                    blockIcon.find('.dtable-cell').html(blocksIcons[block_config.icon]);
                     var caption = block_config.icon;
                     if ('caption' in block_config) caption = block_config.caption;
                     blockCaption = $('<span class="dblock">' + caption + '</span>');

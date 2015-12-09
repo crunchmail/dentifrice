@@ -49,7 +49,15 @@ var dentifrice_postMessage_method = (function() {
     };
     var post = function(objMessage) {
         var messageToSend =  JSON.stringify(objMessage);
-        parent.postMessage(msgPrefix + messageToSend, "*");
+        /*
+        * prevent multiple Iframe into page
+        */
+        for(var f=0; f<frames.length; f++) {
+            if(frames[f].hasOwnProperty("msgPrefix")) {
+                frames[f].postMessage(msgPrefix + messageToSend, "*");
+            }
+        }
+
     };
     /*
     * Callback listener for postMessages

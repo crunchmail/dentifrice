@@ -47,7 +47,8 @@ var dentifrice_postMessage_method = (function() {
             return data.content;
         }
     };
-    var post = function(obj) {
+    var post = function(objMessage) {
+        var messageToSend =  JSON.stringify(objMessage);
         parent.postMessage(msgPrefix + messageToSend, "*");
     };
     /*

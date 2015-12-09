@@ -47,6 +47,9 @@ var dentifrice_postMessage_method = (function() {
             return data.content;
         }
     };
+    var post = function(obj) {
+        parent.postMessage(msgPrefix + messageToSend, "*");
+    };
     /*
     * Callback listener for postMessages
     */
@@ -82,6 +85,7 @@ var dentifrice_postMessage_method = (function() {
 
     return {
         type            : type,
+        post            : post,
         messageListener : messageListener
     }
 

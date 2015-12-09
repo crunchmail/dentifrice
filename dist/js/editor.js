@@ -592,6 +592,40 @@ var dtfEditor = (function ( $ ) {
     // Some scoped global variables
     var undoBtn;
 
+    /*
+    * Blocks events
+    */
+    var blockEvent = {
+        click: function(e) {
+            var dom_block = blocksCatalog.get_dom($(this).attr('data-block-name'));
+                dom_block.addClass('dtf-draggable dtf-block');
+
+            var new_row = $(window.templates.baseBlock);
+            new_row.find('.dtf-block')
+            .replaceWith(dom_block);
+
+            var divClass = blocksCatalog.get_divClass($(this).attr('data-block-name'));
+
+            new_row.addClass(divClass);
+
+            var draft_row = $(this).closest('div.dtf-tr-element');
+            draft_row.after(new_row.css('display', 'none'));
+
+            if ( dom_block.hasClass('dtf-changeable') ) {
+                dtfLayoutMode.changeClass(dom_block);
+            } else {
+                dtfLayoutMode.equipBlock(dom_block);
+            }
+            new_row.show(100);
+
+            actionStack.push(function(){
+                dtfLayoutMode.deleteBlock(dom_block);
+            });
+
+            e.preventDefault();
+        }
+    };
+
     /**
     * Blocks Catalog
     */
@@ -658,35 +692,7 @@ var dtfEditor = (function ( $ ) {
 
                 }
 
-                //Duplicate exist DOM element and add to layout
-                link.on('click', function() {
-                    var dom_block = that.get_dom($(this).attr('data-block-name'));
-                    dom_block.addClass('dtf-draggable dtf-block');
-
-                    var new_row = $(window.templates.baseBlock);
-                    new_row.find('.dtf-block')
-                    .replaceWith(dom_block);
-
-                    var divClass = that.get_divClass($(this).attr('data-block-name'));
-
-                    new_row.addClass(divClass);
-
-                    var draft_row = $(this).closest('div.dtf-tr-element');
-                    draft_row.after(new_row.css('display', 'none'));
-
-                    if ( dom_block.hasClass('dtf-changeable') ) {
-                        dtfLayoutMode.changeClass(dom_block);
-                    } else {
-                        dtfLayoutMode.equipBlock(dom_block);
-                    }
-                    new_row.show(100);
-
-                    actionStack.push(function(){
-                        dtfLayoutMode.deleteBlock(dom_block);
-                    });
-
-                    return false;
-                });
+                link.on("click", blockEvent.click);
 
             } else if ( block_config.isUnique && typeof block_config.listChangeable !== "undefined" ){
 
@@ -1090,6 +1096,7 @@ var dtfEditor = (function ( $ ) {
     // Return public methods
     return {
         blocksCatalog   : blocksCatalog,
+        blockEvent      : blockEvent,
         setMessage      : setMessage,
         addItemDropDown : addItemDropDown,
         pushToStack     : pushToStack,

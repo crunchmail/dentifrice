@@ -596,19 +596,19 @@ var dtfEditor = (function ( $ ) {
     * Blocks events
     */
     var blockEvent = {
-        click: function(e) {
-            var dom_block = blocksCatalog.get_dom($(this).attr('data-block-name'));
+        click: function(el, e) {
+            var dom_block = blocksCatalog.get_dom(el.attr('data-block-name'));
                 dom_block.addClass('dtf-draggable dtf-block');
 
             var new_row = $(window.templates.baseBlock);
             new_row.find('.dtf-block')
             .replaceWith(dom_block);
 
-            var divClass = blocksCatalog.get_divClass($(this).attr('data-block-name'));
+            var divClass = blocksCatalog.get_divClass(el.attr('data-block-name'));
 
             new_row.addClass(divClass);
 
-            var draft_row = $(this).closest('div.dtf-tr-element');
+            var draft_row = el.closest('div.dtf-tr-element');
             draft_row.after(new_row.css('display', 'none'));
 
             if ( dom_block.hasClass('dtf-changeable') ) {
@@ -692,7 +692,9 @@ var dtfEditor = (function ( $ ) {
 
                 }
 
-                link.on("click", blockEvent.click);
+                link.on("click", function(e) {
+                    blockEvent.click($(this), e);
+                });
 
             } else if ( block_config.isUnique && typeof block_config.listChangeable !== "undefined" ){
 

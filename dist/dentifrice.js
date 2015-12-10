@@ -242,7 +242,9 @@ var dentifrice = (function () {
         return true;
       }
     },
-    settings: settings,
+    getSettings : function() {
+        return settings;
+    },
     init_dentifrice : init_dentifrice,
     bootstrap : function(options) {
       // initialize
@@ -281,6 +283,7 @@ var dentifrice = (function () {
 */
 
 var logger = (function (dentifrice) {
+  var dentifrice_settings = dentifrice.getSettings();
   /**
    * Print messages to the console using provided level.
    */
@@ -303,7 +306,7 @@ var logger = (function (dentifrice) {
      * Only displayed if 'log' setting is true.
      */
     _info : function (msg) {
-        _output('info', msg, dentifrice.settings.log);
+        _output('info', msg, dentifrice_settings.log);
     },
 
     /**
@@ -311,7 +314,7 @@ var logger = (function (dentifrice) {
      * Only displayed if 'debug' setting is true.
      */
     _debug : function (msg) {
-        _output('log', msg, dentifrice.settings.debug);
+        _output('log', msg, dentifrice_settings.debug);
     }
   }
 
@@ -331,29 +334,30 @@ var logger = (function (dentifrice) {
  */
 var _initEditor = (function (dentifrice) {
   var init = function() {
+    dentifrice_settings = dentifrice.getSettings();
     // Hide the target and prepare iframe
-    if (dentifrice.settings.hideTarget) {
+    if (dentifrice_settings.hideTarget) {
       target.style.display = 'none';
     }
 
-    var assetsUrlBase = dentifrice.settings.templateUrl.replace(/\/[^\/]*$/, '/');
+    var assetsUrlBase = dentifrice_settings.templateUrl.replace(/\/[^\/]*$/, '/');
     var absTest = /^https?:\/\/|^\/\//i;
 
     // Prepare template URL
-    var templateUrlEncoded = encodeURIComponent(dentifrice.settings.templateUrl);
+    var templateUrlEncoded = encodeURIComponent(dentifrice_settings.templateUrl);
 
     // Prepare CSS URL
-    var stylesUrlEncoded = encodeURIComponent(assetsUrlBase + dentifrice.settings.stylesUrl);
+    var stylesUrlEncoded = encodeURIComponent(assetsUrlBase + dentifrice_settings.stylesUrl);
     // If an absolute stylesUrl was provided, use it instead
-    if ( absTest.test(dentifrice.settings.stylesUrl) ) {
-        stylesUrlEncoded = encodeURIComponent(dentifrice.settings.stylesUrl);
+    if ( absTest.test(dentifrice_settings.stylesUrl) ) {
+        stylesUrlEncoded = encodeURIComponent(dentifrice_settings.stylesUrl);
     }
 
     // Prepare config URL
-    var configUrlEncoded = encodeURIComponent(assetsUrlBase + dentifrice.settings.configUrl);
+    var configUrlEncoded = encodeURIComponent(assetsUrlBase + dentifrice_settings.configUrl);
     // f an absolute configUrl was provided, use it instead
-    if ( absTest.test(dentifrice.settings.configUrl) ) {
-        configUrlEncoded = encodeURIComponent(dentifrice.settings.configUrl);
+    if ( absTest.test(dentifrice_settings.configUrl) ) {
+        configUrlEncoded = encodeURIComponent(dentifrice_settings.configUrl);
     }
 
     // Get our own URL to use as base for the iFrame src
@@ -369,23 +373,23 @@ var _initEditor = (function (dentifrice) {
       }
     });
 
-    var editorUrl = bootstrapRoot + 'editor.html?template=' + templateUrlEncoded + '&styles=' + stylesUrlEncoded + '&config=' + configUrlEncoded + '&lang=' + lang + '&title=' + dentifrice.settings.title;
+    var editorUrl = bootstrapRoot + 'editor.html?template=' + templateUrlEncoded + '&styles=' + stylesUrlEncoded + '&config=' + configUrlEncoded + '&lang=' + lang + '&title=' + dentifrice_settings.title;
 
     var iframe = document.createElement('iframe');
 
     iframe.id = iframeID;
     iframe.setAttribute('src', editorUrl);
     iframe.style.border = '0';
-    iframe.style.width = dentifrice.settings.width + 'px';
-    iframe.style.height = dentifrice.settings.height + 'px';
+    iframe.style.width = dentifrice_settings.width + 'px';
+    iframe.style.height = dentifrice_settings.height + 'px';
 
-    if (dentifrice.settings.anchorId) {
-      var anchor = document.getElementById(dentifrice.settings.anchorId);
+    if (dentifrice_settings.anchorId) {
+      var anchor = document.getElementById(dentifrice_settings.anchorId);
       if (0 === anchor.length) {
-        logger._warn('Could not find anchor element with ID: ' + dentifrice.settings.anchorId);
+        logger._warn('Could not find anchor element with ID: ' + dentifrice_settings.anchorId);
       } else {
-        logger._debug('Found anchor element with ID: ' + dentifrice.settings.anchorId);
-        if (dentifrice.settings.replaceAnchor) {
+        logger._debug('Found anchor element with ID: ' + dentifrice_settings.anchorId);
+        if (dentifrice_settings.replaceAnchor) {
           logger._debug('Replacing anchor element with editor');
           anchor.parentNode.replaceChild(iframe, anchor);
         } else {

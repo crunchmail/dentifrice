@@ -242,7 +242,9 @@ var dentifrice = (function () {
         return true;
       }
     },
-    settings: settings,
+    getSettings : function() {
+        return settings;
+    },
     init_dentifrice : init_dentifrice,
     bootstrap : function(options) {
       // initialize
@@ -281,6 +283,7 @@ var dentifrice = (function () {
 */
 
 var logger = (function (dentifrice) {
+  var dentifrice_settings = dentifrice.getSettings();
   /**
    * Print messages to the console using provided level.
    */
@@ -303,7 +306,7 @@ var logger = (function (dentifrice) {
      * Only displayed if 'log' setting is true.
      */
     _info : function (msg) {
-        _output('info', msg, dentifrice.settings.log);
+        _output('info', msg, dentifrice_settings.log);
     },
 
     /**
@@ -311,7 +314,7 @@ var logger = (function (dentifrice) {
      * Only displayed if 'debug' setting is true.
      */
     _debug : function (msg) {
-        _output('log', msg, dentifrice.settings.debug);
+        _output('log', msg, dentifrice_settings.debug);
     }
   }
 

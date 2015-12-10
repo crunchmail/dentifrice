@@ -79,9 +79,6 @@ var postMessage_module = (function() {
     var messageObj = {
         "type": "",
         "content": ""
-    }
-    var get = function(event) {
-        var message = event.data;
     };
     var createMessageToSend = function(type, content) {
         var messageToSend;
@@ -96,18 +93,9 @@ var postMessage_module = (function() {
         parent.postMessage(msgPrefix + messageToSend, "*");
     };
 
-    /*
-    * Listener postMessage
-    */
-    var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
-    var eventer = window[eventMethod];
-    var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
-    eventer(messageEvent, get, false);
-
     return {
         createMessageToSend : createMessageToSend,
         messageObj          : messageObj,
-        get                 : get,
         post                : post
     }
 })();

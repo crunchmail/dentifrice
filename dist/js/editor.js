@@ -596,6 +596,7 @@ var dtfEditor = (function ( $ ) {
     * Blocks events
     */
     var blockEvent = {
+        last_el_create: null,
         click: function(el, e) {
             var dom_block = blocksCatalog.get_dom(el.attr('data-block-name'));
                 dom_block.addClass('dtf-draggable dtf-block');
@@ -616,6 +617,7 @@ var dtfEditor = (function ( $ ) {
             } else {
                 dtfLayoutMode.equipBlock(dom_block);
             }
+            blockEvent.last_el_create = new_row;
             new_row.show(100);
 
             actionStack.push(function(){

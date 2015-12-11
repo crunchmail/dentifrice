@@ -29,16 +29,9 @@ var dentifrice_postMessage = (function() {
       var eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
       var eventer = window[eventMethod];
       var messageEvent = eventMethod == "attachEvent" ? "onmessage" : "message";
-      eventer(messageEvent, dentifrice_postMessage_method.messageListener, false);
+      eventer(messageEvent, messageListener, false);
     };
 
-    return {
-        setupMessageListener: setupMessageListener
-    }
-
-})();
-
-var dentifrice_postMessage_method = (function() {
     /*
     * Type post Message response, extend it if you want
     */
@@ -92,13 +85,27 @@ var dentifrice_postMessage_method = (function() {
 
     };
 
+
+
+
     return {
+        setupMessageListener: setupMessageListener,
         type            : type,
         post            : post,
         messageListener : messageListener
     }
 
 })();
+
+// var dentifrice_postMessage_method = (function() {
+//
+//     return {
+//         type            : type,
+//         post            : post,
+//         messageListener : messageListener
+//     }
+//
+// })();
 
 /*
 * Dentifrice Module

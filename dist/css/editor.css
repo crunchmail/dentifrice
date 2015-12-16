@@ -104,7 +104,7 @@ button {
   right: 0;
   margin: 5px;
   color: #FFF;
-  z-index: 9;
+  z-index: 999;
 }
 
 #dtf-toolbar {

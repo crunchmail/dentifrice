@@ -897,7 +897,7 @@ var dtfEditor = (function ( $ ) {
                     $(this).after('<!--[if (gte mso 9)|(IE)]></td></tr></table><![endif]-->');
                 })
                 //Remove dtf Classes
-                html = html.replace(/dtf.* /g, "");
+               // html = html.replace(/dtf.* /g, "");
             }
 
             // HTML-encode some characters in the tags that might contain text,

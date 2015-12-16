@@ -253,6 +253,14 @@ var dentifrice = (function () {
         return settings;
     },
     init_dentifrice : init_dentifrice,
+    destroy: function(){
+	 var iframe = document.getElementById(iframeID);
+	if(iframe.length !== 0){
+		if (dentifrice_settings.anchorId) {
+			iframe.parentNode.removeChild(iframe);
+		}
+       }
+    },
     bootstrap : function(options) {
       // initialize
       init_dentifrice(options);

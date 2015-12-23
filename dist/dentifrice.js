@@ -77,16 +77,11 @@ var dentifrice_postMessage = (function() {
             logger._warn('Type undefined');
         }
 
-
-
       }else {
         logger._debug('Received postmessage, but not for us :' + msg);
       }
 
     };
-
-
-
 
     return {
         setupMessageListener: setupMessageListener,
@@ -96,16 +91,6 @@ var dentifrice_postMessage = (function() {
     }
 
 })();
-
-// var dentifrice_postMessage_method = (function() {
-//
-//     return {
-//         type            : type,
-//         post            : post,
-//         messageListener : messageListener
-//     }
-//
-// })();
 
 /*
 * Dentifrice Module

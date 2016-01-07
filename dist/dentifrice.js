@@ -355,7 +355,7 @@ var _initEditor = (function (dentifrice) {
     // Get our own URL to use as base for the iFrame src
     var bootstrapRoot = '';
     var allScripts = document.getElementsByTagName('script');
-    var re = /^(.*)dentifrice\.(min\.)*js$/;
+    var re = /^(.*)dentifrice\.(min\.)*js(.*)/;
     [].forEach.call(allScripts, function (tag) {
       var src = tag.getAttribute('src');
       var match = re.exec(src);

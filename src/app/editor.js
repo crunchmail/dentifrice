@@ -140,7 +140,7 @@ var dtfEditor = (function ( $ ) {
     var _fetchBlocksConfig = function () {
         _.forOwn(blocks_config.styles, function (config, name) {
             var cloned_block = $(config.selector).first().clone(true, true);
-            cloned_block.attr("data-default", "true")
+            cloned_block.attr("data-default", "true");
 
             var existBlockDom = {
                 "html": cloned_block,
@@ -316,7 +316,7 @@ var dtfEditor = (function ( $ ) {
                 $content.find('#templateContainer td:first > div').each(function() {
                     $(this).before('<!--[if (gte mso 9)|(IE)]><table cellpadding="0" cellspacing="0" width="600" align="center"><tr><td><![endif]-->');
                     $(this).after('<!--[if (gte mso 9)|(IE)]></td></tr></table><![endif]-->');
-                })
+                });
                 //Remove dtf Classes
                 html = html.replace(/dtf.* /g, "");
             }

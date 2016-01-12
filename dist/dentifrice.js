@@ -77,16 +77,11 @@ var dentifrice_postMessage = (function() {
             logger._warn('Type undefined');
         }
 
-
-
       }else {
         logger._debug('Received postmessage, but not for us :' + msg);
       }
 
     };
-
-
-
 
     return {
         setupMessageListener: setupMessageListener,
@@ -96,16 +91,6 @@ var dentifrice_postMessage = (function() {
     }
 
 })();
-
-// var dentifrice_postMessage_method = (function() {
-//
-//     return {
-//         type            : type,
-//         post            : post,
-//         messageListener : messageListener
-//     }
-//
-// })();
 
 /*
 * Dentifrice Module
@@ -378,7 +363,7 @@ var _initEditor = (function (dentifrice) {
     // Get our own URL to use as base for the iFrame src
     var bootstrapRoot = '';
     var allScripts = document.getElementsByTagName('script');
-    var re = /^(.*)dentifrice\.(min\.)*js$/;
+    var re = /^(.*)dentifrice\.(min\.)*js(.*)/;
     [].forEach.call(allScripts, function (tag) {
       var src = tag.getAttribute('src');
       var match = re.exec(src);

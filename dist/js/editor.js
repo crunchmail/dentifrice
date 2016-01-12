@@ -338,6 +338,15 @@ var dtfDraftsManager = (function( $ ) {
     spinner('show');
     var resultPrompt = prompt($.t('drafts.name_prompt'), $.t('drafts.default_name'));
 
+    function checkingSave(val) {
+      if(val === true) {
+        dtfEditor.setMessage($.t('drafts.save_ok'), 'valid');
+      }
+      else {
+        dtfEditor.setMessage($.t('drafts.save_error'), 'error');
+      }
+    }
+
     if ( resultPrompt !== "" && resultPrompt !== null ) {
       var save = true;
       var exist;
@@ -358,16 +367,8 @@ var dtfDraftsManager = (function( $ ) {
         var html = dtfEditor.getContent();
         var styles = dtfEditor.getUserStyles();
 
-        draftStore.saveDraft( resultPrompt, html, styles, blocks_config, date, checkingFunction, exist);
+        draftStore.saveDraft( resultPrompt, html, styles, blocks_config, date, checkingSave, exist);
 
-        function checkingFunction(val) {
-          if(val === true) {
-            dtfEditor.setMessage($.t('drafts.save_ok'), 'valid');
-          }
-          else {
-            dtfEditor.setMessage($.t('drafts.save_error'), 'error');
-          }
-        }
       }
     } else if ( resultPrompt === "" ) {
       dtfEditor.setMessage($.t('drafts.name_empty'), 'error');
@@ -384,6 +385,15 @@ var dtfDraftsManager = (function( $ ) {
     draftsListUl.empty();
 
     var list = draftStore.listDrafts();
+
+    function checkingDelete(val) {
+      if(val === true) {
+        dtfEditor.setMessage($.t('drafts.delete_ok'), 'valid');
+      }
+      else {
+        dtfEditor.setMessage($.t('drafts.delete_error'), 'error');
+      }
+    }
 
     list.forEach( function(draft) {
 
@@ -415,16 +425,8 @@ var dtfDraftsManager = (function( $ ) {
         if(confirm($.t('drafts.delete_confirm'))) {
           //var id = this.parentNode.getAttribute('data-objId');
 
-          draftStore.deleteDraft(draft.id, checkingFunction)
+          draftStore.deleteDraft(draft.id, checkingDelete);
 
-          function checkingFunction(val) {
-            if(val === true) {
-              dtfEditor.setMessage($.t('drafts.delete_ok'), 'valid');
-            }
-            else {
-              dtfEditor.setMessage($.t('drafts.delete_error'), 'error');
-            }
-          }
         }
         e.stopPropagation();
       });
@@ -437,15 +439,15 @@ var dtfDraftsManager = (function( $ ) {
     var list = draftStore.listDrafts();
     var draftsListUl = document.getElementById('listDraft');
 
-    for ( var v in list ) {
-      var id = this.parentNode.getAttribute('data-objId');
-      draftStore.deleteDraft(draft.id, checkingFunction)
-
-      function checkingFunction(val) {
-        if(val === true) {
-          draftsListUl.removeChild(draftLi);
-        }
+    function checkingDeleteAll(val) {
+      if(val === true) {
+        draftsListUl.removeChild(draftLi);
       }
+    }
+
+    for ( var v = 0; v < list.length; v++) {
+      var id = this.parentNode.getAttribute('data-objId');
+      draftStore.deleteDraft(draft.id, checkingDeleteAll);
     }
   };
 
@@ -719,7 +721,7 @@ var dtfEditor = (function ( $ ) {
     var _fetchBlocksConfig = function () {
         _.forOwn(blocks_config.styles, function (config, name) {
             var cloned_block = $(config.selector).first().clone(true, true);
-            cloned_block.attr("data-default", "true")
+            cloned_block.attr("data-default", "true");
 
             var existBlockDom = {
                 "html": cloned_block,
@@ -895,7 +897,7 @@ var dtfEditor = (function ( $ ) {
                 $content.find('#templateContainer td:first > div').each(function() {
                     $(this).before('<!--[if (gte mso 9)|(IE)]><table cellpadding="0" cellspacing="0" width="600" align="center"><tr><td><![endif]-->');
                     $(this).after('<!--[if (gte mso 9)|(IE)]></td></tr></table><![endif]-->');
-                })
+                });
                 //Remove dtf Classes
                // html = html.replace(/dtf.* /g, "");
             }

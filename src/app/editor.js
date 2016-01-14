@@ -138,6 +138,10 @@ var dtfEditor = (function ( $ ) {
     * Gets all the block config and initialize them
     */
     var _fetchBlocksConfig = function () {
+        /*
+        * Reset blocksCatalog.blocks to prevent duplication
+        */
+        blocksCatalog.blocks = $('<div>');
         _.forOwn(blocks_config.styles, function (config, name) {
             var cloned_block = $(config.selector).first().clone(true, true);
             cloned_block.attr("data-default", "true");

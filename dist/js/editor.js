@@ -667,9 +667,14 @@ var dtfEditor = (function ( $ ) {
                     var caption = block_config.icon;
                     if ('caption' in block_config) caption = block_config.caption;
                     blockCaption = $('<span class="dblock">' + caption + '</span>');
+                }else if(block_config.preview){
+                    blockCaption = $('<div data-tooltip="'+ block_config.caption + '"><img src="' + block_config.preview + '" class="img-responsive" ></div>');
+                    blockIcon = $(block_config.icon);
                 } else {
                     blockIcon = $(block_config.icon);
                 }
+                
+                
                 var link = $('<a class="dtf-block-choice" href="#">')
                 .attr('data-block-name', name)
                 .append(blockIcon);
@@ -693,6 +698,7 @@ var dtfEditor = (function ( $ ) {
                     dom = existBlockDom;
                     $(block_config.selector).addClass('dtf-draggable');
                     this.blocks.first().append(link);
+                
 
                 }
 

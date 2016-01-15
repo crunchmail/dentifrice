@@ -667,9 +667,14 @@ var dtfEditor = (function ( $ ) {
                     var caption = block_config.icon;
                     if ('caption' in block_config) caption = block_config.caption;
                     blockCaption = $('<span class="dblock">' + caption + '</span>');
+                }else if(block_config.preview){
+                    blockCaption = $('<div data-tooltip="'+ block_config.caption + '"><img src="' + block_config.preview + '" class="img-responsive" ></div>');
+                    blockIcon = $(block_config.icon);
                 } else {
                     blockIcon = $(block_config.icon);
                 }
+                
+                
                 var link = $('<a class="dtf-block-choice" href="#">')
                 .attr('data-block-name', name)
                 .append(blockIcon);
@@ -693,6 +698,7 @@ var dtfEditor = (function ( $ ) {
                     dom = existBlockDom;
                     $(block_config.selector).addClass('dtf-draggable');
                     this.blocks.first().append(link);
+                
 
                 }
 
@@ -903,7 +909,7 @@ var dtfEditor = (function ( $ ) {
                     $(this).after('<!--[if (gte mso 9)|(IE)]></td></tr></table><![endif]-->');
                 });
                 //Remove dtf Classes
-                html = html.replace(/dtf.* /g, "");
+               // html = html.replace(/dtf.* /g, "");
             }
 
             // HTML-encode some characters in the tags that might contain text,
@@ -983,6 +989,12 @@ var dtfEditor = (function ( $ ) {
             $('#messages').fadeOut(100);
             $('.overlay').fadeOut(100);
         }
+        //Try calling a parental lock edition callback in case the editor page needs to handle some callback methodoloty there
+        try {
+                 parent._lockEdition(lock);
+             }catch(err){
+                 console.log(err);
+             }
     };
     /*
     * add a item to dropdown

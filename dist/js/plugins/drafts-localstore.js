@@ -22,16 +22,17 @@ var draftStore = (function () {
     localStorage.setItem('draftLastId', id);
   };
 
-  var saveDraft = function ( name, html, styles, config, date, successHandler ) {
-    try {
-      // Create draft object
-      var draftObj = {
-        name    : name,
-        date    : date,
-        html    : html,
-        styles  : styles,
-        config  : config,
-      };
+    var saveDraft = function (name, html, styles, config, date, successHandler) {
+        try {
+            // Create draft object
+            var draftObj = {
+                name: name,
+                date: date,
+                html: html,
+                styles: styles,
+                config: config,
+                template: _getQueryParameterByName('template')
+            };
 
       // Stringify object to pass to localStorage
       draftObj = JSON.stringify(draftObj);
@@ -70,18 +71,20 @@ var draftStore = (function () {
       for ( var i = 1; i <= lastId; i++ ) {
         var draftObj = localStorage.getItem('dtfDraft' + i);
 
-        if(draftObj !== null) {
-          draftObj = JSON.parse(draftObj);
-          list.push({
-            id      : i,
-            name    : draftObj.name,
-            date    : draftObj.date,
-            html    : draftObj.html,
-            styles  : draftObj.styles,
-            config  : draftObj.config
-          });
-        }
-      }
+                if (draftObj !== null) {
+                    draftObj = JSON.parse(draftObj);
+                    if (draftObj.template == _getQueryParameterByName('template')) {
+                        list.push({
+                            id: i,
+                            name: draftObj.name,
+                            date: draftObj.date,
+                            html: draftObj.html,
+                            styles: draftObj.styles,
+                            config: draftObj.config
+                        });
+                    }
+                }
+            }
 
       return list;
 
@@ -93,16 +96,16 @@ var draftStore = (function () {
     }
   };
 
-  var draftExists = function ( name ) {
-    var list = listDrafts();
-    var exists = false;
-    list.forEach( function(draft) {
-      if ( name == draft.name ) {
-        exists = draft;
-      }
-    });
-    return exists;
-  };
+    var draftExists = function (name) {
+        var list = listDrafts();
+        var exists = false;
+        list.forEach(function (draft) {
+            if (name == draft.name && _getQueryParameterByName('template') == draft.template) {
+                exists = draft;
+            }
+        });
+        return exists;
+    };
 
   var deleteDraft = function ( id, successHandler ) {
     try {

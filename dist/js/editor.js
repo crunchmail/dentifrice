@@ -989,6 +989,12 @@ var dtfEditor = (function ( $ ) {
             $('#messages').fadeOut(100);
             $('.overlay').fadeOut(100);
         }
+        //Try calling a parental lock edition callback in case the editor page needs to handle some callback methodoloty there
+        try {
+                 parent._lockEdition(lock);
+             }catch(err){
+                 console.log(err);
+             }
     };
     /*
     * add a item to dropdown

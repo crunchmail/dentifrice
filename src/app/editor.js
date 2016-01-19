@@ -1,4 +1,4 @@
-// Copyright (c) 2015 Oasiswork.
+// Copyright (c) 2016 Oasiswork.
 // All Rights Reserved.
 //
 // This Source Code Form is subject to the
@@ -17,8 +17,8 @@ var dtfEditor = (function ( $ ) {
     * Blocks events
     */
     var blockEvent = {
-        last_el_create: null,
-        click: function(el, e) {
+        last_el_created: null,
+        insert: function(el) {
             var dom_block = blocksCatalog.get_dom(el.attr('data-block-name'));
                 dom_block.addClass('dtf-draggable dtf-block');
 
@@ -38,14 +38,12 @@ var dtfEditor = (function ( $ ) {
             } else {
                 dtfLayoutMode.equipBlock(dom_block);
             }
-            blockEvent.last_el_create = new_row;
+            blockEvent.last_el_created = new_row;
             new_row.show(100);
 
             actionStack.push(function(){
                 dtfLayoutMode.deleteBlock(dom_block);
             });
-
-            e.preventDefault();
         }
     };
 
@@ -116,7 +114,8 @@ var dtfEditor = (function ( $ ) {
                 }
 
                 link.on("click", function(e) {
-                    blockEvent.click($(this), e);
+                    blockEvent.insert($(this));
+                    e.preventDefault();
                 });
 
             } else if ( block_config.isUnique && typeof block_config.listChangeable !== "undefined" ){
@@ -236,7 +235,7 @@ var dtfEditor = (function ( $ ) {
                 // Remove blank lines for good measure
                 boilerplate = boilerplate.replace(/^\s*[\r\n]/gm, "");
 
-                postMessage_module.createMessageToSend("final_html", boilerplate);
+                postMessage.post("final_html", boilerplate);
 
                 spinner('hide');
                 setMessage($.t('editor.valid_ok'), 'valid', false);

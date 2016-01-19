@@ -16,10 +16,7 @@ module.exports = function (gulp, plugins) {
     .pipe(plugins.sourcemaps.write("./"))
     .pipe(gulp.dest('dist/js'));
 
-    gulp.src([
-      'src/bootstrap-functions.js',
-      'src/bootstrap-init-editor.js'
-    ])
+    gulp.src('src/bootstrap.js')
     .pipe(plugins.sourcemaps.init())
     .pipe(plugins.concat('dentifrice.js'))
     .pipe(gulp.dest('dist'))

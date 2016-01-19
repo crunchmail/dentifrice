@@ -86,7 +86,7 @@ var postMessage_module = (function() {
         messageObj.content = content;
 
         messageToSend = JSON.stringify(messageObj);
-        post(messageToSend)
+        post(messageToSend);
     };
 
     var post = function(messageToSend) {
@@ -97,7 +97,7 @@ var postMessage_module = (function() {
         createMessageToSend : createMessageToSend,
         messageObj          : messageObj,
         post                : post
-    }
+    };
 })();
 
 /*

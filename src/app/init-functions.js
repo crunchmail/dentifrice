@@ -71,32 +71,17 @@ function output (type, msg, enabled) {
 * PostMessage Module
 */
 
-var postMessage_module = (function() {
-    /*
-    * Model message to send
-    */
-
-    var messageObj = {
-        "type": "",
-        "content": ""
-    };
-    var createMessageToSend = function(type, content) {
-        var messageToSend;
-        messageObj.type = type;
-        messageObj.content = content;
-
-        messageToSend = JSON.stringify(messageObj);
-        post(messageToSend);
-    };
-
-    var post = function(messageToSend) {
-        parent.postMessage(msgPrefix + messageToSend, "*");
+var postMessage = (function() {
+    var post = function(type, content) {
+        messageToSend = {
+            type    : type,
+            content : content
+        };
+        parent.postMessage(msgPrefix + JSON.stringify(messageToSend), "*");
     };
 
     return {
-        createMessageToSend : createMessageToSend,
-        messageObj          : messageObj,
-        post                : post
+        post : post
     };
 })();
 

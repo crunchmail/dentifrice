@@ -1,4 +1,4 @@
-// Copyright (c) 2015 Oasiswork.
+// Copyright (c) 2016 Oasiswork.
 // All Rights Reserved.
 //
 // This Source Code Form is subject to the
@@ -99,7 +99,7 @@ var dtfContentMode = (function( $ ) {
 
 })( jQuery );
 
-// Copyright (c) 2015 Oasiswork.
+// Copyright (c) 2016 Oasiswork.
 // All Rights Reserved.
 //
 // This Source Code Form is subject to the
@@ -319,7 +319,7 @@ var dtfLayoutMode = (function( $ ) {
 
 })( jQuery );
 
-// Copyright (c) 2015 Oasiswork.
+// Copyright (c) 2016 Oasiswork.
 // All Rights Reserved.
 //
 // This Source Code Form is subject to the
@@ -460,7 +460,7 @@ var dtfDraftsManager = (function( $ ) {
 
 })( jQuery );
 
-// Copyright (c) 2015 Oasiswork.
+// Copyright (c) 2016 Oasiswork.
 // All Rights Reserved.
 //
 // This Source Code Form is subject to the
@@ -579,7 +579,7 @@ var dtfDraftsManager = (function( $ ) {
 
 }( jQuery ));
 
-// Copyright (c) 2015 Oasiswork.
+// Copyright (c) 2016 Oasiswork.
 // All Rights Reserved.
 //
 // This Source Code Form is subject to the

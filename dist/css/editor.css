@@ -693,7 +693,7 @@ li .spanDelete { transform: translate(0, -50%); }
   left: 0;
   height: 100%;
   width: 100%;
-  z-index: 100;
+  z-index: 25;
   background-color: rgba(0,0,0,0.7);
 }
 
@@ -719,7 +719,7 @@ li .spanDelete { transform: translate(0, -50%); }
 }
 
 .spinner {
-  z-index: 101;
+  z-index: 26;
   height: 60px;
   width: 60px;
   margin: 50% auto;

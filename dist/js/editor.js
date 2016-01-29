@@ -892,7 +892,7 @@ var dtfEditor = (function ( $ ) {
                 $content.find('.dtf-contentEditable').removeAttr('contenteditable style');
                 //Remove dentifrice Classes
                 $content.find('*[class*="dtf"]').removeClass (function (index, css) {
-                    return (css.match (/(^|\s)dtf-\S+/g) || []).join(' ');
+                    return (css.match (/dtf-[^"'\s]+(\s)*/g) || []).join(' ');
                 });
                 $content.find('.isUnique').removeClass("isUnique");
 
@@ -901,8 +901,6 @@ var dtfEditor = (function ( $ ) {
                     $(this).before('<!--[if (gte mso 9)|(IE)]><table cellpadding="0" cellspacing="0" width="600" align="center"><tr><td><![endif]-->');
                     $(this).after('<!--[if (gte mso 9)|(IE)]></td></tr></table><![endif]-->');
                 });
-                //Remove dtf Classes
-                html = html.replace(/dtf.* /g, "");
             }
 
             // HTML-encode some characters in the tags that might contain text,

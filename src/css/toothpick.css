@@ -131,13 +131,13 @@ table td { border-collapse: collapse; }
 
 .crunchBlock.crunch1-3ColLeft div:first-child { width: 160px; }
 .crunchBlockNoBg.crunch1-3ColLeft div:first-child { width: 180px; }
-.crunchBlock.crunch1-3ColLeft div:nth-child(2) { width: 340px; }
-.crunchBlockNoBg.crunch1-3ColLeft div:nth-child(2) { width: 360px; }
+.crunchBlock.crunch1-3ColLeft div + div { width: 340px; }
+.crunchBlockNoBg.crunch1-3ColLeft div + div  { width: 360px; }
 
 .crunchBlock.crunch1-3ColRight div:first-child { width: 340px; }
 .crunchBlockNoBg.crunch1-3ColRight div:first-child { width: 360px; }
-.crunchBlock.crunch1-3ColRight div:nth-child(2) { width: 160px; }
-.crunchBlockNoBg.crunch1-3ColRight div:nth-child(2) { width: 180px; }
+.crunchBlock.crunch1-3ColRight div + div  { width: 160px; }
+.crunchBlockNoBg.crunch1-3ColRight div + div  { width: 180px; }
 
 .crunchInlineImg img {
   display: inline;

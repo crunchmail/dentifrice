@@ -446,7 +446,7 @@ var dtfEditor = (function ( $ ) {
             resumeBtn.on('click', function() {
                 // We post an empty content to empty the parent textarea
                 // and force a new validation of the content
-                parent.postMessage(msgPrefix, "*");
+                postMessage.post("final_html", "");
                 // Unlock the editor
                 _lockEdition(false);
             });

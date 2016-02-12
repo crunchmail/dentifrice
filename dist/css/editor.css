@@ -161,7 +161,7 @@ button {
 
 .dtf-drop-down-btn {
   float: right;
-  background: #FF622C;
+  background: #f4a62a;
   position: relative;
   margin-right: 0.3em;
 }
@@ -191,7 +191,7 @@ button {
   position: absolute;
   padding: 0;
   margin: 0;
-  background: #c53200;
+  background: #df8e0c;
   top: -9999px;
   width: 100%;
 }

@@ -5,7 +5,7 @@
     },
     "toolbar": {
         "save_draft": "Un brouillon",
-        "dropdown": "Enregistrer",
+        "dropdown": "Enregistrer comme",
         "validate": "Terminer l'édition",
         "resume": "Reprendre l'édition",
         "content_mode": "Editer le contenu",

@@ -4,7 +4,7 @@
         "valid_error": "Erreur lors de la validation de l'édition"
     },
     "toolbar": {
-        "save_draft": "Un brouillon",
+        "save_draft": "Brouillon",
         "dropdown": "Enregistrer comme",
         "validate": "Terminer l'édition",
         "resume": "Reprendre l'édition",

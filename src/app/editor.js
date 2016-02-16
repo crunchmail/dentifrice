@@ -514,7 +514,6 @@ var dtfEditor = (function ( $ ) {
     var load = function () {
         _fetchBlocksConfig();
         _loadToolbar();
-        _loadToolbar();
     };
 
 

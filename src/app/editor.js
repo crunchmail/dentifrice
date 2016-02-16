@@ -211,7 +211,7 @@ var dtfEditor = (function ( $ ) {
         }
     };
 
-    var _generateFinal = function ( html ) {
+    var generateFinal = function ( html ) {
         if ( undefined === html || null === html) {
             error('No HTML provided, cannot generate final document');
             setMessage($.t('editor.valid_error'), 'error');
@@ -439,7 +439,7 @@ var dtfEditor = (function ( $ ) {
             var validateBtn = toolbar.find('#validateBtn');
             validateBtn.on('click', function() {
                 // Generate final content and post to parent
-                _generateFinal(getContent(true));
+                generateFinal(getContent(true));
             });
 
             var resumeBtn = toolbar.find('#resumeBtn');
@@ -528,6 +528,7 @@ var dtfEditor = (function ( $ ) {
         pushToStack     : pushToStack,
         getContent      : getContent,
         getUserStyles   : getUserStyles,
+        generateFinal   : generateFinal,
         load            : load
     };
 

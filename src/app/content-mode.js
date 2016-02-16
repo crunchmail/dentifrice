@@ -58,7 +58,7 @@ var dtfContentMode = (function( $ ) {
       }
 
       // Disable click on all links outside content editables
-      var contentLinks = $('#dtf-content a:not(.cke_editable a)');
+      var contentLinks = $(config.selector).find('a:not(.cke_editable a)');
       contentLinks.each(function () {
         debug('Disabling clicks on link: ' + this.href);
       });

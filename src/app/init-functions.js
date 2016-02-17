@@ -169,7 +169,13 @@ function _init (local_settings) {
   // Get the settings
   loadSettings(local_settings);
   // And start initialising
-  dtfInit.loadEditor();
+  dtfInit.loadEditor(dtfInit.loadI18n(function () {
+    // Load editor
+    info('Initializing editor');
+    dtfEditor.load();
+    // Hide spinner
+    spinner('hide');
+  }));
 }
 
 function _getQueryParameterByName (name) {
@@ -204,7 +210,22 @@ var dtfInit = (function ( $ ) {
     });
   };
 
-  var loadEditor = function () {
+  var loadI18n = function (callback) {
+      // Load translations
+      info('Initializing locale');
+      $.i18n.init({
+        lng             : settings.lang,
+        fallbackLng     : 'en',
+        lowerCaseLng    : true,
+        resGetPath      : settings.appRootUrl + 'locales/__lng__.json',
+        useLocalStorage : false,
+        debug           : settings.debug
+      }, function () {
+        if(callback) callback();
+      });
+  };
+
+  var loadEditor = function (callback) {
     // Show spinner
     spinner('show');
     // Build list of scripts to load
@@ -225,27 +246,13 @@ var dtfInit = (function ( $ ) {
 
     // Dynamically load scripts
     loadScripts(scriptsList, 0, function () {
-      // Load translations
-      info('Initializing locale');
-      $.i18n.init({
-        lng             : settings.lang,
-        fallbackLng     : 'en',
-        lowerCaseLng    : true,
-        resGetPath      : settings.appRootUrl + 'locales/__lng__.json',
-        useLocalStorage : false,
-        debug           : settings.debug
-      }, function () {
-        // Load editor
-        info('Initializing editor');
-        dtfEditor.load();
-        // Hide spinner
-        spinner('hide');
-      });
+      if(callback) callback();
     });
   };
 
   return {
     loadScripts : loadScripts,
+    loadI18n    : loadI18n,
     loadEditor  : loadEditor
   };
 

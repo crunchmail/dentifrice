@@ -8,94 +8,94 @@
 // http://mozilla.org/MPL/2.0/.
 
 var dtfContentMode = (function( $ ) {
-  'use strict';
+    'use strict';
 
-  var attrHref;
+    var attrHref;
 
-  var enter = function() {
-    info('Entering ContentMode');
+    var enter = function() {
+        info('Entering ContentMode');
 
-    $.each(dtfEditor.blocksCatalog.configs, function(name, config) {
-      // Add CKEditor instances
-      if(!$(config.selector).data("default")) {
-          $(config.selector).remove();
-      }
-      $(config.selector).addClass('dtf-block');
-      if(config.urlckEditor !== undefined) {
-        //get localStorage json file
-        var confCkeditor = JSON.parse(localStorage.getItem(config.selector));
-        $(config.selector).find('.dtf-contentEditable')
-          .attr('contentEditable',true)
-          .ckeditor(confCkeditor);
-      }
-      else {
-        $(config.selector).find('.dtf-contentEditable')
-          .attr('contentEditable',true)
-          .ckeditor();
-      }
+        $.each(dtfEditor.blocksCatalog.configs, function(name, config) {
+            // Add CKEditor instances
+            if(!$(config.selector).data("default")) {
+                $(config.selector).remove();
+            }
+            $(config.selector).addClass('dtf-block');
+            if(config.urlckEditor !== undefined) {
+                //get localStorage json file
+                var confCkeditor = JSON.parse(localStorage.getItem(config.selector));
+                $(config.selector).find('.dtf-contentEditable')
+                .attr('contentEditable',true)
+                .ckeditor(confCkeditor);
+            }
+            else {
+                $(config.selector).find('.dtf-contentEditable')
+                .attr('contentEditable',true)
+                .ckeditor();
+            }
 
-      // Add controls around uploadable images
-      $(config.selector).find('*').addBack()
-        .filter('.dtf-imageUploadable')
-        .uploadify();
+            // Add controls around uploadable images
+            $(config.selector).find('*').addBack()
+            .filter('.dtf-imageUploadable')
+            .uploadify();
 
-      if($(config.selector).find('.dtf-imageUploadable').closest('a').length > 0) {
+            if($(config.selector).find('.dtf-imageUploadable').closest('a').length > 0) {
 
-        attrHref = $(config.selector).find('.dtf-imageUploadable').parent('a').attr('href');
-        $(config.selector)
-          .find('.dtf-imageUploadable').parent('a')
-          .removeAttr('href')
-          .attr('data-href', attrHref);
-      }
+                attrHref = $(config.selector).find('.dtf-imageUploadable').parent('a').attr('href');
+                $(config.selector)
+                .find('.dtf-imageUploadable').parent('a')
+                .removeAttr('href')
+                .attr('data-href', attrHref);
+            }
 
-      // Add controls for resizable images
-      $(config.selector).find('*').addBack()
-        .filter('.dtf-resizable')
-        .makeResizable();
+            // Add controls for resizable images
+            $(config.selector).find('*').addBack()
+            .filter('.dtf-resizable')
+            .makeResizable();
 
-      if($('.ui-resizable-handle').is(':hidden')) {
-        $('.ui-resizable-handle').show();
-      }
+            if($('.ui-resizable-handle').is(':hidden')) {
+                $('.ui-resizable-handle').show();
+            }
 
-      // Disable click on all links outside content editables
-      var contentLinks = $('#dtf-content a:not(.cke_editable a)');
-      contentLinks.each(function () {
-        debug('Disabling clicks on link: ' + this.href);
-      });
-      contentLinks.on('click', function(event) {
-        event.preventDefault();
-      });
-    });
-  };
+            // Disable click on all links outside content editables
+            var contentLinks = $(config.selector).find('a:not(.cke_editable a)');
+            contentLinks.each(function () {
+                debug('Disabling clicks on link: ' + this.href);
+            });
+            contentLinks.on('click', function(event) {
+                event.preventDefault();
+            });
+        });
+    };
 
-  var leave = function() {
-    info('Leaving ContentMode');
-    // Remove content-editables
-    $.each(CKEDITOR.instances, function (_, instance) {
-      instance.destroy();
-    });
-    $('.dtf-contentEditable').attr('contentEditable', false);
-    $('.sortable-element').removeClass('sortable-element');
+    var leave = function() {
+        info('Leaving ContentMode');
+        // Remove content-editables
+        $.each(CKEDITOR.instances, function (_, instance) {
+            instance.destroy();
+        });
+        $('.dtf-contentEditable').attr('contentEditable', false);
+        $('.sortable-element').removeClass('sortable-element');
 
-    // Remove controls for resizable images
-    $('.dtf-resizable').resizable("destroy");
-    // Remove controls uploadable image
-    $('.dtf-image-wrap').find(':not(.dtf-imageUploadable)').remove();
-    $('img.dtf-imageUploadable').unwrap();
+        // Remove controls for resizable images
+        $('.dtf-resizable').resizable("destroy");
+        // Remove controls uploadable image
+        $('.dtf-image-wrap').find(':not(.dtf-imageUploadable)').remove();
+        $('img.dtf-imageUploadable').unwrap();
 
-    if($('.dtf-imageUploadable').closest('a').length > 0) {
-      attrHref = $('.dtf-imageUploadable').parent('a').data('href');
+        if($('.dtf-imageUploadable').closest('a').length > 0) {
+            attrHref = $('.dtf-imageUploadable').parent('a').data('href');
 
-      $('.dtf-imageUploadable').parent('a')
-        .removeAttr('data-href')
-        .attr('href', attrHref);
-    }
-  };
+            $('.dtf-imageUploadable').parent('a')
+            .removeAttr('data-href')
+            .attr('href', attrHref);
+        }
+    };
 
-  return {
-    enter : enter,
-    leave : leave,
-  };
+    return {
+        enter : enter,
+        leave : leave,
+    };
 
 })( jQuery );
 
@@ -109,213 +109,213 @@ var dtfContentMode = (function( $ ) {
 // http://mozilla.org/MPL/2.0/.
 
 var dtfLayoutMode = (function( $ ) {
-  'use strict';
+    'use strict';
 
-  var _draggable = function(block) {
-    var parent_div = block.closest('div'),
-      c = {};
+    var _draggable = function(block) {
+        var parent_div = block.closest('div'),
+        c = {};
 
-    parent_div.addClass('sortable-element');
+        parent_div.addClass('sortable-element');
 
-    $('#templateContainer').sortable({
-      items: '.sortable-element',
-      placeholder: "ui-state-highlight",
-      revert: true,
-      scrollSpeed: 40,
-      sort: function(event, ui) {
-        var containerHeight = $('#templateContainer').height()/2;
-        var centerElement = (ui.item.height()/2)/2;
-        var topElement = ui.item.offset().top/2;
-        var windowPos = parseFloat(topElement) + parseFloat(centerElement);
-        $(window).scrollTop(windowPos);
-      },
-      start: function(event, ui) {
-        ui.placeholder.height(ui.item.height());
-        $('.dtf-tr-element').remove();
-        $('#templateContainer > tbody > tr:not(.sortable-element)').css('opacity', 0.5);
-        var centerElement = (ui.item.height()/2);
-        var topElement = ui.item.offset().top;
-        var windowPos = parseFloat(topElement) + parseFloat(centerElement) - 100;
-        window.scrollTo(0, windowPos);
-      },
-      stop: function(event, ui) {
-        $('.button-del').remove();
-        $('.dtf-block').each(function() {
-          if($(this).hasClass('dtf-changeable')) {
-            changeClass($(this));
-          }else {
-            equipBlock($(this));
-          }
-        });
-        $('#templateContainer > tbody > tr:not(.sortable-element)').css('opacity', 1);
-      }
-    });
-  };
-
-  var _addDelBtn = function(block) {
-    if (block.prev('.pure-button-del').length <= 0 && !block.hasClass('isUnique')) {
-      $(window.templates.blockDelButton)
-        .insertBefore(block)
-        .on('click', function(){
-          var element = $(this).next();
-          var row = element.closest('tr');
-          var before_row = row.prev();
-          var row_parent = row.parent();
-          var next_draft = row.next('tr');
-          var removed = deleteBlock(element).hide();
-          dtfEditor.pushToStack(function(){
-            // Record previous element or parent if first
-            if (before_row.length > 0) {
-              before_row.after(removed);
-            } else {
-              row_parent.prepend(removed);
+        $('#templateContainer').sortable({
+            items: '.sortable-element',
+            placeholder: "ui-state-highlight",
+            revert: true,
+            scrollSpeed: 40,
+            sort: function(event, ui) {
+                var containerHeight = $('#templateContainer').height()/2;
+                var centerElement = (ui.item.height()/2)/2;
+                var topElement = ui.item.offset().top/2;
+                var windowPos = parseFloat(topElement) + parseFloat(centerElement);
+                $(window).scrollTop(windowPos);
+            },
+            start: function(event, ui) {
+                ui.placeholder.height(ui.item.height());
+                $('.dtf-tr-element').remove();
+                $('#templateContainer > tbody > tr:not(.sortable-element)').css('opacity', 0.5);
+                var centerElement = (ui.item.height()/2);
+                var topElement = ui.item.offset().top;
+                var windowPos = parseFloat(topElement) + parseFloat(centerElement) - 100;
+                window.scrollTo(0, windowPos);
+            },
+            stop: function(event, ui) {
+                $('.button-del').remove();
+                $('.dtf-block').each(function() {
+                    if($(this).hasClass('dtf-changeable')) {
+                        changeClass($(this));
+                    }else {
+                        equipBlock($(this));
+                    }
+                });
+                $('#templateContainer > tbody > tr:not(.sortable-element)').css('opacity', 1);
             }
-            removed.show(200);
-          });
         });
-    }
-  };
+    };
 
-  var _hide_catalog = function() {
-    $('.dtf-catalog').hide(100);
-    $('.dtf-add-bar .button-add:hidden').show(100);
-  };
+    var _addDelBtn = function(block) {
+        if (block.prev('.pure-button-del').length <= 0 && !block.hasClass('isUnique')) {
+            $(window.templates.blockDelButton)
+            .insertBefore(block)
+            .on('click', function(){
+                var element = $(this).next();
+                var row = element.closest('tr');
+                var before_row = row.prev();
+                var row_parent = row.parent();
+                var next_draft = row.next('tr');
+                var removed = deleteBlock(element).hide();
+                dtfEditor.pushToStack(function(){
+                    // Record previous element or parent if first
+                    if (before_row.length > 0) {
+                        before_row.after(removed);
+                    } else {
+                        row_parent.prepend(removed);
+                    }
+                    removed.show(200);
+                });
+            });
+        }
+    };
 
-  var _show_catalog = function() {
-    _hide_catalog();
-    $(this).hide(100);
+    var _hide_catalog = function() {
+        $('.dtf-catalog').hide(100);
+        $('.dtf-add-bar .button-add:hidden').show(100);
+    };
 
-    // show my catalog
-    $(this).closest('div').find('.dtf-catalog')
-      .html(dtfEditor.blocksCatalog.get_gallery())
-      .show(100);
-  };
-
-  var enter = function() {
-    info('Entering LayoutMode');
-
-    var numberOfElement = $('.dtf-block').length;
-    $('.dtf-block').each(function(i) {
-      //addClass lastClass to last element
-      if(i === numberOfElement - 1 ) $(this).addClass('lastChild');
-      if(!$(this).hasClass('dtf-changeable')) {
-        equipBlock($(this));
-        _draggable($('.dtf-draggable'));
-      }else {
-        changeClass($(this));
-      }
-    });
-
-    // Block adding
-    $('.first-hidden').show(100);
-    $(this).hide(100);
-  };
-
-  var leave = function() {
-    info('Leaving LayoutMode');
-
-    $('.dtf-draft-block').closest('div').remove();
-    $('.button-del').remove();
-    $('.first-hidden').hide(100);
-    $('#dtf-layout-mode').show(100);
-    $('.dtf-deletion-border').removeClass('dtf-deletion-border');
-    $( "#templateContainer" ).sortable( "destroy" );
-  };
-
-  /**
-   * Equips a block with a border and block inserting tool under it.
-   */
-  var equipBlock = function(block) {
-    var parent_div = block.closest('div');
-
-    block.addClass('dtf-deletion-border');
-    if (parent_div.next('div').find('.dtf-draft-block').length <= 0) {
-      var draft_row = $(window.templates.blockAddBar);
-      draft_row.find('button').on('click', _show_catalog);
-      _hide_catalog();
-
-      parent_div.after(draft_row.fadeIn());
-    }
-
-    //Add button delete block if not Unique
-    _addDelBtn(block);
-
-  };
-
-  //Change Class of element with listChangeable in configuration.json
-  var changeClass = function(block, blockClass) {
-    var parent_div = block.closest('div');
-    //console.log(parent_div.find('.dtf-block'));
-
-    block.addClass('dtf-deletion-border');
-    if (parent_div.next('div').find('.dtf-draft-block').length <= 0) {
-      if(!block.hasClass('lastChild')) {
-        var draft_rowAdd = $(window.templates.blockAddBar);
-
-        draft_rowAdd.find('button').on('click', _show_catalog);
+    var _show_catalog = function() {
         _hide_catalog();
+        $(this).hide(100);
 
-        parent_div.after(draft_rowAdd.fadeIn());
-      }
+        // show my catalog
+        $(this).closest('div').find('.dtf-catalog')
+        .html(dtfEditor.blocksCatalog.get_gallery())
+        .show(100);
+    };
 
-      var draft_row = $(window.templates.blockChange);
-      var classesElement = parent_div.find('.dtf-block').data('change-class');
-      var removeOldClasse = classesElement.split(',').join(' ');
-      var arrClass = classesElement.split(',');
+    var enter = function() {
+        info('Entering LayoutMode');
 
-      parent_div.after(draft_row);
+        var numberOfElement = $('.dtf-block').length;
+        $('.dtf-block').each(function(i) {
+            //addClass lastClass to last element
+            if(i === numberOfElement - 1 ) $(this).addClass('lastChild');
+            if(!$(this).hasClass('dtf-changeable')) {
+                equipBlock($(this));
+                _draggable($('.dtf-draggable'));
+            }else {
+                changeClass($(this));
+            }
+        });
 
-      $.each(arrClass, function() {
-        if(block.closest('div').find('.dtf-block').hasClass(this)) {
-          draft_row.find('.dtf-change-element').append('<div data-background="'+this+'" class="active dtf-background '+this+'"></div>');
+        // Block adding
+        $('.first-hidden').show(100);
+        $(this).hide(100);
+    };
 
-        }else {
-          draft_row.find('.dtf-change-element').append('<div data-background="'+this+'" class="dtf-background '+this+'"></div>');
+    var leave = function() {
+        info('Leaving LayoutMode');
+
+        $('.dtf-draft-block').closest('div').remove();
+        $('.button-del').remove();
+        $('.first-hidden').hide(100);
+        $('#dtf-layout-mode').show(100);
+        $('.dtf-deletion-border').removeClass('dtf-deletion-border');
+        $( "#templateContainer" ).sortable( "destroy" );
+    };
+
+    /**
+    * Equips a block with a border and block inserting tool under it.
+    */
+    var equipBlock = function(block) {
+        var parent_div = block.closest('div');
+
+        block.addClass('dtf-deletion-border');
+        if (parent_div.next('div').find('.dtf-draft-block').length <= 0) {
+            var draft_row = $(window.templates.blockAddBar);
+            draft_row.find('button').on('click', _show_catalog);
+            _hide_catalog();
+
+            parent_div.after(draft_row.fadeIn());
         }
 
-      });
+        //Add button delete block if not Unique
+        _addDelBtn(block);
 
-      block.closest('div').next().on('click', '.dtf-background', function() {
-        $('.dtf-background').removeClass('active');
-        $(this).addClass('active');
-        draft_row.prev().find('.dtf-block').removeClass(removeOldClasse);
-        var nameClass = $(this).data('background');
-        draft_row.prev().find('.dtf-block').addClass(nameClass);
+    };
 
-      });
-    }
+    //Change Class of element with listChangeable in configuration.json
+    var changeClass = function(block, blockClass) {
+        var parent_div = block.closest('div');
+        //console.log(parent_div.find('.dtf-block'));
 
-    //Add button delete block if not Unique
-    _addDelBtn(block);
-  };
+        block.addClass('dtf-deletion-border');
+        if (parent_div.next('div').find('.dtf-draft-block').length <= 0) {
+            if(!block.hasClass('lastChild')) {
+                var draft_rowAdd = $(window.templates.blockAddBar);
 
-  var deleteBlock = function (block) {
-    /* the setattr is a woraround to avoid getting a hidden forever
-     * cloned element
-     */
-    var parent_div = block.closest('div');
-    var deleted;
-    //console.log(parent_div.next('div'));
-    if(block.hasClass("dtf-changeable")) {
-      deleted = $().add(parent_div).add(parent_div.next('div')).add(parent_div.next('div').next('div'));
-    }else {
-      deleted = $().add(parent_div).add(parent_div.next('div'));
-    }
+                draft_rowAdd.find('button').on('click', _show_catalog);
+                _hide_catalog();
 
-    var clone = deleted.clone(true, true);
-    deleted.hide(200, function() {
-      $(this).remove();
-    });
-    return clone;
-  };
+                parent_div.after(draft_rowAdd.fadeIn());
+            }
 
-  return {
-    enter       : enter,
-    leave       : leave,
-    changeClass : changeClass,
-    equipBlock  : equipBlock,
-    deleteBlock : deleteBlock
-  };
+            var draft_row = $(window.templates.blockChange);
+            var classesElement = parent_div.find('.dtf-block').data('change-class');
+            var removeOldClasse = classesElement.split(',').join(' ');
+            var arrClass = classesElement.split(',');
+
+            parent_div.after(draft_row);
+
+            $.each(arrClass, function() {
+                if(block.closest('div').find('.dtf-block').hasClass(this)) {
+                    draft_row.find('.dtf-change-element').append('<div data-background="'+this+'" class="active dtf-background '+this+'"></div>');
+
+                }else {
+                    draft_row.find('.dtf-change-element').append('<div data-background="'+this+'" class="dtf-background '+this+'"></div>');
+                }
+
+            });
+
+            block.closest('div').next().on('click', '.dtf-background', function() {
+                $('.dtf-background').removeClass('active');
+                $(this).addClass('active');
+                draft_row.prev().find('.dtf-block').removeClass(removeOldClasse);
+                var nameClass = $(this).data('background');
+                draft_row.prev().find('.dtf-block').addClass(nameClass);
+
+            });
+        }
+
+        //Add button delete block if not Unique
+        _addDelBtn(block);
+    };
+
+    var deleteBlock = function (block) {
+        /* the setattr is a woraround to avoid getting a hidden forever
+        * cloned element
+        */
+        var parent_div = block.closest('div');
+        var deleted;
+        //console.log(parent_div.next('div'));
+        if(block.hasClass("dtf-changeable")) {
+            deleted = $().add(parent_div).add(parent_div.next('div')).add(parent_div.next('div').next('div'));
+        }else {
+            deleted = $().add(parent_div).add(parent_div.next('div'));
+        }
+
+        var clone = deleted.clone(true, true);
+        deleted.hide(200, function() {
+            $(this).remove();
+        });
+        return clone;
+    };
+
+    return {
+        enter       : enter,
+        leave       : leave,
+        changeClass : changeClass,
+        equipBlock  : equipBlock,
+        deleteBlock : deleteBlock
+    };
 
 })( jQuery );
 
@@ -329,134 +329,134 @@ var dtfLayoutMode = (function( $ ) {
 // http://mozilla.org/MPL/2.0/.
 
 var dtfDraftsManager = (function( $ ) {
-  'use strict';
+    'use strict';
 
-  var versionTpl = 1;
-  var containerListDraft = $('containerListDraft');
+    var versionTpl = 1;
+    var containerListDraft = $('containerListDraft');
 
-  var saveDraft = function() {
-    spinner('show');
-    var resultPrompt = prompt($.t('drafts.name_prompt'), $.t('drafts.default_name'));
+    var saveDraft = function() {
+        spinner('show');
+        var resultPrompt = prompt($.t('drafts.name_prompt'), $.t('drafts.default_name'));
 
-    function checkingSave(val) {
-      if(val === true) {
-        dtfEditor.setMessage($.t('drafts.save_ok'), 'valid');
-      }
-      else {
-        dtfEditor.setMessage($.t('drafts.save_error'), 'error');
-      }
-    }
-
-    if ( resultPrompt !== "" && resultPrompt !== null ) {
-      var save = true;
-      var exist;
-
-      if ( draftStore.draftExists(resultPrompt) ) {
-        info('Draft name already exist: ' + resultPrompt);
-        save = confirm($.t('drafts.overwrite_confirm'));
-        if (save === true) {
-          info('Overwriting draft named ' + resultPrompt);
-          exist = true;
+        function checkingSave(val) {
+            if(val === true) {
+                dtfEditor.setMessage($.t('drafts.save_ok'), 'valid');
+            }
+            else {
+                dtfEditor.setMessage($.t('drafts.save_error'), 'error');
+            }
         }
-      }
 
-      if ( save === true ) {
-        var date = new Date();
-        date = date.toLocaleDateString() + " " + date.toLocaleTimeString();
+        if ( resultPrompt !== "" && resultPrompt !== null ) {
+            var save = true;
+            var exist;
 
-        var html = dtfEditor.getContent();
-        var styles = dtfEditor.getUserStyles();
+            if ( draftStore.draftExists(resultPrompt) ) {
+                info('Draft name already exist: ' + resultPrompt);
+                save = confirm($.t('drafts.overwrite_confirm'));
+                if (save === true) {
+                    info('Overwriting draft named ' + resultPrompt);
+                    exist = true;
+                }
+            }
 
-        draftStore.saveDraft( resultPrompt, html, styles, blocks_config, date, checkingSave, exist);
+            if ( save === true ) {
+                var date = new Date();
+                date = date.toLocaleDateString() + " " + date.toLocaleTimeString();
 
-      }
-    } else if ( resultPrompt === "" ) {
-      dtfEditor.setMessage($.t('drafts.name_empty'), 'error');
-    }
-    spinner('hide');
-  };
+                var html = dtfEditor.getContent();
+                var styles = dtfEditor.getUserStyles();
 
-  var hideMenu = function() {
-    $('#containerListDraft').removeClass('isActive');
-  };
+                draftStore.saveDraft( resultPrompt, html, styles, blocks_config, date, checkingSave, exist);
 
-  var listDrafts = function() {
-    var draftsListUl = $('#listDraft');
-    draftsListUl.empty();
-
-    var list = draftStore.listDrafts();
-
-    function checkingDelete(val) {
-      if(val === true) {
-        dtfEditor.setMessage($.t('drafts.delete_ok'), 'valid');
-      }
-      else {
-        dtfEditor.setMessage($.t('drafts.delete_error'), 'error');
-      }
-    }
-
-    list.forEach( function(draft) {
-
-      var draftLi = $("<li/>");
-      draftLi.attr('data-objId', draft.id);
-
-      var spanDate = $('<span class="draftDate">'+draft.date+'</span>');
-
-      var spanName = $('<span class="draftName">'+draft.name+'</span>');
-
-      var spanDelete = $('<span class="spanDelete fa fa-minus-circle"/>');
-
-
-      draftLi.append(spanDate);
-      draftLi.append(spanName);
-      draftLi.append(spanDelete);
-
-      draftLi.on('click', function(e) {
-        if ( confirm($.t('drafts.restore_confirm')) ) {
-          try {
-            draftStore.loadDraft(draft.id);
-          } catch(err) {
-            dtfEditor.setMessage($.t('drafts.restore_error'), 'error');
-          }
+            }
+        } else if ( resultPrompt === "" ) {
+            dtfEditor.setMessage($.t('drafts.name_empty'), 'error');
         }
-      });
+        spinner('hide');
+    };
 
-      spanDelete.on('click', function(e) {
-        if(confirm($.t('drafts.delete_confirm'))) {
-          //var id = this.parentNode.getAttribute('data-objId');
+    var hideMenu = function() {
+        $('#containerListDraft').removeClass('isActive');
+    };
 
-          draftStore.deleteDraft(draft.id, checkingDelete);
+    var listDrafts = function() {
+        var draftsListUl = $('#listDraft');
+        draftsListUl.empty();
 
+        var list = draftStore.listDrafts();
+
+        function checkingDelete(val) {
+            if(val === true) {
+                dtfEditor.setMessage($.t('drafts.delete_ok'), 'valid');
+            }
+            else {
+                dtfEditor.setMessage($.t('drafts.delete_error'), 'error');
+            }
         }
-        e.stopPropagation();
-      });
 
-      draftsListUl.append(draftLi);
-    });
-  };
+        list.forEach( function(draft) {
 
-  var deleteAllDrafts = function() {
-    var list = draftStore.listDrafts();
-    var draftsListUl = document.getElementById('listDraft');
+            var draftLi = $("<li/>");
+            draftLi.attr('data-objId', draft.id);
+            
+            var spanDate = $('<span class="draftDate">'+draft.date+'</span>');
 
-    function checkingDeleteAll(val) {
-      if(val === true) {
-        draftsListUl.removeChild(draftLi);
-      }
-    }
+            var spanName = $('<span class="draftName">'+draft.name+'</span>');
 
-    for ( var v = 0; v < list.length; v++) {
-      var id = this.parentNode.getAttribute('data-objId');
-      draftStore.deleteDraft(draft.id, checkingDeleteAll);
-    }
-  };
+            var spanDelete = $('<span class="spanDelete fa fa-minus-circle"/>');
 
-  return {
-    saveDraft       : saveDraft,
-    listDrafts      : listDrafts,
-    hideMenu        : hideMenu,
-    deleteAllDrafts : deleteAllDrafts
-  };
+
+            draftLi.append(spanDate);
+            draftLi.append(spanName);
+            draftLi.append(spanDelete);
+
+            draftLi.on('click', function(e) {
+                if ( confirm($.t('drafts.restore_confirm')) ) {
+                    try {
+                        draftStore.loadDraft(draft.id);
+                    } catch(err) {
+                        dtfEditor.setMessage($.t('drafts.restore_error'), 'error');
+                    }
+                }
+            });
+
+            spanDelete.on('click', function(e) {
+                if(confirm($.t('drafts.delete_confirm'))) {
+                    //var id = this.parentNode.getAttribute('data-objId');
+
+                    draftStore.deleteDraft(draft.id, checkingDelete);
+
+                }
+                e.stopPropagation();
+            });
+
+            draftsListUl.append(draftLi);
+        });
+    };
+
+    var deleteAllDrafts = function() {
+        var list = draftStore.listDrafts();
+        var draftsListUl = document.getElementById('listDraft');
+
+        function checkingDeleteAll(val) {
+            if(val === true) {
+                draftsListUl.removeChild(draftLi);
+            }
+        }
+
+        for ( var v = 0; v < list.length; v++) {
+            var id = this.parentNode.getAttribute('data-objId');
+            draftStore.deleteDraft(draft.id, checkingDeleteAll);
+        }
+    };
+
+    return {
+        saveDraft       : saveDraft,
+        listDrafts      : listDrafts,
+        hideMenu        : hideMenu,
+        deleteAllDrafts : deleteAllDrafts
+    };
 
 })( jQuery );
 
@@ -470,112 +470,112 @@ var dtfDraftsManager = (function( $ ) {
 // http://mozilla.org/MPL/2.0/.
 
 (function ( $ ) {
-  'use strict';
+    'use strict';
 
-  var instances;
+    var instances;
 
-  $.fn.makeResizable = function () {
-    $.each(this, function(idx, el) {
-      var img = $(el);
+    $.fn.makeResizable = function () {
+        $.each(this, function(idx, el) {
+            var img = $(el);
 
-      var ratioResizable = Math.round(img[0].naturalHeight / img[0].naturalWidth);
-      var maxWidthResizable = img.closest('td').width();
-      var configResizable = {
-        maxWidth: maxWidthResizable,
-        minWidth: 50,
-        aspectRatio: true,
-        handles:"e, s, se"
-      };
-      if(img.data('resizable') === 'left') {
-        configResizable.handles = "sw, w, s";
-      }
-      img.resizable(configResizable);
-    });
-    return this;
-  };
+            var ratioResizable = Math.round(img[0].naturalHeight / img[0].naturalWidth);
+            var maxWidthResizable = img.closest('td').width();
+            var configResizable = {
+                maxWidth: maxWidthResizable,
+                minWidth: 50,
+                aspectRatio: true,
+                handles:"e, s, se"
+            };
+            if(img.data('resizable') === 'left') {
+                configResizable.handles = "sw, w, s";
+            }
+            img.resizable(configResizable);
+        });
+        return this;
+    };
 
-  $.fn.uploadify = function () {
-    $.each(this, function(idx, el) {
-      var uploadForm = $(window.templates.imageUploadForm);
-      var img = $(el);
-      var showFormButton = $(window.templates.imageUploadButton);
-      var attrHref;
-      var imgWidth = img.width();
+    $.fn.uploadify = function () {
+        $.each(this, function(idx, el) {
+            var uploadForm = $(window.templates.imageUploadForm);
+            var img = $(el);
+            var showFormButton = $(window.templates.imageUploadButton);
+            var attrHref;
+            var imgWidth = img.width();
 
-      uploadForm.i18n();
+            uploadForm.i18n();
 
-      if(img.closest('a').length > 0) {
-        attrHref = img.parent('a').attr('href');
-        img.parent('a')
-        .removeAttr('href')
-        .attr('data-href', attrHref);
-      }
+            if(img.closest('a').length > 0) {
+                attrHref = img.parent('a').attr('href');
+                img.parent('a')
+                .removeAttr('href')
+                .attr('data-href', attrHref);
+            }
 
-      img.wrap('<div class="dtf-image-wrap">');
-      img.parent().append(showFormButton);
-      img.parent().append(uploadForm.hide());
-      var waiter = uploadForm.find('.dtf-waiter');
-      var fileInput = uploadForm.find('input');
-      var browseBtn = uploadForm.find('.upload-button');
-      var closeLink = uploadForm.find('.button-cancel');
+            img.wrap('<div class="dtf-image-wrap">');
+            img.parent().append(showFormButton);
+            img.parent().append(uploadForm.hide());
+            var waiter = uploadForm.find('.dtf-waiter');
+            var fileInput = uploadForm.find('input');
+            var browseBtn = uploadForm.find('.upload-button');
+            var closeLink = uploadForm.find('.button-cancel');
 
-      function showUploadForm() {
-        showFormButton.hide();
-        fileInput.show();
-        browseBtn.show();
-        waiter.hide();
-        uploadForm.show();
-      }
+            function showUploadForm() {
+                showFormButton.hide();
+                fileInput.show();
+                browseBtn.show();
+                waiter.hide();
+                uploadForm.show();
+            }
 
-      function hideUploadForm() {
-        uploadForm.hide();
-        showFormButton.show();
-        return false;
-      }
+            function hideUploadForm() {
+                uploadForm.hide();
+                showFormButton.show();
+                return false;
+            }
 
-      function startWaiting() {
-        fileInput.hide();
-        browseBtn.hide();
-        waiter.show();
-      }
+            function startWaiting() {
+                fileInput.hide();
+                browseBtn.hide();
+                waiter.show();
+            }
 
-      showFormButton.click(showUploadForm);
-      closeLink.click(hideUploadForm);
+            showFormButton.click(showUploadForm);
+            closeLink.click(hideUploadForm);
 
-      fileInput.change(function() {
-        var fd = new FormData();
-        var file = uploadForm.find("#file")[0].files[0];
-        fd.append("file", file);
-        fd.append("width", imgWidth);
+            fileInput.change(function() {
+                var fd = new FormData();
+                var file = uploadForm.find("#file")[0].files[0];
+                fd.append("file", file);
+                fd.append("width", imgWidth);
 
-        var url = uploadStore.doUpload(fd);
+                var url = uploadStore.doUpload(fd);
 
-        if ( null !== url ) {
-          var dataResizable = (img.data('resizable') === undefined ? 'right' : img.data('resizable'));
+                if ( null !== url ) {
+                    var dataResizable = (img.data('resizable') === undefined ? 'right' : img.data('resizable'));
 
-          if ( img.hasClass('dtf-resizable') ) {
-            img.resizable("destroy");
-          }
+                    if ( img.hasClass('dtf-resizable') ) {
+                        img.resizable("destroy");
+                    }
 
-          var parent = img.parent();
-          var newImg = $('<img data-resizable="' + dataResizable + '" class="dtf-resizable dtf-imageUploadable" src="' + url + '" width="' + img.width() + 'px" />');
-          parent.replaceWith(newImg);
+                    var parent = img.parent();
+                    var newImg = $('<img data-resizable="' + dataResizable + '" class="dtf-resizable dtf-imageUploadable" src="' + url + '" width="' + img.width() + 'px" />');
+                    parent.replaceWith(newImg);
 
-          setTimeout(function(){
-            newImg.uploadify();
-            newImg.makeResizable();
-          }, 1000);
-        } else {
-          dtfEditor.setMessage($.t('upload.error'), 'error');
-        }
+                    setTimeout(function(){
+                        newImg.uploadify();
+                        newImg.makeResizable();
+                    }, 1000);
+                } else {
+                    dtfEditor.setMessage($.t('upload.error'), 'error');
+                }
 
-        hideUploadForm();
-        startWaiting();
-        return false;
-      });
-    });
-    return this;
-  };
+                hideUploadForm();
+                startWaiting();
+                return false;
+            });
+        });
+        return this;
+    };
 
 }( jQuery ));
 
@@ -601,7 +601,7 @@ var dtfEditor = (function ( $ ) {
         last_el_created: null,
         insert: function(el) {
             var dom_block = blocksCatalog.get_dom(el.attr('data-block-name'));
-                dom_block.addClass('dtf-draggable dtf-block');
+            dom_block.addClass('dtf-draggable dtf-block');
 
             var new_row = $(window.templates.baseBlock);
             new_row.find('.dtf-block')
@@ -792,13 +792,14 @@ var dtfEditor = (function ( $ ) {
         }
     };
 
-    var generateFinal = function ( html ) {
-        if ( undefined === html || null === html) {
-            error('No HTML provided, cannot generate final document');
+    var generateFinal = function ( $content ) {
+        if ( undefined === $content || null === $content) {
+            error('No HTML content provided, cannot generate final document');
             setMessage($.t('editor.valid_error'), 'error');
         } else {
 
             spinner('show');
+            var html = _contentCleanup($content);
             // Get the custom styles
             var styles = getUserStyles();
 
@@ -853,8 +854,8 @@ var dtfEditor = (function ( $ ) {
         });
     };
 
-    var getContent = function ( cleanup ) {
-        if ( undefined === cleanup) cleanup = false;
+    var getContent = function ( asObject ) {
+        if ( undefined === asObject) asObject = false;
 
         try {
             // Disable the editor, removes the content editables and other stuff
@@ -862,60 +863,77 @@ var dtfEditor = (function ( $ ) {
             // Clone the content div
             var $content = $('#dtf-content').clone();
 
-            // Dump the raw html
-            var html = $content.html();
-
             // Re-enable the editor
             dtfContentMode.enter();
 
-            if (cleanup) {
-                // Do some more cleanup
-
-                // First get all the uploadable images sizes
-                // and set their attributes accordingly
-                $content.find('.dtf-imageUploadable').each(function() {
-                    var width = $(this)[0].naturalWidth;
-                    var height = $(this)[0].naturalHeight;
-                    if ( $(this).width() !== 0 ) {
-                        // Not a stock image, so get real size (possibly resized)
-                        width = $(this).width();
-                        height = $(this).height();
-                    }
-                    $(this).attr('width', width);
-                    $(this).attr('height', height);
-                    $(this).removeAttr('class style');
-                });
-
-
-                $content.find('.dtf-upload').remove();
-                _removeDataAttributes($content.find('.dtf-changeable'));
-                $content.find('.dtf-contentEditable').removeAttr('contenteditable style');
-                //Remove dentifrice Classes
-                $content.find('*[class*="dtf"]').removeClass (function (index, css) {
-                    return (css.match (/dtf-[^"'\s]+(\s)*/g) || []).join(' ');
-                });
-                $content.find('.isUnique').removeClass("isUnique");
-
-                //Add table conditional IE
-                $content.find('#templateContainer td:first > div').each(function() {
-                    $(this).before('<!--[if (gte mso 9)|(IE)]><table cellpadding="0" cellspacing="0" width="600" align="center"><tr><td><![endif]-->');
-                    $(this).after('<!--[if (gte mso 9)|(IE)]></td></tr></table><![endif]-->');
-                });
+            if (asObject) {
+                return $content;
+            } else {
+                return htmlFromContent($content);
             }
 
-            // HTML-encode some characters in the tags that might contain text,
-            // in order to avoid mangling further down the chain
-            // especially with UTF-8 encoding on POST (smart quotes for example)
-            html = html.htmlEncode();
-
-            // Remove no IE comments
-            html = html.replace(/<!--(?!\[if).*?-->/g, "");
-
-            return html;
-
         } catch(err) {
+            error('Error getting content !');
             return null;
         }
+    };
+
+    var htmlFromContent = function( $content ) {
+        // Remove internal classes
+        _.each(['dtf-block', 'dtf-draggable', 'isUnique'], function(dtfClass) {
+            $content.find('.'+dtfClass).removeClass(dtfClass);
+        });
+
+        // Dump the raw html
+        var html = $content.html();
+
+        // HTML-encode some characters in the tags that might contain text,
+        // in order to avoid mangling further down the chain
+        // especially with UTF-8 encoding on POST (smart quotes for example)
+        html = html.htmlEncode();
+
+        // Remove tbody tags
+        html = html.replace(/<\/?tbody>/g, '');
+
+        // Remove no IE comments
+        html = html.replace(/<!--(?!\[if).*?-->/g, "");
+
+        return html;
+    };
+
+    var _contentCleanup = function($content) {
+        // First get all the uploadable images sizes
+        // and set their attributes accordingly
+        $content.find('.dtf-imageUploadable').each(function() {
+            var width = $(this)[0].naturalWidth;
+            var height = $(this)[0].naturalHeight;
+            if ( $(this).width() !== 0 ) {
+                // Not a stock image, so get real size (possibly resized)
+                width = $(this).width();
+                height = $(this).height();
+            }
+            $(this).attr('width', width);
+            $(this).attr('height', height);
+            $(this).removeAttr('class style');
+        });
+
+
+        $content.find('.dtf-upload').remove();
+        _removeDataAttributes($content.find('.dtf-changeable'));
+        $content.find('.dtf-contentEditable').removeAttr('contenteditable style');
+        //Remove dentifrice Classes
+        $content.find('*[class*="dtf"]').removeClass (function (index, css) {
+            return (css.match(/dtf-[^"'\s]+(\s)*/g) || []).join(' ');
+        });
+        $content.find('.isUnique').removeClass("isUnique");
+
+        //Add table conditional IE
+        $content.find('#templateContainer td:first > div').each(function() {
+            $(this).before('<!--[if (gte mso 9)|(IE)]><table cellpadding="0" cellspacing="0" width="600" align="center"><tr><td><![endif]-->');
+            $(this).after('<!--[if (gte mso 9)|(IE)]></td></tr></table><![endif]-->');
+        });
+
+        return htmlFromContent($content);
     };
 
     /**
@@ -1095,7 +1113,6 @@ var dtfEditor = (function ( $ ) {
     var load = function () {
         _fetchBlocksConfig();
         _loadToolbar();
-        _loadToolbar();
     };
 
 
@@ -1109,6 +1126,7 @@ var dtfEditor = (function ( $ ) {
         pushToStack     : pushToStack,
         getContent      : getContent,
         getUserStyles   : getUserStyles,
+        htmlFromContent : htmlFromContent,
         generateFinal   : generateFinal,
         load            : load
     };

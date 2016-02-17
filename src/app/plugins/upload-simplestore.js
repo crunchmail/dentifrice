@@ -8,40 +8,40 @@
 // http://mozilla.org/MPL/2.0/.
 
 var uploadStore = (function ( $ ) {
-  'use strict';
+    'use strict';
 
-  var doUpload = function (data, width) {
-    var ret = null;
+    var doUpload = function (data, width) {
+        var ret = null;
 
-    $.ajax({
-      url: settings.uploadURL,
-      method: 'POST',
-      data: data,
-      async: false,
+        $.ajax({
+            url: settings.uploadURL,
+            method: 'POST',
+            data: data,
+            async: false,
 
-      // With files, its better if jquery does not try
-      // to manage form content
-      cache: false,
-      contentType: false,
-      processData: false
-    })
-    .done( function (url) {
+            // With files, its better if jquery does not try
+            // to manage form content
+            cache: false,
+            contentType: false,
+            processData: false
+        })
+        .done( function (url) {
 
-      info('file uploaded. Response: ' + url);
-      ret = url;
+            info('file uploaded. Response: ' + url);
+            ret = url;
 
-    })
-    .fail( function (jqXHR, textStatus) {
+        })
+        .fail( function (jqXHR, textStatus) {
 
-      warn('Failed uploading file: '+ textStatus);
+            warn('Failed uploading file: '+ textStatus);
 
-    });
+        });
 
-    return ret;
-  };
+        return ret;
+    };
 
-  return {
-    doUpload : doUpload
-  };
+    return {
+        doUpload : doUpload
+    };
 
 })( jQuery );

@@ -20,7 +20,7 @@ var dtfEditor = (function ( $ ) {
         last_el_created: null,
         insert: function(el) {
             var dom_block = blocksCatalog.get_dom(el.attr('data-block-name'));
-                dom_block.addClass('dtf-draggable dtf-block');
+            dom_block.addClass('dtf-draggable dtf-block');
 
             var new_row = $(window.templates.baseBlock);
             new_row.find('.dtf-block')

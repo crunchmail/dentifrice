@@ -8,133 +8,133 @@
 // http://mozilla.org/MPL/2.0/.
 
 var dtfDraftsManager = (function( $ ) {
-  'use strict';
+    'use strict';
 
-  var versionTpl = 1;
-  var containerListDraft = $('containerListDraft');
+    var versionTpl = 1;
+    var containerListDraft = $('containerListDraft');
 
-  var saveDraft = function() {
-    spinner('show');
-    var resultPrompt = prompt($.t('drafts.name_prompt'), $.t('drafts.default_name'));
+    var saveDraft = function() {
+        spinner('show');
+        var resultPrompt = prompt($.t('drafts.name_prompt'), $.t('drafts.default_name'));
 
-    function checkingSave(val) {
-      if(val === true) {
-        dtfEditor.setMessage($.t('drafts.save_ok'), 'valid');
-      }
-      else {
-        dtfEditor.setMessage($.t('drafts.save_error'), 'error');
-      }
-    }
-
-    if ( resultPrompt !== "" && resultPrompt !== null ) {
-      var save = true;
-      var exist;
-
-      if ( draftStore.draftExists(resultPrompt) ) {
-        info('Draft name already exist: ' + resultPrompt);
-        save = confirm($.t('drafts.overwrite_confirm'));
-        if (save === true) {
-          info('Overwriting draft named ' + resultPrompt);
-          exist = true;
+        function checkingSave(val) {
+            if(val === true) {
+                dtfEditor.setMessage($.t('drafts.save_ok'), 'valid');
+            }
+            else {
+                dtfEditor.setMessage($.t('drafts.save_error'), 'error');
+            }
         }
-      }
 
-      if ( save === true ) {
-        var date = new Date();
-        date = date.toLocaleDateString() + " " + date.toLocaleTimeString();
+        if ( resultPrompt !== "" && resultPrompt !== null ) {
+            var save = true;
+            var exist;
 
-        var html = dtfEditor.getContent();
-        var styles = dtfEditor.getUserStyles();
+            if ( draftStore.draftExists(resultPrompt) ) {
+                info('Draft name already exist: ' + resultPrompt);
+                save = confirm($.t('drafts.overwrite_confirm'));
+                if (save === true) {
+                    info('Overwriting draft named ' + resultPrompt);
+                    exist = true;
+                }
+            }
 
-        draftStore.saveDraft( resultPrompt, html, styles, blocks_config, date, checkingSave, exist);
+            if ( save === true ) {
+                var date = new Date();
+                date = date.toLocaleDateString() + " " + date.toLocaleTimeString();
 
-      }
-    } else if ( resultPrompt === "" ) {
-      dtfEditor.setMessage($.t('drafts.name_empty'), 'error');
-    }
-    spinner('hide');
-  };
+                var html = dtfEditor.getContent();
+                var styles = dtfEditor.getUserStyles();
 
-  var hideMenu = function() {
-    $('#containerListDraft').removeClass('isActive');
-  };
+                draftStore.saveDraft( resultPrompt, html, styles, blocks_config, date, checkingSave, exist);
 
-  var listDrafts = function() {
-    var draftsListUl = $('#listDraft');
-    draftsListUl.empty();
-
-    var list = draftStore.listDrafts();
-
-    function checkingDelete(val) {
-      if(val === true) {
-        dtfEditor.setMessage($.t('drafts.delete_ok'), 'valid');
-      }
-      else {
-        dtfEditor.setMessage($.t('drafts.delete_error'), 'error');
-      }
-    }
-
-    list.forEach( function(draft) {
-
-      var draftLi = $("<li/>");
-      draftLi.attr('data-objId', draft.id);
-
-      var spanDate = $('<span class="draftDate">'+draft.date+'</span>');
-
-      var spanName = $('<span class="draftName">'+draft.name+'</span>');
-
-      var spanDelete = $('<span class="spanDelete fa fa-minus-circle"/>');
-
-
-      draftLi.append(spanDate);
-      draftLi.append(spanName);
-      draftLi.append(spanDelete);
-
-      draftLi.on('click', function(e) {
-        if ( confirm($.t('drafts.restore_confirm')) ) {
-          try {
-            draftStore.loadDraft(draft.id);
-          } catch(err) {
-            dtfEditor.setMessage($.t('drafts.restore_error'), 'error');
-          }
+            }
+        } else if ( resultPrompt === "" ) {
+            dtfEditor.setMessage($.t('drafts.name_empty'), 'error');
         }
-      });
+        spinner('hide');
+    };
 
-      spanDelete.on('click', function(e) {
-        if(confirm($.t('drafts.delete_confirm'))) {
-          //var id = this.parentNode.getAttribute('data-objId');
+    var hideMenu = function() {
+        $('#containerListDraft').removeClass('isActive');
+    };
 
-          draftStore.deleteDraft(draft.id, checkingDelete);
+    var listDrafts = function() {
+        var draftsListUl = $('#listDraft');
+        draftsListUl.empty();
 
+        var list = draftStore.listDrafts();
+
+        function checkingDelete(val) {
+            if(val === true) {
+                dtfEditor.setMessage($.t('drafts.delete_ok'), 'valid');
+            }
+            else {
+                dtfEditor.setMessage($.t('drafts.delete_error'), 'error');
+            }
         }
-        e.stopPropagation();
-      });
 
-      draftsListUl.append(draftLi);
-    });
-  };
+        list.forEach( function(draft) {
 
-  var deleteAllDrafts = function() {
-    var list = draftStore.listDrafts();
-    var draftsListUl = document.getElementById('listDraft');
+            var draftLi = $("<li/>");
+            draftLi.attr('data-objId', draft.id);
+            
+            var spanDate = $('<span class="draftDate">'+draft.date+'</span>');
 
-    function checkingDeleteAll(val) {
-      if(val === true) {
-        draftsListUl.removeChild(draftLi);
-      }
-    }
+            var spanName = $('<span class="draftName">'+draft.name+'</span>');
 
-    for ( var v = 0; v < list.length; v++) {
-      var id = this.parentNode.getAttribute('data-objId');
-      draftStore.deleteDraft(draft.id, checkingDeleteAll);
-    }
-  };
+            var spanDelete = $('<span class="spanDelete fa fa-minus-circle"/>');
 
-  return {
-    saveDraft       : saveDraft,
-    listDrafts      : listDrafts,
-    hideMenu        : hideMenu,
-    deleteAllDrafts : deleteAllDrafts
-  };
+
+            draftLi.append(spanDate);
+            draftLi.append(spanName);
+            draftLi.append(spanDelete);
+
+            draftLi.on('click', function(e) {
+                if ( confirm($.t('drafts.restore_confirm')) ) {
+                    try {
+                        draftStore.loadDraft(draft.id);
+                    } catch(err) {
+                        dtfEditor.setMessage($.t('drafts.restore_error'), 'error');
+                    }
+                }
+            });
+
+            spanDelete.on('click', function(e) {
+                if(confirm($.t('drafts.delete_confirm'))) {
+                    //var id = this.parentNode.getAttribute('data-objId');
+
+                    draftStore.deleteDraft(draft.id, checkingDelete);
+
+                }
+                e.stopPropagation();
+            });
+
+            draftsListUl.append(draftLi);
+        });
+    };
+
+    var deleteAllDrafts = function() {
+        var list = draftStore.listDrafts();
+        var draftsListUl = document.getElementById('listDraft');
+
+        function checkingDeleteAll(val) {
+            if(val === true) {
+                draftsListUl.removeChild(draftLi);
+            }
+        }
+
+        for ( var v = 0; v < list.length; v++) {
+            var id = this.parentNode.getAttribute('data-objId');
+            draftStore.deleteDraft(draft.id, checkingDeleteAll);
+        }
+    };
+
+    return {
+        saveDraft       : saveDraft,
+        listDrafts      : listDrafts,
+        hideMenu        : hideMenu,
+        deleteAllDrafts : deleteAllDrafts
+    };
 
 })( jQuery );

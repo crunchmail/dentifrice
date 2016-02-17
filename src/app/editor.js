@@ -211,13 +211,14 @@ var dtfEditor = (function ( $ ) {
         }
     };
 
-    var generateFinal = function ( html ) {
-        if ( undefined === html || null === html) {
-            error('No HTML provided, cannot generate final document');
+    var generateFinal = function ( $content ) {
+        if ( undefined === $content || null === $content) {
+            error('No HTML content provided, cannot generate final document');
             setMessage($.t('editor.valid_error'), 'error');
         } else {
 
             spinner('show');
+            var html = _contentCleanup($content);
             // Get the custom styles
             var styles = getUserStyles();
 
@@ -272,8 +273,8 @@ var dtfEditor = (function ( $ ) {
         });
     };
 
-    var getContent = function ( cleanup ) {
-        if ( undefined === cleanup) cleanup = false;
+    var getContent = function ( asObject ) {
+        if ( undefined === asObject) asObject = false;
 
         try {
             // Disable the editor, removes the content editables and other stuff
@@ -281,60 +282,77 @@ var dtfEditor = (function ( $ ) {
             // Clone the content div
             var $content = $('#dtf-content').clone();
 
-            // Dump the raw html
-            var html = $content.html();
-
             // Re-enable the editor
             dtfContentMode.enter();
 
-            if (cleanup) {
-                // Do some more cleanup
-
-                // First get all the uploadable images sizes
-                // and set their attributes accordingly
-                $content.find('.dtf-imageUploadable').each(function() {
-                    var width = $(this)[0].naturalWidth;
-                    var height = $(this)[0].naturalHeight;
-                    if ( $(this).width() !== 0 ) {
-                        // Not a stock image, so get real size (possibly resized)
-                        width = $(this).width();
-                        height = $(this).height();
-                    }
-                    $(this).attr('width', width);
-                    $(this).attr('height', height);
-                    $(this).removeAttr('class style');
-                });
-
-
-                $content.find('.dtf-upload').remove();
-                _removeDataAttributes($content.find('.dtf-changeable'));
-                $content.find('.dtf-contentEditable').removeAttr('contenteditable style');
-                //Remove dentifrice Classes
-                $content.find('*[class*="dtf"]').removeClass (function (index, css) {
-                    return (css.match (/dtf-[^"'\s]+(\s)*/g) || []).join(' ');
-                });
-                $content.find('.isUnique').removeClass("isUnique");
-
-                //Add table conditional IE
-                $content.find('#templateContainer td:first > div').each(function() {
-                    $(this).before('<!--[if (gte mso 9)|(IE)]><table cellpadding="0" cellspacing="0" width="600" align="center"><tr><td><![endif]-->');
-                    $(this).after('<!--[if (gte mso 9)|(IE)]></td></tr></table><![endif]-->');
-                });
+            if (asObject) {
+                return $content;
+            } else {
+                return htmlFromContent($content);
             }
 
-            // HTML-encode some characters in the tags that might contain text,
-            // in order to avoid mangling further down the chain
-            // especially with UTF-8 encoding on POST (smart quotes for example)
-            html = html.htmlEncode();
-
-            // Remove no IE comments
-            html = html.replace(/<!--(?!\[if).*?-->/g, "");
-
-            return html;
-
         } catch(err) {
+            error('Error getting content !');
             return null;
         }
+    };
+
+    var htmlFromContent = function( $content ) {
+        // Remove internal classes
+        _.each(['dtf-block', 'dtf-draggable', 'isUnique'], function(dtfClass) {
+            $content.find('.'+dtfClass).removeClass(dtfClass);
+        });
+
+        // Dump the raw html
+        var html = $content.html();
+
+        // HTML-encode some characters in the tags that might contain text,
+        // in order to avoid mangling further down the chain
+        // especially with UTF-8 encoding on POST (smart quotes for example)
+        html = html.htmlEncode();
+
+        // Remove tbody tags
+        html = html.replace(/<\/?tbody>/g, '');
+
+        // Remove no IE comments
+        html = html.replace(/<!--(?!\[if).*?-->/g, "");
+
+        return html;
+    };
+
+    var _contentCleanup = function($content) {
+        // First get all the uploadable images sizes
+        // and set their attributes accordingly
+        $content.find('.dtf-imageUploadable').each(function() {
+            var width = $(this)[0].naturalWidth;
+            var height = $(this)[0].naturalHeight;
+            if ( $(this).width() !== 0 ) {
+                // Not a stock image, so get real size (possibly resized)
+                width = $(this).width();
+                height = $(this).height();
+            }
+            $(this).attr('width', width);
+            $(this).attr('height', height);
+            $(this).removeAttr('class style');
+        });
+
+
+        $content.find('.dtf-upload').remove();
+        _removeDataAttributes($content.find('.dtf-changeable'));
+        $content.find('.dtf-contentEditable').removeAttr('contenteditable style');
+        //Remove dentifrice Classes
+        $content.find('*[class*="dtf"]').removeClass (function (index, css) {
+            return (css.match(/dtf-[^"'\s]+(\s)*/g) || []).join(' ');
+        });
+        $content.find('.isUnique').removeClass("isUnique");
+
+        //Add table conditional IE
+        $content.find('#templateContainer td:first > div').each(function() {
+            $(this).before('<!--[if (gte mso 9)|(IE)]><table cellpadding="0" cellspacing="0" width="600" align="center"><tr><td><![endif]-->');
+            $(this).after('<!--[if (gte mso 9)|(IE)]></td></tr></table><![endif]-->');
+        });
+
+        return htmlFromContent($content);
     };
 
     /**
@@ -527,6 +545,7 @@ var dtfEditor = (function ( $ ) {
         pushToStack     : pushToStack,
         getContent      : getContent,
         getUserStyles   : getUserStyles,
+        htmlFromContent : htmlFromContent,
         generateFinal   : generateFinal,
         load            : load
     };

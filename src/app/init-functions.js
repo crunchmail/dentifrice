@@ -238,7 +238,7 @@ var dtfInit = (function ( $ ) {
         var beforeEditor = settings.plugins.beforeEditor.map( function(item) { return getAbsoluteUrl(item); });
         scriptsList = scriptsList.concat(beforeEditor);
         // Add the editor itself
-        scriptsList.push(settings.appRootUrl + 'js/editor.js');
+        scriptsList.push(settings.appRootUrl + 'js/editor.min.js');
         // Add after-editor custom scripts
         if (typeof settings.plugins.afterEditor === 'string') settings.plugins.afterEditor = [settings.plugins.afterEditor];
         var afterEditor = settings.plugins.afterEditor.map( function(item) { return getAbsoluteUrl(item); });

@@ -255,14 +255,6 @@ var dentifrice_postMessage = (function() {
     };
 
     /*
-    * Type post Message response, extend it if you want
-    */
-    var type = {
-        "final_html": function(data) {
-            return data.content;
-        }
-    };
-    /*
     * Callback listener for postMessages
     */
     var messageListener = function (event) {
@@ -274,17 +266,19 @@ var dentifrice_postMessage = (function() {
         var msg = event.data;
         if(msg.length > msgPrefixLen && typeof msg === 'string' && isMessageForUs()) {
             logger._debug('Received postmessage :' + msg);
-            /*
-            * Message Json
-            */
-            var messageJson = JSON.parse(msg.substr(msgPrefixLen));
-            /*
-            * Check if type is defined
-            */
-            if(type.hasOwnProperty(messageJson.type)) {
-                target.value = type[messageJson.type](messageJson);
-            }else {
-                logger._warn('Type undefined');
+            try {
+                // we expect to receive JSON in the message payload
+                var jsonMessage = JSON.parse(msg.substr(msgPrefixLen));
+
+                // Check if type is defined
+                if(jsonMessage.type == 'final_html') {
+                    target.value = messageJson.content;
+                }else {
+                    logger._warn('Received message did not match any known type');
+                }
+
+            } catch(e) {
+                logger._warn('Could not decode message. Not JSON: ' + msg.substr(msgPrefixLen));
             }
 
         }else {
@@ -294,8 +288,7 @@ var dentifrice_postMessage = (function() {
     };
 
     return {
-        setupMessageListener : setupMessageListener,
-        type                 : type
+        setupMessageListener : setupMessageListener
     };
 
 })();

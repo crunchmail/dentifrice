@@ -66,6 +66,10 @@ var dtfContentMode = (function( $ ) {
                 event.preventDefault();
             });
         });
+
+        // Broadcast change mode event
+        debug('Broadcast dtfContentModeEnter');
+        $('#dtf-content').trigger('dtfContentModeEnter');
     };
 
     var leave = function() {
@@ -90,6 +94,10 @@ var dtfContentMode = (function( $ ) {
             .removeAttr('data-href')
             .attr('href', attrHref);
         }
+
+        // Broadcast change mode event
+        debug('Broadcast dtfContentModeLeave');
+        $('#dtf-content').trigger('dtfContentModeLeave');
     };
 
     return {
@@ -209,6 +217,10 @@ var dtfLayoutMode = (function( $ ) {
         // Block adding
         $('.first-hidden').show(100);
         $(this).hide(100);
+
+        // Broadcast change mode event
+        debug('Broadcast dtfLayoutModeEnter');
+        $('#dtf-content').trigger('dtfLayoutModeEnter');
     };
 
     var leave = function() {
@@ -220,6 +232,10 @@ var dtfLayoutMode = (function( $ ) {
         $('#dtf-layout-mode').show(100);
         $('.dtf-deletion-border').removeClass('dtf-deletion-border');
         $( "#templateContainer" ).sortable( "destroy" );
+
+        // Broadcast change mode event
+        debug('Broadcast dtfLayoutModeLeave');
+        $('#dtf-content').trigger('dtfLayoutModeLeave');
     };
 
     /**
@@ -1110,9 +1126,13 @@ var dtfEditor = (function ( $ ) {
     /**
     * Load the editor
     */
-    var load = function () {
+    var load = function (callback) {
         _fetchBlocksConfig();
         _loadToolbar();
+        if (callback) {
+            debug('calling after-load callback');
+            callback();
+        }
     };
 
 

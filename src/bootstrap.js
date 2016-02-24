@@ -266,16 +266,12 @@ var dentifrice_postMessage = (function() {
         var msg = event.data;
         if(msg.length > msgPrefixLen && typeof msg === 'string' && isMessageForUs()) {
             logger._debug('Received postmessage :' + msg);
-            try {
-                // we expect to receive JSON in the message payload
-                var jsonMessage = JSON.parse(msg.substr(msgPrefixLen));
 
-                // Call our handler to do something with the message
-                dentifrice_postMessage.handlePostMessage(jsonMessage);
-
-            } catch(e) {
-                logger._warn('Could not decode message. Not JSON: ' + msg.substr(msgPrefixLen));
-            }
+            // we expect to receive JSON in the message payload
+            var data = JSON.parse(msg.substr(msgPrefixLen));
+            
+            // Call our handler to do something with the message
+            dentifrice_postMessage.handlePostMessage(data);
 
         }else {
             logger._debug('Received postmessage, but not for us :' + msg);

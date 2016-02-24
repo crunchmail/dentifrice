@@ -108,6 +108,10 @@ var dtfLayoutMode = (function( $ ) {
         // Block adding
         $('.first-hidden').show(100);
         $(this).hide(100);
+
+        // Broadcast change mode event
+        debug('Broadcast dtfLayoutModeEnter');
+        $('#dtf-content').trigger('dtfLayoutModeEnter');
     };
 
     var leave = function() {
@@ -119,6 +123,10 @@ var dtfLayoutMode = (function( $ ) {
         $('#dtf-layout-mode').show(100);
         $('.dtf-deletion-border').removeClass('dtf-deletion-border');
         $( "#templateContainer" ).sortable( "destroy" );
+
+        // Broadcast change mode event
+        debug('Broadcast dtfLayoutModeLeave');
+        $('#dtf-content').trigger('dtfLayoutModeLeave');
     };
 
     /**

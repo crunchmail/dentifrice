@@ -66,6 +66,10 @@ var dtfContentMode = (function( $ ) {
                 event.preventDefault();
             });
         });
+
+        // Broadcast change mode event
+        debug('Broadcast dtfContentModeEnter');
+        $('#dtf-content').trigger('dtfContentModeEnter');
     };
 
     var leave = function() {
@@ -90,6 +94,10 @@ var dtfContentMode = (function( $ ) {
             .removeAttr('data-href')
             .attr('href', attrHref);
         }
+
+        // Broadcast change mode event
+        debug('Broadcast dtfContentModeLeave');
+        $('#dtf-content').trigger('dtfContentModeLeave');
     };
 
     return {

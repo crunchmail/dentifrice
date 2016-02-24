@@ -81,18 +81,18 @@ var dtfEditor = (function ( $ ) {
 
                 if (block_config.icon in blocksIcons) {
                     blockIcon.find('.dtable-cell').html(blocksIcons[block_config.icon]);
-                    var caption = block_config.icon;
-                    if ('caption' in block_config) caption = block_config.caption;
-                    blockCaption = $('<span class="dblock">' + caption + '</span>');
                 } else {
                     blockIcon = $(block_config.icon);
                 }
+
+                var caption = block_config.icon;
+                if ('caption' in block_config) caption = block_config.caption;
+                blockCaption = $('<span class="dblock">' + caption + '</span>');
+
                 var link = $('<a class="dtf-block-choice" href="#">')
                 .attr('data-block-name', name)
-                .append(blockIcon);
-                if (blockCaption.length) {
-                    link.append(blockCaption);
-                }
+                .append(blockIcon)
+                .append(blockCaption);
 
                 // Test changeable class in configuration.json
                 if ( typeof block_config.listChangeable === "undefined" ) {

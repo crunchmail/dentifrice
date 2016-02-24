@@ -529,9 +529,13 @@ var dtfEditor = (function ( $ ) {
     /**
     * Load the editor
     */
-    var load = function () {
+    var load = function (callback) {
         _fetchBlocksConfig();
         _loadToolbar();
+        if (callback) {
+            debug('calling after-load callback');
+            callback();
+        }
     };
 
 

@@ -270,12 +270,8 @@ var dentifrice_postMessage = (function() {
                 // we expect to receive JSON in the message payload
                 var jsonMessage = JSON.parse(msg.substr(msgPrefixLen));
 
-                // Check if type is defined
-                if(jsonMessage.type == 'final_html') {
-                    target.value = messageJson.content;
-                }else {
-                    logger._warn('Received message did not match any known type');
-                }
+                // Call our handler to do something with the message
+                dentifrice_postMessage.handlePostMessage(jsonMessage);
 
             } catch(e) {
                 logger._warn('Could not decode message. Not JSON: ' + msg.substr(msgPrefixLen));
@@ -287,8 +283,20 @@ var dentifrice_postMessage = (function() {
 
     };
 
+    var handlePostMessage = function (data) {
+        // Check if type is defined
+        if(data.type === 'final_html') {
+            if (target !== undefined)
+                target.value = data.content;
+        } else {
+            logger._warn('Received message did not match any known type');
+        }
+    };
+
     return {
-        setupMessageListener : setupMessageListener
+        setupMessageListener : setupMessageListener,
+        // expose postmessage handler for easy override
+        handlePostMessage: handlePostMessage
     };
 
 })();

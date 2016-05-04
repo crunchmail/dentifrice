@@ -225,7 +225,7 @@ var dtfInit = (function ( $ ) {
         });
     };
 
-    var loadEditor = function (callback) {
+    var loadEditor = function (callback, failCallback) {
         // Show spinner
         spinner('show');
         // Build list of scripts to load
@@ -247,6 +247,9 @@ var dtfInit = (function ( $ ) {
         // Dynamically load scripts
         loadScripts(scriptsList, 0, function () {
             if(callback) callback();
+        },
+        function () {
+            if(failCallback) failCallback();
         });
     };
 

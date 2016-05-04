@@ -103,6 +103,10 @@ var dtfLayoutMode = (function( $ ) {
             }else {
                 changeClass($(this));
             }
+            // Disable click on all links inside block
+            $(this).find('a').on('click', function(event) {
+                event.preventDefault();
+            });
         });
 
         // Block adding
